@@ -1,12 +1,11 @@
 package com.solution.hangouts.dao;
 
-import javax.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -32,13 +31,9 @@ public class OrganizationDAO
 	@Size(max = 100)
 	private String name;
 
-
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "org_properties",
-			joinColumns = @JoinColumn(name = "org_id"),
-			inverseJoinColumns = @JoinColumn(name = "prop_id"))
-	Set<PropertyDAO> ownProperties;
+	@OneToMany(mappedBy = "organizations", fetch = FetchType.EAGER )
+	@JsonManagedReference
+	private Set<PropertyDAO> ownProperties;
 
 
 	public long getOrgId()
@@ -69,5 +64,15 @@ public class OrganizationDAO
 	public void setName( String name )
 	{
 		this.name = name;
+	}
+
+	public Set<PropertyDAO> getOwnProperties()
+	{
+		return ownProperties;
+	}
+
+	public void setOwnProperties( Set<PropertyDAO> ownProperties )
+	{
+		this.ownProperties = ownProperties;
 	}
 }
