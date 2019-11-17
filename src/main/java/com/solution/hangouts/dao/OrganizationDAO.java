@@ -2,6 +2,8 @@ package com.solution.hangouts.dao;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -18,8 +20,10 @@ public class OrganizationDAO
 	@SequenceGenerator(
 			name = "organization_gen",
 			sequenceName = "organization_org_id_seq",
-			initialValue = 0
+			initialValue = 0 ,
+			allocationSize= 1
 	)
+	@GeneratedValue( generator = "organization_org_id_seq" , strategy= GenerationType.IDENTITY )
 	private long orgId;
 
 	@NotBlank

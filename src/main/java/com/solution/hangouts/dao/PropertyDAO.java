@@ -4,6 +4,8 @@ package com.solution.hangouts.dao;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,12 +22,13 @@ public class PropertyDAO
 	@SequenceGenerator(
 			name = "prop_gen",
 			sequenceName = "property_prop_id_seq",
-			initialValue = 100
+			initialValue = 0
 	)
+	@GeneratedValue( generator = "property_prop_id_seq" , strategy= GenerationType.IDENTITY )
 	private long propId;
 
 	@NotBlank
-	@Size(max = 10)
+	@Size(max = 10 , message = "Property code cannot exceed 10 characters")
 	@Column(name = "code")
 	private String code;
 
