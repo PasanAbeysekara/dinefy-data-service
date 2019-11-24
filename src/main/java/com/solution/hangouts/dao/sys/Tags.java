@@ -1,4 +1,4 @@
-package com.solution.hangouts.dao.global;
+package com.solution.hangouts.dao.sys;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 
 
 @Entity
-@Table(name = "tags")
+@Table(name = "sys_tags")
 public class Tags
 {
 	@Id

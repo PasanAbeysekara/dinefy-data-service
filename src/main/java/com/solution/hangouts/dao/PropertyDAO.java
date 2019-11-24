@@ -1,7 +1,12 @@
 package com.solution.hangouts.dao;
 
 
+import com.solution.hangouts.dao.global.Point;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -36,6 +41,22 @@ public class PropertyDAO
 	@Column(name = "name")
 	private String name;
 
+	@Size( min = 10 )
+	@Column(name = "description")
+	private String description;
+
+	@Size(max = 100)
+	@Column(name = "location_name")
+	private String location_name;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "geo_location", column = @Column(name = "x")),
+			@AttributeOverride(name = "geo_location", column = @Column(name = "y"))
+	})
+	private Point point;
+
+
 	@ManyToOne( fetch = FetchType.LAZY )
 	@JoinColumn( name = "org_id"	)
 	private OrganizationDAO organizations;
@@ -68,6 +89,16 @@ public class PropertyDAO
 	public void setName( String name )
 	{
 		this.name = name;
+	}
+
+	public String getDescription()
+	{
+		return description;
+	}
+
+	public void setDescription( String description )
+	{
+		this.description = description;
 	}
 
 	public OrganizationDAO getOrganizations()
