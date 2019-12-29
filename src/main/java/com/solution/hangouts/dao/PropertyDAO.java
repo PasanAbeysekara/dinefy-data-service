@@ -1,12 +1,9 @@
 package com.solution.hangouts.dao;
 
 
-import com.solution.hangouts.dao.global.Point;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,11 +26,11 @@ public class PropertyDAO
 			sequenceName = "property_prop_id_seq",
 			initialValue = 0
 	)
-	@GeneratedValue( generator = "property_prop_id_seq" , strategy= GenerationType.IDENTITY )
+	@GeneratedValue(generator = "property_prop_id_seq", strategy = GenerationType.IDENTITY)
 	private long propId;
 
 	@NotBlank
-	@Size(max = 10 , message = "Property code cannot exceed 10 characters")
+	@Size(max = 10, message = "Property code cannot exceed 10 characters")
 	@Column(name = "code")
 	private String code;
 
@@ -41,7 +38,7 @@ public class PropertyDAO
 	@Column(name = "name")
 	private String name;
 
-	@Size( min = 10 )
+	@Size(min = 10)
 	@Column(name = "description")
 	private String description;
 
@@ -49,16 +46,17 @@ public class PropertyDAO
 	@Column(name = "location_name")
 	private String location_name;
 
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "geo_location", column = @Column(name = "x")),
-			@AttributeOverride(name = "geo_location", column = @Column(name = "y"))
-	})
-	private Point point;
+	//	@Embedded
+	//	@AttributeOverrides({
+	//			@AttributeOverride(name = "geo_location", column = @Column(name = "x")),
+	//			@AttributeOverride(name = "geo_location", column = @Column(name = "y"))
+	//	})
+	//	private Point point;
 
 
-	@ManyToOne( fetch = FetchType.LAZY )
-	@JoinColumn( name = "org_id"	)
+	@JsonBackReference
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "org_id")
 	private OrganizationDAO organizations;
 
 	public long getPropId()

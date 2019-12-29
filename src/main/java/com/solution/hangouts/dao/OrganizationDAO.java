@@ -1,5 +1,7 @@
 package com.solution.hangouts.dao;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,6 +35,7 @@ public class OrganizationDAO
 	@Size(max = 100)
 	private String name;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "organizations", fetch = FetchType.LAZY )
 	private Set<PropertyDAO> ownProperties;
 
