@@ -1,6 +1,7 @@
 package com.solution.hangouts.dao;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.solution.hangouts.ano.GuestFacingName;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
+@GuestFacingName
 @Table(name = "organization")
 public class OrganizationDAO
 {
@@ -37,7 +39,7 @@ public class OrganizationDAO
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "organizations", fetch = FetchType.LAZY )
-	private Set<PropertyDAO> ownProperties;
+	private Set<PropertyDAO> properties;
 
 
 	public long getOrgId()
@@ -72,11 +74,11 @@ public class OrganizationDAO
 
 	public Set<PropertyDAO> getOwnProperties()
 	{
-		return ownProperties;
+		return properties;
 	}
 
 	public void setOwnProperties( Set<PropertyDAO> ownProperties )
 	{
-		this.ownProperties = ownProperties;
+		this.properties = ownProperties;
 	}
 }

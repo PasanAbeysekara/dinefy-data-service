@@ -2,6 +2,9 @@ package com.solution.hangouts.dao;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Data;
+import org.postgresql.geometric.PGpoint;
+import org.springframework.data.geo.Point;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +18,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalTime;
 
+
+
+@Data
 @Entity
 @Table(name = "property")
 public class PropertyDAO
@@ -54,58 +61,73 @@ public class PropertyDAO
 	//	private Point point;
 
 
+//	@Column(name = "geo_location" )
+//	private Point geo_location;
+
+	@Column(name = "current_cont_id")
+	private Integer current_cont_id;
+
+	@Column(name = "current_cont_version")
+	private Short current_cont_version;
+
+	@Column(name = "start_time")
+	private LocalTime start_time;
+
+	@Column(name = "end_time")
+	private LocalTime end_time;
+
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "org_id")
 	private OrganizationDAO organizations;
 
-	public long getPropId()
-	{
-		return propId;
-	}
-
-	public void setPropId( long propId )
-	{
-		this.propId = propId;
-	}
-
-	public String getCode()
-	{
-		return code;
-	}
-
-	public void setCode( String code )
-	{
-		this.code = code;
-	}
-
-	public String getName()
-	{
-		return name;
-	}
-
-	public void setName( String name )
-	{
-		this.name = name;
-	}
-
-	public String getDescription()
-	{
-		return description;
-	}
-
-	public void setDescription( String description )
-	{
-		this.description = description;
-	}
-
-	public OrganizationDAO getOrganizations()
-	{
-		return organizations;
-	}
-
-	public void setOrganizations( OrganizationDAO organizations )
-	{
-		this.organizations = organizations;
-	}
+//	public long getPropId()
+//	{
+//		return propId;
+//	}
+//
+//	public void setPropId( long propId )
+//	{
+//		this.propId = propId;
+//	}
+//
+//	public String getCode()
+//	{
+//		return code;
+//	}
+//
+//	public void setCode( String code )
+//	{
+//		this.code = code;
+//	}
+//
+//	public String getName()
+//	{
+//		return name;
+//	}
+//
+//	public void setName( String name )
+//	{
+//		this.name = name;
+//	}
+//
+//	public String getDescription()
+//	{
+//		return description;
+//	}
+//
+//	public void setDescription( String description )
+//	{
+//		this.description = description;
+//	}
+//
+//	public OrganizationDAO getOrganizations()
+//	{
+//		return organizations;
+//	}
+//
+//	public void setOrganizations( OrganizationDAO organizations )
+//	{
+//		this.organizations = organizations;
+//	}
 }

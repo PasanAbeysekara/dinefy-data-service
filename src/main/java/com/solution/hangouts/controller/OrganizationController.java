@@ -28,7 +28,7 @@ public class OrganizationController extends HngoutAbstractController
 		List<OrganizationDAO> orgList = organizationRepository.findAll();
 
 		ResponseEntity<List<OrganizationDAO>> responseEntity = null;
-		if( orgList == null || orgList.isEmpty() )
+		if( orgList.isEmpty() )
 		{
 			responseEntity = ResponseEntity.notFound().headers( responseHeaders ).build();
 		}
