@@ -1,6 +1,7 @@
 package com.solution.hangouts.controller;
 
 import com.solution.hangouts.dao.PropertyDAO;
+import com.solution.hangouts.messaging.producer.PropertyQueueProducer;
 import com.solution.hangouts.repo.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,11 +20,14 @@ public class PropertyController
 	@Autowired
 	private PropertyRepository propertyRepository;
 
+	@Autowired
+	private PropertyQueueProducer queueProducer;
+
 	@GetMapping("/prop")
 	public ResponseEntity<List<PropertyDAO>> getProperty()
 	{
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set( "Access-Control-Allow-Origin","http://localhost:4200" );
+		responseHeaders.set( "Access-Control-Allow-Origin", "http://localhost:4200" );
 
 		return ResponseEntity.ok()
 				.headers( responseHeaders )
@@ -34,21 +38,37 @@ public class PropertyController
 	public ResponseEntity<PropertyDAO> saveProperty( @RequestBody PropertyDAO propertyDAO )
 	{
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set( "Access-Control-Allow-Origin","*" );
+		responseHeaders.set( "Access-Control-Allow-Origin", "*" );
 
-		return ResponseEntity.ok()
-				.headers( responseHeaders )
-				.body( propertyRepository.save( propertyDAO) );
+
+		PropertyDAO savedProp = null;
+		ResponseEntity<PropertyDAO> response;
+
+		try
+		{
+			savedProp = propertyRepository.save( propertyDAO );
+			queueProducer.produceMessage( propertyDAO );
+
+			response = ResponseEntity.ok().headers( responseHeaders ).body( savedProp );
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+			response = ResponseEntity.noContent().headers( responseHeaders ).build();
+		}
+
+
+		return response;
 	}
 
 	@GetMapping("/prop-name")
 	public ResponseEntity<List<String>> getPropertyNames()
 	{
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set( "Access-Control-Allow-Origin","http://localhost:4200" );
+		responseHeaders.set( "Access-Control-Allow-Origin", "http://localhost:4200" );
 
 		return ResponseEntity.ok()
 				.headers( responseHeaders )
-				.body( propertyRepository.findAll().stream().map( PropertyDAO::getName ).collect( Collectors.toList()) );
+				.body( propertyRepository.findAll().stream().map( PropertyDAO::getName ).collect( Collectors.toList() ) );
 	}
 }

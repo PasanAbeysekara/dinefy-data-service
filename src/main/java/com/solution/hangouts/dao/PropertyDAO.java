@@ -2,6 +2,7 @@ package com.solution.hangouts.dao;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.postgresql.geometric.PGpoint;
 import org.springframework.data.geo.Point;
@@ -18,6 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalTime;
 
 
@@ -25,7 +27,7 @@ import java.time.LocalTime;
 @Data
 @Entity
 @Table(name = "property")
-public class PropertyDAO
+public class PropertyDAO implements Serializable
 {
 	@Id
 	@SequenceGenerator(
@@ -73,6 +75,7 @@ public class PropertyDAO
 	@Column(name = "start_time")
 	private LocalTime start_time;
 
+	//@JsonIgnore
 	@Column(name = "end_time")
 	private LocalTime end_time;
 
