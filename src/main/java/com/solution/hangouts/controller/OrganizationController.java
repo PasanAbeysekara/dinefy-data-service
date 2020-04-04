@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-public class OrganizationController extends HngoutAbstractController
+public class OrganizationController extends HngoutAbstractController<OrganizationDAO>
 {
 	@Autowired
-	private	OrganizationRepository organizationRepository;
+	private OrganizationRepository organizationRepository;
 
-	@GetMapping("/org")
+	@GetMapping("/organizations")
 	public ResponseEntity<List<OrganizationDAO>> getProperty()
 	{
 		HttpHeaders responseHeaders = new HttpHeaders();

@@ -7,15 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-public class PropertyController
+public class PropertyController extends HngoutAbstractController<PropertyDAO>
 {
 	@Autowired
 	private PropertyRepository propertyRepository;
@@ -23,23 +25,49 @@ public class PropertyController
 	@Autowired
 	private PropertyQueueProducer queueProducer;
 
-	@GetMapping("/prop")
-	public ResponseEntity<List<PropertyDAO>> getProperty()
-	{
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set( "Access-Control-Allow-Origin", "http://localhost:4200" );
 
+	/**
+	 * Get all properties
+	 *
+	 * @return return All properties
+	 */
+	@GetMapping("/property")
+	public ResponseEntity<List<PropertyDAO>> getProperties()
+	{
 		return ResponseEntity.ok()
-				.headers( responseHeaders )
+				.headers( addCommonHeaders( new HttpHeaders() ) )
 				.body( propertyRepository.findAll() );
 	}
 
-	@PostMapping("/prop")
+
+	/**
+	 * Get Single property
+	 *
+	 * @param id property ID
+	 * @return The Property
+	 */
+	@GetMapping("/property/{id}")
+	public ResponseEntity<PropertyDAO> getProperty( @PathVariable("id") long id )
+	{
+		Optional<PropertyDAO> optionalPropertyDAO = propertyRepository.findById( id );
+
+		return optionalPropertyDAO.map( propertyDAO -> ResponseEntity.ok()
+				.headers( addCommonHeaders( new HttpHeaders() ) )
+				.body( propertyDAO ) ).orElseGet( this::buildNotFoundResponse );
+
+	}
+
+
+	/**
+	 * Save a property
+	 *
+	 * @param propertyDAO property
+	 * @return saved property
+	 */
+	@PostMapping("/property")
 	public ResponseEntity<PropertyDAO> saveProperty( @RequestBody PropertyDAO propertyDAO )
 	{
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set( "Access-Control-Allow-Origin", "*" );
-
 
 		PropertyDAO savedProp = null;
 		ResponseEntity<PropertyDAO> response;
@@ -57,18 +85,20 @@ public class PropertyController
 			response = ResponseEntity.noContent().headers( responseHeaders ).build();
 		}
 
-
 		return response;
 	}
 
+
+	/**
+	 * Get Property Names
+	 *
+	 * @return all property names
+	 */
 	@GetMapping("/prop-name")
 	public ResponseEntity<List<String>> getPropertyNames()
 	{
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set( "Access-Control-Allow-Origin", "http://localhost:4200" );
-
 		return ResponseEntity.ok()
-				.headers( responseHeaders )
+				.headers( addCommonHeaders( new HttpHeaders() ) )
 				.body( propertyRepository.findAll().stream().map( PropertyDAO::getName ).collect( Collectors.toList() ) );
 	}
 }

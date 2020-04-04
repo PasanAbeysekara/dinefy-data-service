@@ -1,7 +1,6 @@
 package com.solution.hangouts.messaging.consumer;
 
 import com.solution.hangouts.dao.PropertyDAO;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component

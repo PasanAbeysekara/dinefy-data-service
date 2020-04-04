@@ -24,10 +24,10 @@ public class OrganizationDAO
 	@SequenceGenerator(
 			name = "organization_gen",
 			sequenceName = "organization_org_id_seq",
-			initialValue = 0 ,
-			allocationSize= 1
+			initialValue = 0,
+			allocationSize = 1
 	)
-	@GeneratedValue( generator = "organization_org_id_seq" , strategy= GenerationType.IDENTITY )
+	@GeneratedValue(generator = "organization_org_id_seq", strategy = GenerationType.IDENTITY)
 	private long orgId;
 
 	@NotBlank
@@ -38,7 +38,7 @@ public class OrganizationDAO
 	private String name;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "organizations", fetch = FetchType.LAZY )
+	@OneToMany(mappedBy = "organizations", fetch = FetchType.LAZY)
 	private Set<PropertyDAO> properties;
 
 
