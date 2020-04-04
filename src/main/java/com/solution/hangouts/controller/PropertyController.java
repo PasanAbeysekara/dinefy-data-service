@@ -31,7 +31,7 @@ public class PropertyController extends HngoutAbstractController<PropertyDAO>
 	 *
 	 * @return return All properties
 	 */
-	@GetMapping("/property")
+	@GetMapping("/properties")
 	public ResponseEntity<List<PropertyDAO>> getProperties()
 	{
 		return ResponseEntity.ok()
@@ -46,7 +46,7 @@ public class PropertyController extends HngoutAbstractController<PropertyDAO>
 	 * @param id property ID
 	 * @return The Property
 	 */
-	@GetMapping("/property/{id}")
+	@GetMapping("/properties/{id}")
 	public ResponseEntity<PropertyDAO> getProperty( @PathVariable("id") long id )
 	{
 		Optional<PropertyDAO> optionalPropertyDAO = propertyRepository.findById( id );
@@ -64,7 +64,7 @@ public class PropertyController extends HngoutAbstractController<PropertyDAO>
 	 * @param propertyDAO property
 	 * @return saved property
 	 */
-	@PostMapping("/property")
+	@PostMapping("/properties")
 	public ResponseEntity<PropertyDAO> saveProperty( @RequestBody PropertyDAO propertyDAO )
 	{
 		HttpHeaders responseHeaders = new HttpHeaders();
@@ -94,7 +94,7 @@ public class PropertyController extends HngoutAbstractController<PropertyDAO>
 	 *
 	 * @return all property names
 	 */
-	@GetMapping("/prop-name")
+	@GetMapping("/properties/names")
 	public ResponseEntity<List<String>> getPropertyNames()
 	{
 		return ResponseEntity.ok()

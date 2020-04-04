@@ -3,7 +3,7 @@ package com.solution.hangouts.controller;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-public abstract class HngoutAbstractController<E>
+public abstract class HngoutAbstractController<DAO>
 {
 
 	protected HttpHeaders addCommonHeaders( HttpHeaders responseHeaders )
@@ -13,7 +13,7 @@ public abstract class HngoutAbstractController<E>
 		return responseHeaders;
 	}
 
-	protected ResponseEntity<E> buildNotFoundResponse()
+	protected ResponseEntity<DAO> buildNotFoundResponse()
 	{
 		return ResponseEntity.notFound().headers( new HttpHeaders() ).build();
 	}

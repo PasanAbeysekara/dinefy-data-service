@@ -1,5 +1,6 @@
 package com.solution.hangouts.dao.sys;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
@@ -21,10 +22,13 @@ public class Facilities
 
 	@NotBlank
 	@Size(max = 10)
+	@Column(name = "code")
 	private String code;
 
 	@Size(max = 100)
+	@Column(name = "name")
 	private String name;
 
+	@Column(name = "description")
 	private String description;
 }

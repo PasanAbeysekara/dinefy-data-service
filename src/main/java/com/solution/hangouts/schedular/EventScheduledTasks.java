@@ -19,10 +19,10 @@ public class EventScheduledTasks
 	@Autowired
 	private PropertyQueueProducer queueProducer;
 
-	@Scheduled(fixedRate = 5000)
+	@Scheduled(fixedRate = 60000)
 	public void reportCurrentTime()
 	{
-		queueProducer.produceTextMessage( "The time is now " + dateFormat.format( new Date() ) );
+		//queueProducer.produceTextMessage( "The time is now " + dateFormat.format( new Date() ) );
 		log.info( "The time is now {}", dateFormat.format( new Date() ) );
 	}
 
