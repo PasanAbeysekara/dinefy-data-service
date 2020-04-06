@@ -2,6 +2,7 @@ package com.solution.hangouts.dao;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.solution.hangouts.ano.GuestFacingName;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,10 +16,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
+@Data
 @Entity
 @GuestFacingName
 @Table(name = "organization")
-public class OrganizationDAO
+public class Organization
 {
 	@Id
 	@SequenceGenerator(
@@ -39,46 +41,6 @@ public class OrganizationDAO
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "organizations", fetch = FetchType.LAZY)
-	private Set<PropertyDAO> properties;
+	private Set<Property> properties;
 
-
-	public long getOrgId()
-	{
-		return orgId;
-	}
-
-	public void setOrgId( long orgId )
-	{
-		this.orgId = orgId;
-	}
-
-	public String getCode()
-	{
-		return code;
-	}
-
-	public void setCode( String code )
-	{
-		this.code = code;
-	}
-
-	public String getName()
-	{
-		return name;
-	}
-
-	public void setName( String name )
-	{
-		this.name = name;
-	}
-
-	public Set<PropertyDAO> getOwnProperties()
-	{
-		return properties;
-	}
-
-	public void setOwnProperties( Set<PropertyDAO> ownProperties )
-	{
-		this.properties = ownProperties;
-	}
 }

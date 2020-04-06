@@ -20,7 +20,7 @@ public class SysTagsController extends HngoutAbstractController<Tags>
 	private TagsRepository tagsRepository;
 
 	@GetMapping("/tags")
-	public ResponseEntity<List<Tags>> getFaEntities()
+	public ResponseEntity<List<Tags>> getTags()
 	{
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )

@@ -1,5 +1,7 @@
 package com.solution.hangouts.dao.sys;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
@@ -7,7 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-
+@Data
 @Entity
 @Table(name = "sys_tags")
 public class Tags

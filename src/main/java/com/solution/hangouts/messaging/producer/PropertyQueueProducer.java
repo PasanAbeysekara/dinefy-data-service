@@ -1,13 +1,13 @@
 package com.solution.hangouts.messaging.producer;
 
-import com.solution.hangouts.dao.PropertyDAO;
+import com.solution.hangouts.dao.Property;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PropertyQueueProducer implements QueueMessageProducer<PropertyDAO>
+public class PropertyQueueProducer implements QueueMessageProducer<Property>
 {
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
@@ -16,7 +16,7 @@ public class PropertyQueueProducer implements QueueMessageProducer<PropertyDAO>
 	private String queueName;
 
 	@Override
-	public void produceMessage( PropertyDAO message )
+	public void produceMessage( Property message )
 	{
 		System.out.println( "Queue Name detected  " + queueName );
 		rabbitTemplate.convertAndSend( queueName, message );

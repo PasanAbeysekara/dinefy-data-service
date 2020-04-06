@@ -1,0 +1,50 @@
+package com.solution.hangouts.dao;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.solution.hangouts.dao.key.PropFacilityID;
+import com.solution.hangouts.dao.sys.Facilities;
+import lombok.Data;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+@Data
+@Entity
+@Table(name = "prop_facilities")
+public class PropFacilities
+{
+	@EmbeddedId
+	private PropFacilityID propFacilityID;
+
+	@Size(max = 100)
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "description")
+	private String description;
+
+	@JsonManagedReference
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // No serializer found for class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor
+	@ManyToOne(fetch = FetchType.LAZY)
+	@MapsId("facility_id")
+	@JoinColumn(name = "facility_id")
+	private Facilities sysFacility;
+
+
+//	@JsonBackReference
+//	@JsonIgnore
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@MapsId("propId")
+//	@JoinColumn(name = "prop_id")
+//	private Property properties;
+}

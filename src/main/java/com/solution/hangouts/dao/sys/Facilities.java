@@ -1,13 +1,22 @@
 package com.solution.hangouts.dao.sys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.solution.hangouts.dao.PropFacilities;
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "sys_facilities")
 public class Facilities
@@ -31,4 +40,10 @@ public class Facilities
 
 	@Column(name = "description")
 	private String description;
+
+	@JsonBackReference // Could not write JSON: Infinite recursion (StackOverflowError)
+	@OneToMany(mappedBy = "sysFacility", fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	private Set<PropFacilities> propFacilities;
+
 }

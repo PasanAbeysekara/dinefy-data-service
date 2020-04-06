@@ -1,6 +1,6 @@
 package com.solution.hangouts.controller;
 
-import com.solution.hangouts.dao.OrganizationDAO;
+import com.solution.hangouts.dao.Organization;
 import com.solution.hangouts.repo.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -12,22 +12,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-public class OrganizationController extends HngoutAbstractController<OrganizationDAO>
+public class OrganizationController extends HngoutAbstractController<Organization>
 {
 	@Autowired
 	private OrganizationRepository organizationRepository;
 
 	@GetMapping("/organizations")
-	public ResponseEntity<List<OrganizationDAO>> getProperty()
+	public ResponseEntity<List<Organization>> getProperty()
 	{
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set( "method-org", "test" );
 
 		addCommonHeaders( responseHeaders );
 
-		List<OrganizationDAO> orgList = organizationRepository.findAll();
+		List<Organization> orgList = organizationRepository.findAll();
 
-		ResponseEntity<List<OrganizationDAO>> responseEntity = null;
+		ResponseEntity<List<Organization>> responseEntity = null;
 		if( orgList.isEmpty() )
 		{
 			responseEntity = ResponseEntity.notFound().headers( responseHeaders ).build();
@@ -44,11 +44,8 @@ public class OrganizationController extends HngoutAbstractController<Organizatio
 	@GetMapping("/org-name")
 	public ResponseEntity<List<String>> getPropertyNames()
 	{
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set( "Access-Control-Allow-Origin", "http://localhost:4200" );
-
 		return ResponseEntity.ok()
-				.headers( responseHeaders )
-				.body( organizationRepository.findAll().stream().map( OrganizationDAO::getName ).collect( Collectors.toList() ) );
+				.headers( addCommonHeaders( new HttpHeaders() ) )
+				.body( organizationRepository.findAll().stream().map( Organization::getName ).collect( Collectors.toList() ) );
 	}
 }

@@ -1,6 +1,6 @@
 package com.solution.hangouts.dao.key;
 
-import com.solution.hangouts.dao.PropertyDAO;
+import com.solution.hangouts.dao.Property;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -40,7 +40,7 @@ public class OrgPropertyDAO
 			name = "org_properties",
 			joinColumns = @JoinColumn(name = "org_id"),
 			inverseJoinColumns = @JoinColumn(name = "prop_id"))
-	Set<PropertyDAO> ownProperties;
+	Set<Property> ownProperties;
 
 
 	public long getOrgId()

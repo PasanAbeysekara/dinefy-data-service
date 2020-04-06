@@ -2,6 +2,7 @@ package com.solution.hangouts.dao;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ import java.time.LocalTime;
 @Data
 @Entity
 @Table(name = "property")
-public class PropertyDAO implements Serializable
+public class Property implements Serializable
 {
 	@Id
 	@SequenceGenerator(
@@ -76,8 +77,13 @@ public class PropertyDAO implements Serializable
 	private LocalTime end_time;
 
 	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "org_id")
-	private OrganizationDAO organizations;
+	private Organization organizations;
+
+	//	@JsonManagedReference
+	//	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
+	//	private Set<PropFacilities> facilities;
 
 }
