@@ -2,8 +2,12 @@ package com.solution.hangouts.dao;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,17 +17,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.Set;
 
 
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true) //Lombok HashCode issues , Need to explicitly add include with onlyExplicitlyIncluded = true
 @Entity
 @Table(name = "property")
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "propId")
 public class Property implements Serializable
 {
 	@Id
@@ -33,11 +43,13 @@ public class Property implements Serializable
 			initialValue = 0
 	)
 	@GeneratedValue(generator = "property_prop_id_seq", strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include //Lombok HashCode issues , Need to explicitly add include with onlyExplicitlyIncluded = true
 	private long propId;
 
 	@NotBlank
 	@Size(max = 10, message = "Property code cannot exceed 10 characters")
 	@Column(name = "code")
+	@EqualsAndHashCode.Include //Lombok HashCode issues , Need to explicitly add include with onlyExplicitlyIncluded = true
 	private String code;
 
 	@Size(max = 100)
@@ -76,14 +88,13 @@ public class Property implements Serializable
 	@Column(name = "end_time")
 	private LocalTime end_time;
 
-	@JsonBackReference
-	@JsonIgnore
+	//@JsonBackReference
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "org_id")
 	private Organization organizations;
 
-	//	@JsonManagedReference
-	//	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
-	//	private Set<PropFacilities> facilities;
+	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
+	private Set<PropFacilities> facilities;
 
 }

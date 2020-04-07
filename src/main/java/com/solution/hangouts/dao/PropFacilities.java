@@ -1,12 +1,15 @@
 package com.solution.hangouts.dao;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.hangouts.dao.key.PropFacilityID;
 import com.solution.hangouts.dao.sys.Facilities;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -21,9 +24,14 @@ import javax.validation.constraints.Size;
 @Data
 @Entity
 @Table(name = "prop_facilities")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "propFacilityID")
 public class PropFacilities
 {
 	@EmbeddedId
+	@EqualsAndHashCode.Include
 	private PropFacilityID propFacilityID;
 
 	@Size(max = 100)
@@ -40,11 +48,8 @@ public class PropFacilities
 	@JoinColumn(name = "facility_id")
 	private Facilities sysFacility;
 
-
-//	@JsonBackReference
-//	@JsonIgnore
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@MapsId("propId")
-//	@JoinColumn(name = "prop_id")
-//	private Property properties;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@MapsId("propId")
+	@JoinColumn(name = "prop_id")
+	private Property properties;
 }
