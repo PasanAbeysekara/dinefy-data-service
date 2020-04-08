@@ -97,4 +97,7 @@ public class Property implements Serializable
 	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
 	private Set<PropFacilities> facilities;
 
+	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
+	private Set<PropTags> propTags;
+
 }
