@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.hangouts.ano.GuestFacingName;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,28 +22,33 @@ import java.util.Set;
 @Data
 @Entity
 @GuestFacingName
-@Table(name = "organization")
+@Table(name = "contracts")
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "orgId")
-public class Organization implements Serializable
+		property = "contractId")
+public class Contracts implements Serializable
 {
 	@Id
 	@SequenceGenerator(
-			name = "organization_gen",
-			sequenceName = "organization_org_id_seq",
+			name = "contracts_gen",
+			sequenceName = "contracts_contract_id_seq",
 			initialValue = 0,
 			allocationSize = 1
 	)
-	@GeneratedValue(generator = "organization_org_id_seq", strategy = GenerationType.IDENTITY)
-	private long orgId;
+	@GeneratedValue(generator = "contracts_contract_id_seq", strategy = GenerationType.IDENTITY)
+	private long contractId;
+
 
 	@NotBlank
-	@Size(max = 10)
-	private String code;
+	@Column(name = "version")
+	private Short version;
 
-	@Size(max = 100)
-	private String name;
+	@Column(name = "timeslot")
+	private Short timeSlot;
+
+	@Size(max = 50)
+	@Column(name = "version_txt")
+	private String versionTxt;
 
 	//@JsonManagedReference
 	@OneToMany(mappedBy = "organizations", fetch = FetchType.LAZY)
