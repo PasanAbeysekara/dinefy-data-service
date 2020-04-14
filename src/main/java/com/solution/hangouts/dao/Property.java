@@ -91,7 +91,6 @@ public class Property implements Serializable
 	@Column(name = "end_time")
 	private LocalTime end_time;
 
-	//@JsonBackReference
 	@ToString.Exclude
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -110,6 +109,7 @@ public class Property implements Serializable
 	@JoinColumn(name = "current_cont_id", insertable = false, updatable = false)
 	private Contract currentContract;
 
+	//@JsonBackReference
 	@OneToMany(mappedBy = "contractProp", fetch = FetchType.LAZY)
 	private Set<Contract> allContracts;
 

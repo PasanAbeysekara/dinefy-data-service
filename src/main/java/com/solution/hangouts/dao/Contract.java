@@ -69,7 +69,7 @@ public class Contract implements Serializable
 	@OneToOne(mappedBy = "currentContract", fetch = FetchType.LAZY)
 	private Property property;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prop_id", insertable = false, updatable = false)
 	private Property contractProp;
 
