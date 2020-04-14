@@ -1,12 +1,8 @@
 package com.solution.hangouts.repo;
 
-import com.solution.hangouts.dao.Contracts;
-import com.solution.hangouts.dao.Organization;
+import com.solution.hangouts.dao.Contract;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
-public interface ContractsRepository extends JpaRepository<Contracts, Long>
+public interface ContractsRepository extends JpaRepository<Contract, Long>
 {
 }

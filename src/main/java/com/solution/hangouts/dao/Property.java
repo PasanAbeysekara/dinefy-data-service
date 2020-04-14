@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -27,6 +29,7 @@ import java.util.Set;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true) //Lombok HashCode issues , Need to explicitly add include with onlyExplicitlyIncluded = true
+@ToString
 @Entity
 @Table(name = "property")
 @JsonIdentityInfo(
@@ -87,6 +90,7 @@ public class Property implements Serializable
 	private LocalTime end_time;
 
 	//@JsonBackReference
+	@ToString.Exclude
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "org_id")
@@ -97,5 +101,14 @@ public class Property implements Serializable
 
 	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
 	private Set<PropTags> propTags;
+
+
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "current_cont_id" , insertable=false, updatable=false )
+	private Contract currentContract;
+
+	@OneToMany(mappedBy = "contractProp",fetch = FetchType.LAZY)
+	private Set<Contract> allContracts;
 
 }
