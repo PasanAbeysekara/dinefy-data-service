@@ -26,7 +26,9 @@ import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Set;
 
-
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true) //Lombok HashCode issues , Need to explicitly add include with onlyExplicitlyIncluded = true
 @ToString
@@ -105,10 +107,10 @@ public class Property implements Serializable
 
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "current_cont_id" , insertable=false, updatable=false )
+	@JoinColumn(name = "current_cont_id", insertable = false, updatable = false)
 	private Contract currentContract;
 
-	@OneToMany(mappedBy = "contractProp",fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "contractProp", fetch = FetchType.LAZY)
 	private Set<Contract> allContracts;
 
 }

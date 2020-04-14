@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 @RestController
 public class SysFacilityController extends HngoutAbstractController<Facilities>
 {

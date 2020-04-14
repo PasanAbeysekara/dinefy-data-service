@@ -1,7 +1,6 @@
 package com.solution.hangouts.dao.sys;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.solution.hangouts.dao.PropFacilities;
 import com.solution.hangouts.dao.PropTags;
 import lombok.Data;
 
@@ -17,6 +16,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 @Data
 @Entity
 @Table(name = "sys_tags")

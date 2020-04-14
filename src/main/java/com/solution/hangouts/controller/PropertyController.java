@@ -2,7 +2,6 @@ package com.solution.hangouts.controller;
 
 import com.solution.hangouts.dao.PropFacilities;
 import com.solution.hangouts.dao.Property;
-import com.solution.hangouts.dao.key.PropFacilityID;
 import com.solution.hangouts.messaging.producer.PropertyQueueProducer;
 import com.solution.hangouts.repo.PropFacilitiesRepository;
 import com.solution.hangouts.repo.PropertyRepository;
@@ -19,6 +18,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 @RestController
 public class PropertyController extends HngoutAbstractController<Property>
 {
@@ -50,7 +52,7 @@ public class PropertyController extends HngoutAbstractController<Property>
 	 * @return return All properties
 	 */
 	@GetMapping("/properties/{id}/facilities")
-	public ResponseEntity<List<PropFacilities>> getPropFacilities(  @PathVariable("id") long id )
+	public ResponseEntity<List<PropFacilities>> getPropFacilities( @PathVariable("id") long id )
 	{
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )

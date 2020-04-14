@@ -1,5 +1,8 @@
 package com.solution.hangouts.dao;
 
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 public class SubLocationDAO
 {
 	private long locationId;

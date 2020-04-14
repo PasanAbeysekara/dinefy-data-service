@@ -19,6 +19,9 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 @Data
 @Entity
 @Table(name = "prop_tags")

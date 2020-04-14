@@ -2,6 +2,9 @@ package com.solution.hangouts.dao;
 
 import java.util.Set;
 
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 public class LocationDAO
 {
 	private long locationId;

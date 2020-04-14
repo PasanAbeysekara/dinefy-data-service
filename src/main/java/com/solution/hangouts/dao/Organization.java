@@ -18,6 +18,9 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 @Data
 @Entity
 @GuestFacingName

@@ -6,7 +6,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-//@RepositoryRestResource(collectionResourceRel = "organizations", path = "organizations")
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 public interface OrganizationRepository extends JpaRepository<Organization, Long>
 {
 	List<Organization> findByCode( @Param("code") String code );

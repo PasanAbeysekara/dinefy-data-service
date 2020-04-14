@@ -1,9 +1,7 @@
 package com.solution.hangouts.controller.sys;
 
 import com.solution.hangouts.controller.HngoutAbstractController;
-import com.solution.hangouts.dao.sys.Facilities;
 import com.solution.hangouts.dao.sys.Tags;
-import com.solution.hangouts.repo.sys.FacilitiesRepository;
 import com.solution.hangouts.repo.sys.TagsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 @RestController
 public class SysTagsController extends HngoutAbstractController<Tags>
 {

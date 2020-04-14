@@ -3,6 +3,9 @@ package com.solution.hangouts.controller;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 public abstract class HngoutAbstractController<DAO>
 {
 

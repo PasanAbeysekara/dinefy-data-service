@@ -16,6 +16,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 @Data
 @Entity
 @Table(name = "sys_facilities")

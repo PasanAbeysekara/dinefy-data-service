@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
-
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 @RestController
 public class ContractController extends HngoutAbstractController<Contract>
 {

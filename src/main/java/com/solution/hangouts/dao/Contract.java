@@ -15,16 +15,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Set;
 
+/**
+ * @author Tharinda Wickramaarachchi
+ */
 @Data
 @Entity
 @GuestFacingName
@@ -70,7 +70,7 @@ public class Contract implements Serializable
 	private Property property;
 
 	@ManyToOne
-	@JoinColumn(name = "prop_id" , insertable=false, updatable=false )
+	@JoinColumn(name = "prop_id", insertable = false, updatable = false)
 	private Property contractProp;
 
 }
