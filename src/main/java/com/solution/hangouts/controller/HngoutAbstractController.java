@@ -1,5 +1,6 @@
 package com.solution.hangouts.controller;
 
+import com.solution.hangouts.util.HATEOASProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
  */
 public abstract class HngoutAbstractController<DAO>
 {
+	protected HATEOASProvider hateoasProvider;
 
 	protected HttpHeaders addCommonHeaders( HttpHeaders responseHeaders )
 	{

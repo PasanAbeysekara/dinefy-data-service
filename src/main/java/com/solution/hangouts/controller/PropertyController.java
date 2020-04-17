@@ -1,11 +1,11 @@
 package com.solution.hangouts.controller;
 
-import com.solution.hangouts.controller.sys.SysFacilityController;
 import com.solution.hangouts.dao.PropFacilities;
 import com.solution.hangouts.dao.Property;
 import com.solution.hangouts.messaging.producer.PropertyQueueProducer;
 import com.solution.hangouts.repo.PropFacilitiesRepository;
 import com.solution.hangouts.repo.PropertyRepository;
+import com.solution.hangouts.util.HATEOASProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
@@ -74,22 +74,29 @@ public class PropertyController extends HngoutAbstractController<Property>
 	@GetMapping("/properties/{id}")
 	public ResponseEntity<Property> getProperty( @PathVariable("id") long id )
 	{
-		Optional<Property> optionalPropertyDAO = propertyRepository.findById( id );
+		Optional<Property> optionalProperty = propertyRepository.findById( id );
 
 		ResponseEntity<Property> response;
 
-		if( optionalPropertyDAO.isPresent() )
+		if( optionalProperty.isPresent() )
 		{
-			Link selfRel = linkTo( methodOn( PropertyController.class ).getProperty( id ) ).withSelfRel();
+			Link selfRel = HATEOASProvider.propertySelfLinkProvider( id );
 
-			Property property = optionalPropertyDAO.get();
+			Property property = optionalProperty.get();
 			property.add( selfRel );
+
+			if( property.getOrganizations() != null )
+			{
+				Link orgSelfLink = linkTo( methodOn( OrganizationController.class ).getOrganization( property.getOrganizations().getOrgId() ) ).withRel( "org" );
+				property.add( orgSelfLink );
+			}
 
 			for( PropFacilities facility : property.getFacilities() )
 			{
 				int sysFacilityID = facility.getSysFacility().getFacility_id();
-				Link selfRelSysFacility = linkTo( methodOn( SysFacilityController.class ).getFacility( sysFacilityID ) ).withSelfRel();//.withRel("sysFacility");
-				Link selfRelPropFacility = linkTo( methodOn( PropertyController.class ).getPropFacilities( facility.getPropFacilityID().getPropId() ) ).withSelfRel();//.withRel("sysFacility");
+
+				Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider( sysFacilityID );
+				Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );
 
 				facility.getSysFacility().add( selfRelSysFacility );
 				facility.add( selfRelPropFacility );

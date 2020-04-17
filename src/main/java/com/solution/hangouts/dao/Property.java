@@ -1,6 +1,7 @@
 package com.solution.hangouts.dao;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -91,6 +92,7 @@ public class Property extends RepresentationModel<Property>
 	@Column(name = "end_time")
 	private LocalTime end_time;
 
+	@JsonBackReference
 	@ToString.Exclude
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
