@@ -1,11 +1,13 @@
 package com.solution.hangouts.controller;
 
+import com.solution.hangouts.controller.sys.SysFacilityController;
 import com.solution.hangouts.dao.PropFacilities;
 import com.solution.hangouts.dao.Property;
 import com.solution.hangouts.messaging.producer.PropertyQueueProducer;
 import com.solution.hangouts.repo.PropFacilitiesRepository;
 import com.solution.hangouts.repo.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -71,9 +76,34 @@ public class PropertyController extends HngoutAbstractController<Property>
 	{
 		Optional<Property> optionalPropertyDAO = propertyRepository.findById( id );
 
-		return optionalPropertyDAO.map( propertyDAO -> ResponseEntity.ok()
-				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( propertyDAO ) ).orElseGet( this::buildNotFoundResponse );
+		ResponseEntity<Property> response;
+
+		if( optionalPropertyDAO.isPresent() )
+		{
+			Link selfRel = linkTo( methodOn( PropertyController.class ).getProperty( id ) ).withSelfRel();
+
+			Property property = optionalPropertyDAO.get();
+			property.add( selfRel );
+
+			for( PropFacilities facility : property.getFacilities() )
+			{
+				int sysFacilityID = facility.getSysFacility().getFacility_id();
+				Link selfRelSysFacility = linkTo( methodOn( SysFacilityController.class ).getFacility( sysFacilityID ) ).withSelfRel();//.withRel("sysFacility");
+				Link selfRelPropFacility = linkTo( methodOn( PropertyController.class ).getPropFacilities( facility.getPropFacilityID().getPropId() ) ).withSelfRel();//.withRel("sysFacility");
+
+				facility.getSysFacility().add( selfRelSysFacility );
+				facility.add( selfRelPropFacility );
+			}
+
+			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( property );
+		}
+		else
+		{
+			response = buildNotFoundResponse();
+		}
+
+
+		return response;
 
 	}
 

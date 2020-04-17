@@ -8,6 +8,7 @@ import com.solution.hangouts.dao.key.PropFacilityID;
 import com.solution.hangouts.dao.sys.Facilities;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -25,11 +26,11 @@ import javax.validation.constraints.Size;
 @Data
 @Entity
 @Table(name = "prop_facilities")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
 		property = "propFacilityID")
-public class PropFacilities
+public class PropFacilities extends RepresentationModel<PropFacilities>
 {
 	@EmbeddedId
 	@EqualsAndHashCode.Include

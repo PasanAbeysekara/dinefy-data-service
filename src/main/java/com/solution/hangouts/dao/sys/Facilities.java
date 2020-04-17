@@ -3,6 +3,7 @@ package com.solution.hangouts.dao.sys;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.solution.hangouts.dao.PropFacilities;
 import lombok.Data;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +23,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "sys_facilities")
-public class Facilities
+public class Facilities extends RepresentationModel<Facilities>
 {
 	@Id
 	@SequenceGenerator(
