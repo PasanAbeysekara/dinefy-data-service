@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -108,11 +109,13 @@ public class Property extends RepresentationModel<Property>
 
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "current_cont_id", insertable = false, updatable = false)
+	@JoinColumns({
+			@JoinColumn(name = "current_cont_id", referencedColumnName = "contract_id", insertable = false, updatable = false),
+			@JoinColumn(name = "current_cont_version", referencedColumnName = "version", insertable = false, updatable = false)
+	})
 	private Contract currentContract;
 
-	//@JsonBackReference
-	@OneToMany(mappedBy = "contractProp", fetch = FetchType.LAZY)
-	private Set<Contract> allContracts;
+	//@OneToMany(mappedBy = "contractProp", fetch = FetchType.LAZY)
+	//private Set<Contract> allContracts;
 
 }
