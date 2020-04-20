@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.solution.hangouts.dao.key.PropTagID;
-import com.solution.hangouts.dao.sys.Tags;
+import com.solution.hangouts.dao.key.PropAvailabilityUnitKey;
+import com.solution.hangouts.dao.sys.AvailabilityUnit;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.RepresentationModel;
@@ -25,16 +25,16 @@ import javax.validation.constraints.Size;
  */
 @Data
 @Entity
-@Table(name = "prop_tags")
+@Table(name = "prop_availability_unit")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "propTagID")
-public class PropTags extends RepresentationModel<PropTags>
+		property = "propAvailabilityUnitId")
+public class PropAvailabilityUnit extends RepresentationModel<PropAvailabilityUnit>
 {
 	@EmbeddedId
 	@EqualsAndHashCode.Include
-	private PropTagID propTagID;
+	private PropAvailabilityUnitKey propAvailabilityUnitId;
 
 	@Size(max = 100)
 	@Column(name = "name")
@@ -46,9 +46,9 @@ public class PropTags extends RepresentationModel<PropTags>
 	@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // No serializer found for class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor
 	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("tag_id")
-	@JoinColumn(name = "tag_id")
-	private Tags sysTags;
+	@MapsId("unit_id")
+	@JoinColumn(name = "unit_id")
+	private AvailabilityUnit sysAvailabilityUnit;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("propId")

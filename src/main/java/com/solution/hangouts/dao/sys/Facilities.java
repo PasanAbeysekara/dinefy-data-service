@@ -3,6 +3,7 @@ package com.solution.hangouts.dao.sys;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.solution.hangouts.dao.PropFacilities;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
@@ -21,6 +22,7 @@ import java.util.Set;
  * @author Tharinda Wickramaarachchi
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "sys_facilities")
 public class Facilities extends RepresentationModel<Facilities>

@@ -1,6 +1,8 @@
 package com.solution.hangouts.controller;
 
+import com.solution.hangouts.dao.PropAvailabilityUnit;
 import com.solution.hangouts.dao.PropFacilities;
+import com.solution.hangouts.dao.PropTags;
 import com.solution.hangouts.dao.Property;
 import com.solution.hangouts.messaging.producer.PropertyQueueProducer;
 import com.solution.hangouts.repo.PropFacilitiesRepository;
@@ -80,27 +82,8 @@ public class PropertyController extends HngoutAbstractController<Property>
 
 		if( optionalProperty.isPresent() )
 		{
-			Link selfRel = HATEOASProvider.propertySelfLinkProvider( id );
-
 			Property property = optionalProperty.get();
-			property.add( selfRel );
-
-			if( property.getOrganizations() != null )
-			{
-				Link orgSelfLink = linkTo( methodOn( OrganizationController.class ).getOrganization( property.getOrganizations().getOrgId() ) ).withRel( "org" );
-				property.add( orgSelfLink );
-			}
-
-			for( PropFacilities facility : property.getFacilities() )
-			{
-				int sysFacilityID = facility.getSysFacility().getFacility_id();
-
-				Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider( sysFacilityID );
-				Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );
-
-				facility.getSysFacility().add( selfRelSysFacility );
-				facility.add( selfRelPropFacility );
-			}
+			linkPropertyEntities( property );
 
 			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( property );
 		}
@@ -112,6 +95,52 @@ public class PropertyController extends HngoutAbstractController<Property>
 
 		return response;
 
+	}
+
+	/**
+	 * Add HATEOAS links for entities which are related to the property
+	 *
+	 * @param property property
+	 */
+	private void linkPropertyEntities( Property property )
+	{
+		Link selfRel = HATEOASProvider.propertySelfLinkProvider( property.getPropId() );
+		property.add( selfRel );
+
+		if( property.getOrganizations() != null )
+		{
+			Link orgSelfLink = linkTo( methodOn( OrganizationController.class ).getOrganization( property.getOrganizations().getOrgId() ) ).withRel( "org" );
+			property.add( orgSelfLink );
+		}
+
+		for( PropFacilities facility : property.getFacilities() )
+		{
+			int sysFacilityID = facility.getSysFacility().getFacility_id();
+
+			Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider( sysFacilityID );
+			Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );
+
+			facility.getSysFacility().add( selfRelSysFacility );
+			facility.add( selfRelPropFacility );
+		}
+
+		for( PropTags tags : property.getPropTags() )
+		{
+			Link selfRelSysTags = HATEOASProvider.sysTagsSelfLinkProvider( tags.getSysTags().getTag_id() );
+			//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( tags.getPropTagID().getPropId() );
+
+			tags.getSysTags().add( selfRelSysTags );
+			//tags.add( selfRelPropFacility );
+		}
+
+		for( PropAvailabilityUnit availabilityUnit : property.getAvailabilityUnits() )
+		{
+			Link selfRelSysAvailabilityUnit = HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnit.getSysAvailabilityUnit().getUnit_id() );
+			//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );
+
+			availabilityUnit.getSysAvailabilityUnit().add( selfRelSysAvailabilityUnit );
+			//facility.add( selfRelPropFacility );
+		}
 	}
 
 

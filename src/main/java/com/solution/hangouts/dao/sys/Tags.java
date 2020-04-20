@@ -3,6 +3,8 @@ package com.solution.hangouts.dao.sys;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.solution.hangouts.dao.PropTags;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,9 +22,10 @@ import java.util.Set;
  * @author Tharinda Wickramaarachchi
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "sys_tags")
-public class Tags
+public class Tags extends RepresentationModel<Tags>
 {
 	@Id
 	@SequenceGenerator(
