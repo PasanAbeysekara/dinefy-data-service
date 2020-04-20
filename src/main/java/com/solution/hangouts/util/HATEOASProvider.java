@@ -2,6 +2,7 @@ package com.solution.hangouts.util;
 
 import com.solution.hangouts.controller.OrganizationController;
 import com.solution.hangouts.controller.PropertyController;
+import com.solution.hangouts.controller.sys.SysAvailabilityUnitController;
 import com.solution.hangouts.controller.sys.SysFacilityController;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,11 @@ public class HATEOASProvider
 	public static Link sysFacilitySelfLinkProvider( int id )
 	{
 		return linkTo( methodOn( SysFacilityController.class ).getFacility( id ) ).withSelfRel();//.withRel("sysFacility");
+	}
+
+	public static Link sysAvailabilityUnitSelfLinkProvider( int id )
+	{
+		return linkTo( methodOn( SysAvailabilityUnitController.class ).getAvailabilityUnit( id ) ).withSelfRel();
 	}
 
 	public static Link propFacilitySelfLinkProvider( long id )

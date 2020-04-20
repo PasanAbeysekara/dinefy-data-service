@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.hangouts.ano.GuestFacingName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Entity;
@@ -22,6 +23,7 @@ import java.util.Set;
  * @author Tharinda Wickramaarachchi
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @GuestFacingName
 @Table(name = "organization")
