@@ -43,6 +43,9 @@ public class PropAvailabilityUnit extends RepresentationModel<PropAvailabilityUn
 	@Column(name = "description")
 	private String description;
 
+	@Column(name = "capacity")
+	private Short capacity;
+
 	@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // No serializer found for class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor
 	@ManyToOne(fetch = FetchType.LAZY)

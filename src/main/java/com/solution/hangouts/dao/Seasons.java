@@ -1,6 +1,7 @@
 package com.solution.hangouts.dao;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.solution.hangouts.ano.GuestFacingName;
 import com.solution.hangouts.dao.key.SeasonID;
 import lombok.Data;
@@ -14,10 +15,12 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.util.Set;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -62,6 +65,9 @@ public class Seasons
 	})
 	private Contract contract;
 
+	@JsonManagedReference
+	@OneToMany(mappedBy = "seasons", fetch = FetchType.LAZY)
+	private Set<ContractAvailability> availabilities;
 
 }
 
