@@ -1,6 +1,7 @@
 package com.solution.hangouts.controller;
 
 import com.solution.hangouts.dao.Contract;
+import com.solution.hangouts.dao.key.ContractID;
 import com.solution.hangouts.repo.ContractsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -44,13 +45,16 @@ public class ContractController extends HngoutAbstractController<Contract>
 	/**
 	 * Get Single property
 	 *
-	 * @param id property ID
+	 * @param identification property ID
 	 * @return The Property
 	 */
-	@GetMapping("/contracts/{id}")
-	public ResponseEntity<Contract> getProperty( @PathVariable("id") long id )
+	@GetMapping("/contracts/{id~version}")
+	public ResponseEntity<Contract> getProperty( @PathVariable("id~version") String identification )
 	{
-		Optional<Contract> contractOptional = contractsRepository.findById( id );
+
+		String[] ids = identification.split( "~" );
+
+		Optional<Contract> contractOptional = contractsRepository.findById( new ContractID( Long.parseLong( ids[0] ), Short.parseShort( ids[1] ) ) );
 
 		return contractOptional.map( propertyDAO -> ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )

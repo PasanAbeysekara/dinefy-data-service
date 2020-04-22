@@ -1,5 +1,6 @@
 package com.solution.hangouts.dao;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.solution.hangouts.ano.GuestFacingName;
 import com.solution.hangouts.dao.key.ContractID;
@@ -47,7 +48,7 @@ public class Contract implements Serializable
 	@EqualsAndHashCode.Include
 	private String versionTxt;
 
-	//@JsonManagedReference
+	@JsonBackReference
 	@ToString.Exclude
 	@OneToOne(mappedBy = "currentContract", fetch = FetchType.LAZY)
 	private Property property;

@@ -103,13 +103,6 @@ public class Property extends RepresentationModel<Property>
 	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
 	private Set<PropAvailabilityUnit> availabilityUnits;
 
-	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
-	private Set<PropFacilities> facilities;
-
-	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
-	private Set<PropTags> propTags;
-
-
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumns({
@@ -117,6 +110,12 @@ public class Property extends RepresentationModel<Property>
 			@JoinColumn(name = "current_cont_version", referencedColumnName = "version", insertable = false, updatable = false)
 	})
 	private Contract currentContract;
+
+	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
+	private Set<PropFacilities> facilities;
+
+	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
+	private Set<PropTags> propTags;
 
 	//@OneToMany(mappedBy = "contractProp", fetch = FetchType.LAZY)
 	//private Set<Contract> allContracts;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.solution.hangouts.ano.GuestFacingName;
 import com.solution.hangouts.dao.key.SeasonID;
+import com.solution.hangouts.dao.sys.WeekDefinition;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -66,8 +68,19 @@ public class Seasons
 	private Contract contract;
 
 	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "contract_availability",
+			joinColumns = {
+					@JoinColumn(name = "contract_id", referencedColumnName = "contract_id", insertable = false, updatable = false),
+					@JoinColumn(name = "contract_version", referencedColumnName = "contract_version", insertable = false, updatable = false),
+					@JoinColumn(name = "season_id", referencedColumnName = "season_id", insertable = false, updatable = false)},
+			inverseJoinColumns = @JoinColumn(name = "week_def_id")
+	)
+	private Set<WeekDefinition> weekDefinitions;
+
+	@JsonManagedReference
 	@OneToMany(mappedBy = "seasons", fetch = FetchType.LAZY)
 	private Set<ContractAvailability> availabilities;
-
 }
 

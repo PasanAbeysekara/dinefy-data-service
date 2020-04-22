@@ -37,6 +37,12 @@ public class ContractAvailability extends RepresentationModel<PropFacilities>
 	@Column(name = "count")
 	private Short count;
 
+	//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	//	@ManyToOne(fetch = FetchType.LAZY)
+	//	@MapsId("weekDefId")
+	//	@JoinColumn(name = "week_def_id")
+	//	private WeekDefinition weekDefinition;
+
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumns({
