@@ -100,9 +100,11 @@ public class Property extends RepresentationModel<Property>
 	@JoinColumn(name = "org_id")
 	private Organization organizations;
 
+	@ToString.Exclude
 	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
 	private Set<PropAvailabilityUnit> availabilityUnits;
 
+	@ToString.Exclude
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumns({
@@ -111,11 +113,20 @@ public class Property extends RepresentationModel<Property>
 	})
 	private Contract currentContract;
 
+	@ToString.Exclude
 	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
 	private Set<PropFacilities> facilities;
 
+	@ToString.Exclude
 	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
 	private Set<PropTags> propTags;
+
+	@ToString.Exclude
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "contact_id")
+	private Contacts contacts;
+
 
 	//@OneToMany(mappedBy = "contractProp", fetch = FetchType.LAZY)
 	//private Set<Contract> allContracts;
