@@ -4,7 +4,10 @@ package com.solution.hangouts.dao;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.solution.hangouts.dao.sys.PaymentOptions;
+import com.solution.hangouts.dao.sys.PropertySpeciality;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -18,6 +21,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -49,6 +53,7 @@ public class Property extends RepresentationModel<Property>
 	)
 	@GeneratedValue(generator = "property_prop_id_seq", strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include //Lombok HashCode issues , Need to explicitly add include with onlyExplicitlyIncluded = true
+	@Column(name = "prop_id")
 	private long propId;
 
 	@NotBlank
@@ -127,6 +132,23 @@ public class Property extends RepresentationModel<Property>
 	@JoinColumn(name = "contact_id")
 	private Contacts contacts;
 
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "prop_speciality",
+			joinColumns = @JoinColumn(name = "prop_id", referencedColumnName = "prop_id", insertable = false, updatable = false),
+			inverseJoinColumns = @JoinColumn(name = "speciality_id", referencedColumnName = "speciality_id")
+	)
+	private Set<PropertySpeciality> propertySpecialities;
+
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "prop_payment_options",
+			joinColumns = @JoinColumn(name = "prop_id", referencedColumnName = "prop_id", insertable = false, updatable = false),
+			inverseJoinColumns = @JoinColumn(name = "option_id", referencedColumnName = "option_id")
+	)
+	private Set<PaymentOptions> paymentOptions;
 
 	//@OneToMany(mappedBy = "contractProp", fetch = FetchType.LAZY)
 	//private Set<Contract> allContracts;

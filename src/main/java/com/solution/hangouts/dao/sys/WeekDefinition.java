@@ -25,7 +25,7 @@ import java.util.Set;
  * @author Tharinda Wickramaarachchi
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "week_definition")
 public class WeekDefinition extends RepresentationModel<WeekDefinition>
