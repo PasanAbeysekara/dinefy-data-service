@@ -70,10 +70,6 @@ public class Property extends RepresentationModel<Property>
 	@Column(name = "description")
 	private String description;
 
-	@Size(max = 100)
-	@Column(name = "location_name")
-	private String location_name;
-
 	//	@Embedded
 	//	@AttributeOverrides({
 	//			@AttributeOverride(name = "geo_location", column = @Column(name = "x")),
@@ -108,6 +104,12 @@ public class Property extends RepresentationModel<Property>
 	@ToString.Exclude
 	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
 	private Set<PropAvailabilityUnit> availabilityUnits;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JsonManagedReference
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JoinColumn(name = "based_location_id")
+	private LocationBased basedLocation;
 
 	@ToString.Exclude
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

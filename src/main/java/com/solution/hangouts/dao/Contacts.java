@@ -32,15 +32,17 @@ public class Contacts
 	@SequenceGenerator(
 			name = "contact_gen",
 			sequenceName = "contact_id_seq",
-			initialValue = 0
+			initialValue = 0,
+			allocationSize = 1
 	)
-	@GeneratedValue(generator = "contact_id_seq", strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "contact_id_seq", strategy = GenerationType.IDENTITY) //TODO sequence [hngout.contact_id_seq] defined inconsistent increment-size; found [1] but expecting [50
 	@EqualsAndHashCode.Include
 	@Column(name = "contact_id")
 	private Long contactId;
 
 	@NotBlank
 	@Size(max = 5)
+	@EqualsAndHashCode.Include
 	private String type;
 
 	@Size(max = 100)
