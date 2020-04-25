@@ -47,11 +47,11 @@ public class LocationBased
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "country_id")
-	private Short countryId;
-
-	@Column(name = "state_id")
-	private Short stateId;
+	//	@Column(name = "country_id")
+	//	private Short countryId;
+	//
+	//	@Column(name = "state_id")
+	//	private Short stateId;
 
 	@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
