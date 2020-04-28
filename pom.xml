@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.solution</groupId>
-    <artifactId>hangouts</artifactId>
+    <artifactId>x</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Hangouts</name>
-    <description>Hangouts for Everyone</description>
+    <name>x</name>
+    <description>x for Everyone</description>
 
     <properties>
         <java.version>8</java.version>
