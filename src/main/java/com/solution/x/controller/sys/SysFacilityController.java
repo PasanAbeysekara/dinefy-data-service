@@ -2,9 +2,11 @@ package com.solution.x.controller.sys;
 
 import com.solution.x.controller.HngoutAbstractController;
 import com.solution.x.dao.sys.Facilities;
+import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.repo.sys.FacilitiesRepository;
 import com.solution.x.util.HATEOASProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +32,14 @@ public class SysFacilityController extends HngoutAbstractController<Facilities>
 	 * @return all sys facilities
 	 */
 	@GetMapping("/facilities")
-	public ResponseEntity<List<Facilities>> getFacilities()
+	public ResponseEntity<ResponseWrapper<List<Facilities>>> getFacilities()
 	{
+		List<Facilities> facilities = facilitiesRepository.findAll( Sort.by( Sort.Direction.ASC, "name" ) );
+		facilities.forEach( fac -> fac.add( HATEOASProvider.sysFacilitySelfLinkProvider( fac.getFacility_id() ) ) );
+
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( facilitiesRepository.findAll() );
+				.body( new ResponseWrapper<>( "OK", facilities ) );
 	}
 
 
@@ -45,11 +50,11 @@ public class SysFacilityController extends HngoutAbstractController<Facilities>
 	 * @return The Facility
 	 */
 	@GetMapping("/facilities/{id}")
-	public ResponseEntity<Facilities> getFacility( @PathVariable("id") int id )
+	public ResponseEntity<ResponseWrapper<Facilities>> getFacility( @PathVariable("id") int id )
 	{
 		Optional<Facilities> optionalFacility = facilitiesRepository.findById( id );
 
-		ResponseEntity<Facilities> response;
+		ResponseEntity<ResponseWrapper<Facilities>> response;
 
 		if( optionalFacility.isPresent() )
 		{
@@ -57,12 +62,12 @@ public class SysFacilityController extends HngoutAbstractController<Facilities>
 			Link selfRel = HATEOASProvider.sysFacilitySelfLinkProvider( facility.getFacility_id() );
 			facility.add( selfRel );
 
-			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( facility );
+			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( new ResponseWrapper<>( "OK", facility ) );
 
 		}
 		else
 		{
-			response = buildNotFoundResponse();
+			response = buildNotFoundResponseWrapped();
 		}
 
 		return response;
