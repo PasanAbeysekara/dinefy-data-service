@@ -3,7 +3,9 @@ package com.solution.x.controller.sys;
 import com.solution.x.controller.HngoutAbstractController;
 import com.solution.x.dao.sys.Facilities;
 import com.solution.x.repo.sys.FacilitiesRepository;
+import com.solution.x.util.HATEOASProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,9 +49,23 @@ public class SysFacilityController extends HngoutAbstractController<Facilities>
 	{
 		Optional<Facilities> optionalFacility = facilitiesRepository.findById( id );
 
-		return optionalFacility.map( facility -> ResponseEntity.ok()
-				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( facility ) ).orElseGet( this::buildNotFoundResponse );
+		ResponseEntity<Facilities> response;
+
+		if( optionalFacility.isPresent() )
+		{
+			Facilities facility = optionalFacility.get();
+			Link selfRel = HATEOASProvider.sysFacilitySelfLinkProvider( facility.getFacility_id() );
+			facility.add( selfRel );
+
+			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( facility );
+
+		}
+		else
+		{
+			response = buildNotFoundResponse();
+		}
+
+		return response;
 	}
 
 
