@@ -36,11 +36,11 @@ public class Facilities extends RepresentationModel<Facilities>
 	private int facility_id;
 
 	@NotBlank
-	@Size(max = 10)
-	@Column(name = "code")
+	@Size(max = 10, message = "Facility code cannot exceed 10 characters")
+	@Column(name = "code", unique = true)
 	private String code;
 
-	@Size(max = 100)
+	@Size(max = 100, message = "Facility name cannot exceed 100 characters")
 	@Column(name = "name")
 	private String name;
 

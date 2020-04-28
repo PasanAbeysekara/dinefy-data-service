@@ -29,7 +29,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
  * @author Tharinda Wickramaarachchi
  */
 @RestController
-public class PropertyController extends HngoutAbstractController<Property>
+public class PropertyController extends AbstractController<Property>
 {
 	@Autowired
 	private PropertyRepository propertyRepository;

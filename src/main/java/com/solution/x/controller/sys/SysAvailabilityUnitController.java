@@ -1,6 +1,6 @@
 package com.solution.x.controller.sys;
 
-import com.solution.x.controller.HngoutAbstractController;
+import com.solution.x.controller.AbstractController;
 import com.solution.x.dao.sys.AvailabilityUnit;
 import com.solution.x.repo.sys.AvailabilityUnitRepository;
 import com.solution.x.util.HATEOASProvider;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @author Tharinda Wickramaarachchi
  */
 @RestController
-public class SysAvailabilityUnitController extends HngoutAbstractController<AvailabilityUnit>
+public class SysAvailabilityUnitController extends AbstractController<AvailabilityUnit>
 {
 	@Autowired
 	private AvailabilityUnitRepository availabilityUnitRepository;

@@ -9,7 +9,7 @@ public class ResponseWrapper<T>
 {
 
 	private String code;
-	private String message;
+	private String prettyMessage;
 	private Error error;
 	private T data;
 
@@ -19,10 +19,17 @@ public class ResponseWrapper<T>
 		this.data = data;
 	}
 
-	public ResponseWrapper( String code, String message, Error error )
+	public ResponseWrapper( String code, String prettyMessage, T data )
 	{
 		this.code = code;
-		this.message = message;
+		this.prettyMessage = prettyMessage;
+		this.data = data;
+	}
+
+	public ResponseWrapper( String code, String prettyMessage, Error error )
+	{
+		this.code = code;
+		this.prettyMessage = prettyMessage;
 		this.error = error;
 	}
 
@@ -36,14 +43,14 @@ public class ResponseWrapper<T>
 		this.code = code;
 	}
 
-	public String getMessage()
+	public String getPrettyMessage()
 	{
-		return message;
+		return prettyMessage;
 	}
 
-	public void setMessage( String message )
+	public void setPrettyMessage( String prettyMessage )
 	{
-		this.message = message;
+		this.prettyMessage = prettyMessage;
 	}
 
 	public Error getError()

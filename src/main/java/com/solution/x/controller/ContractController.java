@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author Tharinda Wickramaarachchi
  */
 @RestController
-public class ContractController extends HngoutAbstractController<Contract>
+public class ContractController extends AbstractController<Contract>
 {
 	@Autowired
 	private ContractsRepository contractsRepository;

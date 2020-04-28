@@ -1,6 +1,6 @@
 package com.solution.x.controller.sys;
 
-import com.solution.x.controller.HngoutAbstractController;
+import com.solution.x.controller.AbstractController;
 import com.solution.x.dao.sys.Tags;
 import com.solution.x.repo.sys.TagsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author Tharinda Wickramaarachchi
  */
 @RestController
-public class SysTagsController extends HngoutAbstractController<Tags>
+public class SysTagsController extends AbstractController<Tags>
 {
 	@Autowired
 	private TagsRepository tagsRepository;

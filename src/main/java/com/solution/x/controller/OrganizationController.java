@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @author Tharinda Wickramaarachchi
  */
 @RestController
-public class OrganizationController extends HngoutAbstractController<Organization>
+public class OrganizationController extends AbstractController<Organization>
 {
 	@Autowired
 	private OrganizationRepository organizationRepository;

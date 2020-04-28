@@ -1,17 +1,21 @@
 package com.solution.x.controller.sys;
 
-import com.solution.x.controller.HngoutAbstractController;
+import com.solution.x.controller.AbstractController;
 import com.solution.x.dao.sys.Facilities;
 import com.solution.x.facade.ResponseWrapper;
+import com.solution.x.facade.SystemMessages;
 import com.solution.x.repo.sys.FacilitiesRepository;
 import com.solution.x.util.HATEOASProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,7 +25,7 @@ import java.util.Optional;
  * @author Tharinda Wickramaarachchi
  */
 @RestController
-public class SysFacilityController extends HngoutAbstractController<Facilities>
+public class SysFacilityController extends AbstractController<Facilities>
 {
 	@Autowired
 	private FacilitiesRepository facilitiesRepository;
@@ -63,11 +67,42 @@ public class SysFacilityController extends HngoutAbstractController<Facilities>
 			facility.add( selfRel );
 
 			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( new ResponseWrapper<>( "OK", facility ) );
-
 		}
 		else
 		{
 			response = buildNotFoundResponseWrapped();
+		}
+
+		return response;
+	}
+
+	/**
+	 * Create a Facility
+	 *
+	 * @param facilities The Facility
+	 * @return Saved Facility response
+	 */
+	@PostMapping("/facilities")
+	public ResponseEntity<ResponseWrapper<Facilities>> createFacility( @RequestBody Facilities facilities )
+	{
+		ResponseEntity<ResponseWrapper<Facilities>> response;
+
+		try
+		{
+			Facilities savedFacility;
+			savedFacility = facilitiesRepository.save( facilities );
+
+			Link selfRel = HATEOASProvider.sysFacilitySelfLinkProvider( savedFacility.getFacility_id() );
+			savedFacility.add( selfRel );
+
+			response = ResponseEntity.status( HttpStatus.CREATED )
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( "OK", SystemMessages.FACILITY_CREATE_SUCCESS.getReasonPhrase(), savedFacility ) );
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+			response = buildErrorResponse( SystemMessages.FACILITY_CREATE_FAILED, e );
 		}
 
 		return response;
