@@ -9,10 +9,12 @@ package com.solution.x.facade;
 public enum SystemMessages
 {
 
-	FACILITY_CREATE_SUCCESS( "100", "Facility successfully saved" ),
-	FACILITY_CREATE_FAILED( "101", "Facility saving failed" ),
-	FACILITY_UPDATE_FAILED( "102", "Facility update failed" ),
-	FACILITY_DELETE_FAILED( "103", "Facility delete failed" );
+	FACILITY_CREATE_SUCCESS( "1100", "Facility successfully saved" ),
+	FACILITY_CREATE_FAILED( "1101", "Facility saving failed" ),
+	FACILITY_UPDATE_SUCCESS( "1102", "Facility successfully updated" ),
+	FACILITY_UPDATE_FAILED( "1103", "Facility update failed" ),
+	FACILITY_DELETE_SUCCESS( "1104", "Facility successfully deleted" ),
+	FACILITY_DELETE_FAILED( "1105", "Facility delete failed" );
 
 	private final String code;
 	private final String reasonPhrase;
