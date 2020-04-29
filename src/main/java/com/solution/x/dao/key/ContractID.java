@@ -26,7 +26,7 @@ public class ContractID implements Serializable
 			initialValue = 0,
 			allocationSize = 1
 	)
-	@GeneratedValue(generator = "contracts_contract_id_seq", strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "contracts_gen", strategy = GenerationType.IDENTITY)
 	@Column(name = "contract_id")
 	private long contractId;
 

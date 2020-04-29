@@ -49,9 +49,10 @@ public class Property extends RepresentationModel<Property>
 	@SequenceGenerator(
 			name = "prop_gen",
 			sequenceName = "property_prop_id_seq",
-			initialValue = 0
+			initialValue = 0,
+			allocationSize = 1
 	)
-	@GeneratedValue(generator = "property_prop_id_seq", strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "prop_gen", strategy = GenerationType.SEQUENCE)
 	@EqualsAndHashCode.Include //Lombok HashCode issues , Need to explicitly add include with onlyExplicitlyIncluded = true
 	@Column(name = "prop_id")
 	private long propId;

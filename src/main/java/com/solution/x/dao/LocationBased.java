@@ -38,7 +38,7 @@ public class LocationBased
 			initialValue = 0,
 			allocationSize = 1
 	)
-	@GeneratedValue(generator = "location_seq", strategy = GenerationType.IDENTITY) //TODO change to sequence
+	@GeneratedValue(generator = "location_gen", strategy = GenerationType.IDENTITY) //TODO change to sequence
 	@EqualsAndHashCode.Include
 	@Column(name = "id")
 	private Long locationId;

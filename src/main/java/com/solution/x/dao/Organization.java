@@ -39,7 +39,7 @@ public class Organization extends RepresentationModel<Organization>
 			initialValue = 0,
 			allocationSize = 1
 	)
-	@GeneratedValue(generator = "organization_org_id_seq", strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "organization_gen", strategy = GenerationType.SEQUENCE)
 	private long orgId;
 
 	@NotBlank
