@@ -9,6 +9,8 @@ import org.springframework.hateoas.RepresentationModel;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -31,8 +33,9 @@ public class Facilities extends RepresentationModel<Facilities>
 	@SequenceGenerator(
 			name = "facilities_gen",
 			sequenceName = "facilities_facility_id_seq",
-			initialValue = 100
+			allocationSize = 1
 	)
+	@GeneratedValue(generator = "facilities_gen", strategy = GenerationType.SEQUENCE)
 	private int facility_id;
 
 	@NotBlank
