@@ -41,7 +41,7 @@ public class SysFacilityController extends AbstractController<Facilities>
 	public ResponseEntity<ResponseWrapper<List<Facilities>>> getFacilities()
 	{
 		List<Facilities> facilities = facilitiesRepository.findAll( Sort.by( Sort.Direction.ASC, "name" ) );
-		facilities.forEach( fac -> fac.add( HATEOASProvider.sysFacilitySelfLinkProvider( fac.getFacility_id() ) ) );
+		facilities.forEach( fac -> fac.add( HATEOASProvider.sysFacilitySelfLinkProvider( fac.getFacilityId() ) ) );
 
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
@@ -65,7 +65,7 @@ public class SysFacilityController extends AbstractController<Facilities>
 		if( optionalFacility.isPresent() )
 		{
 			Facilities facility = optionalFacility.get();
-			Link selfRel = HATEOASProvider.sysFacilitySelfLinkProvider( facility.getFacility_id() );
+			Link selfRel = HATEOASProvider.sysFacilitySelfLinkProvider( facility.getFacilityId() );
 			facility.add( selfRel );
 
 			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( new ResponseWrapper<>( "OK", facility ) );
@@ -93,7 +93,7 @@ public class SysFacilityController extends AbstractController<Facilities>
 		{
 			Facilities savedFacility = facilitiesRepository.save( facility );
 
-			Link selfRel = HATEOASProvider.sysFacilitySelfLinkProvider( savedFacility.getFacility_id() );
+			Link selfRel = HATEOASProvider.sysFacilitySelfLinkProvider( savedFacility.getFacilityId() );
 			savedFacility.add( selfRel );
 
 			response = ResponseEntity.status( HttpStatus.CREATED )
@@ -124,10 +124,10 @@ public class SysFacilityController extends AbstractController<Facilities>
 
 		try
 		{
-			facility.setFacility_id( id );
+			facility.setFacilityId( id );
 			Facilities savedFacility = facilitiesRepository.save( facility );
 
-			Link selfRel = HATEOASProvider.sysFacilitySelfLinkProvider( savedFacility.getFacility_id() );
+			Link selfRel = HATEOASProvider.sysFacilitySelfLinkProvider( savedFacility.getFacilityId() );
 			savedFacility.add( selfRel );
 
 			response = ResponseEntity.ok()
@@ -150,7 +150,7 @@ public class SysFacilityController extends AbstractController<Facilities>
 	 * @return Delete response
 	 */
 	@DeleteMapping("/facilities/{id}")
-	public ResponseEntity<ResponseWrapper<Facilities>> updateFacility( @PathVariable("id") int id )
+	public ResponseEntity<ResponseWrapper<Facilities>> deleteTag( @PathVariable("id") int id )
 	{
 		ResponseEntity<ResponseWrapper<Facilities>> response;
 

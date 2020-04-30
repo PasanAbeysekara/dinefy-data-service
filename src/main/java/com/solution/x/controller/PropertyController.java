@@ -115,7 +115,7 @@ public class PropertyController extends AbstractController<Property>
 
 		for( PropFacilities facility : property.getFacilities() )
 		{
-			int sysFacilityID = facility.getSysFacility().getFacility_id();
+			int sysFacilityID = facility.getSysFacility().getFacilityId();
 
 			Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider( sysFacilityID );
 			Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );
@@ -126,7 +126,7 @@ public class PropertyController extends AbstractController<Property>
 
 		for( PropTags tags : property.getPropTags() )
 		{
-			Link selfRelSysTags = HATEOASProvider.sysTagsSelfLinkProvider( tags.getSysTags().getTag_id() );
+			Link selfRelSysTags = HATEOASProvider.sysTagsSelfLinkProvider( tags.getSysTags().getTagId() );
 			//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( tags.getPropTagID().getPropId() );
 
 			tags.getSysTags().add( selfRelSysTags );
@@ -135,7 +135,7 @@ public class PropertyController extends AbstractController<Property>
 
 		for( PropAvailabilityUnit availabilityUnit : property.getAvailabilityUnits() )
 		{
-			Link selfRelSysAvailabilityUnit = HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnit.getSysAvailabilityUnit().getUnit_id() );
+			Link selfRelSysAvailabilityUnit = HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnit.getSysAvailabilityUnit().getUnitId() );
 			//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );
 
 			availabilityUnit.getSysAvailabilityUnit().add( selfRelSysAvailabilityUnit );

@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
+import java.sql.SQLException;
 import java.util.Set;
 
 /**
@@ -34,7 +34,7 @@ public abstract class AbstractController<DAO>
 	{
 		return ResponseEntity.status( HttpStatus.NOT_FOUND )
 				.headers( new HttpHeaders() )
-				.body( new ResponseWrapper<>( "NOT FOUND", "Requested data not found", null ) );
+				.body( new ResponseWrapper<>( "NOT FOUND", SystemMessages.NOT_FOUND.getReasonPhrase(), null ) );
 	}
 
 	protected ResponseEntity<ResponseWrapper<DAO>> buildErrorResponse( SystemMessages message, Exception e )
@@ -46,27 +46,34 @@ public abstract class AbstractController<DAO>
 		if( e != null )
 		{
 			int level = 0;
-
-			error.addMessage( level + " - " + e.getMessage() );
-			Throwable cause = e.getCause();
+			Throwable cause = e;
 
 			while( cause != null && level < CAUSED_BY_DEEP )
 			{
-				++level;
-
-				if( cause instanceof ConstraintViolationException )
+				if( cause instanceof javax.validation.ConstraintViolationException )
 				{
-					Set<ConstraintViolation<?>> constraintViolations = ( (ConstraintViolationException) cause ).getConstraintViolations();
+					Set<ConstraintViolation<?>> constraintViolations = ( (javax.validation.ConstraintViolationException) cause ).getConstraintViolations();
 					if( constraintViolations != null )
 					{
 						if( constraintViolations.stream().findFirst().isPresent() )
 						{
-							error.setMessage( "Constraint Violated : " + constraintViolations.stream().findFirst().get().getMessage() );
+							error.setMessage( "Constraint Violated[JV] : " + constraintViolations.stream().findFirst().get().getMessage() );
 						}
 					}
 				}
+				else if( cause instanceof org.hibernate.exception.ConstraintViolationException )
+				{
+					SQLException sqlException = ( (org.hibernate.exception.ConstraintViolationException) cause ).getSQLException();
+					String constraintName = ( (org.hibernate.exception.ConstraintViolationException) cause ).getConstraintName();
 
-				error.addMessage( level + " - " + cause.getMessage() );
+					if( sqlException != null )
+					{
+						error.setMessage( "Constraint Violated[HB]-[" + constraintName + "]-" + sqlException.getMessage() );
+					}
+				}
+
+				error.addMessage( level + " - Caused By : " + cause.getMessage() );
+				++level;
 				cause = cause.getCause();
 			}
 		}

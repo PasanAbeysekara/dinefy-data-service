@@ -35,7 +35,8 @@ public class AvailabilityUnit extends RepresentationModel<AvailabilityUnit>
 			initialValue = 100
 	)
 	@EqualsAndHashCode.Include
-	private Integer unit_id;
+	@Column(name = "unit_id", updatable = false, nullable = false)
+	private Integer unitId;
 
 	@NotBlank
 	@Size(max = 10)

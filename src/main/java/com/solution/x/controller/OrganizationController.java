@@ -76,7 +76,7 @@ public class OrganizationController extends AbstractController<Organization>
 
 				for( PropFacilities facility : property.getFacilities() )
 				{
-					int sysFacilityID = facility.getSysFacility().getFacility_id();
+					int sysFacilityID = facility.getSysFacility().getFacilityId();
 
 					Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider( sysFacilityID );
 					Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );

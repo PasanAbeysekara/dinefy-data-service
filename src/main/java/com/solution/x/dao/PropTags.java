@@ -2,7 +2,6 @@ package com.solution.x.dao;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.dao.key.PropTagID;
 import com.solution.x.dao.sys.Tags;
@@ -43,7 +42,7 @@ public class PropTags extends RepresentationModel<PropTags>
 	@Column(name = "description")
 	private String description;
 
-	@JsonManagedReference
+	//@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // No serializer found for class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("tag_id")

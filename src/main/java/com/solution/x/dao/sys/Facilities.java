@@ -36,7 +36,8 @@ public class Facilities extends RepresentationModel<Facilities>
 			allocationSize = 1
 	)
 	@GeneratedValue(generator = "facilities_gen", strategy = GenerationType.SEQUENCE)
-	private int facility_id;
+	@Column(name = "facility_id", updatable = false, nullable = false)
+	private int facilityId;
 
 	@NotBlank
 	@Size(max = 10, message = "Facility code cannot exceed 10 characters")

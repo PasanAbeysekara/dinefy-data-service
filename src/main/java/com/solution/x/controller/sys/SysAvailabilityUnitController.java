@@ -32,8 +32,9 @@ public class SysAvailabilityUnitController extends AbstractController<Availabili
 	@GetMapping("/availability-units")
 	public ResponseEntity<List<AvailabilityUnit>> getAvailabilityUnits()
 	{
-		List<AvailabilityUnit> availabilityUnits = availabilityUnitRepository.findAll().stream().map( unit -> unit.add( HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( unit.getUnit_id() ) ) ).collect( Collectors.toList() );
-
+		List<AvailabilityUnit> availabilityUnits = availabilityUnitRepository.findAll().stream()
+				.map( unit -> unit.add( HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( unit.getUnitId() ) ) )
+				.collect( Collectors.toList() );
 
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
@@ -54,7 +55,8 @@ public class SysAvailabilityUnitController extends AbstractController<Availabili
 
 		return optionalAvailabilityUnit.map( availabilityUnit -> ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( availabilityUnit.add( HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnit.getUnit_id() ) ) ) ).orElseGet( this::buildNotFoundResponse );
+				.body( availabilityUnit.add( HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnit.getUnitId() ) ) ) )
+				.orElseGet( this::buildNotFoundResponse );
 	}
 
 
