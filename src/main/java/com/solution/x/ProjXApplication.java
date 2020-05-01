@@ -9,10 +9,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @EnableScheduling
-public class HangoutsApplication
+public class ProjXApplication
 {
 	public static void main( String[] args )
 	{
-		SpringApplication.run( HangoutsApplication.class, args );
+		SpringApplication.run( ProjXApplication.class, args );
 	}
 }

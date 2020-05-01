@@ -16,7 +16,7 @@
     <description>x for Everyone</description>
 
     <properties>
-        <java.version>8</java.version>
+        <java.version>14</java.version>
     </properties>
 
     <dependencies>
@@ -96,6 +96,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <release>14</release>  <!--or <release>10</release>-->
+                </configuration>
             </plugin>
         </plugins>
     </build>

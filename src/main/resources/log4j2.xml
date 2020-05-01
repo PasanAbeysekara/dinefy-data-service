@@ -27,7 +27,7 @@
         <logger name="org.springframework.amqp.rabbit.core.RabbitTemplate" level="debug" additivity="true">
             <AppenderRef ref="Console" level="debug"/>
         </logger>
-        <Root level="debug">
+        <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
