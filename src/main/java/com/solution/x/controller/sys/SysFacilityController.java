@@ -3,14 +3,10 @@ package com.solution.x.controller.sys;
 import com.solution.x.controller.AbstractController;
 import com.solution.x.dao.sys.Facilities;
 import com.solution.x.facade.ResponseWrapper;
-import com.solution.x.facade.SystemMessages;
 import com.solution.x.repo.sys.FacilitiesRepository;
-import com.solution.x.util.HATEOASProvider;
+import com.solution.x.service.SysFacilityService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.hateoas.Link;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,16 +17,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Tharinda Wickramaarachchi
  */
 @RestController
+@Slf4j
 public class SysFacilityController extends AbstractController<Facilities>
 {
 	@Autowired
 	private FacilitiesRepository facilitiesRepository;
+
+	@Autowired
+	private SysFacilityService facilityService;
 
 	/**
 	 * Get All Facilities
@@ -40,14 +39,8 @@ public class SysFacilityController extends AbstractController<Facilities>
 	@GetMapping("/facilities")
 	public ResponseEntity<ResponseWrapper<List<Facilities>>> getFacilities()
 	{
-		List<Facilities> facilities = facilitiesRepository.findAll( Sort.by( Sort.Direction.ASC, "name" ) );
-		facilities.forEach( fac -> fac.add( HATEOASProvider.sysFacilitySelfLinkProvider( fac.getFacilityId() ) ) );
-
-		return ResponseEntity.ok()
-				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( new ResponseWrapper<>( "OK", facilities ) );
+		return facilityService.getFacilities();
 	}
-
 
 	/**
 	 * Get Single Facility
@@ -58,24 +51,7 @@ public class SysFacilityController extends AbstractController<Facilities>
 	@GetMapping("/facilities/{id}")
 	public ResponseEntity<ResponseWrapper<Facilities>> getFacility( @PathVariable("id") int id )
 	{
-		Optional<Facilities> optionalFacility = facilitiesRepository.findById( id );
-
-		ResponseEntity<ResponseWrapper<Facilities>> response;
-
-		if( optionalFacility.isPresent() )
-		{
-			Facilities facility = optionalFacility.get();
-			Link selfRel = HATEOASProvider.sysFacilitySelfLinkProvider( facility.getFacilityId() );
-			facility.add( selfRel );
-
-			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( new ResponseWrapper<>( "OK", facility ) );
-		}
-		else
-		{
-			response = buildNotFoundResponseWrapped();
-		}
-
-		return response;
+		return facilityService.getFacility( id );
 	}
 
 	/**
@@ -87,28 +63,8 @@ public class SysFacilityController extends AbstractController<Facilities>
 	@PostMapping("/facilities")
 	public ResponseEntity<ResponseWrapper<Facilities>> createFacility( @RequestBody Facilities facility )
 	{
-		ResponseEntity<ResponseWrapper<Facilities>> response;
-
-		try
-		{
-			Facilities savedFacility = facilitiesRepository.save( facility );
-
-			Link selfRel = HATEOASProvider.sysFacilitySelfLinkProvider( savedFacility.getFacilityId() );
-			savedFacility.add( selfRel );
-
-			response = ResponseEntity.status( HttpStatus.CREATED )
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "CREATED", SystemMessages.FACILITY_CREATE_SUCCESS.getReasonPhrase(), savedFacility ) );
-		}
-		catch( Exception e )
-		{
-			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.FACILITY_CREATE_FAILED, e );
-		}
-
-		return response;
+		return facilityService.createFacility( facility );
 	}
-
 
 	/**
 	 * Update a Facility
@@ -120,27 +76,7 @@ public class SysFacilityController extends AbstractController<Facilities>
 	@PutMapping("/facilities/{id}")
 	public ResponseEntity<ResponseWrapper<Facilities>> updateFacility( @PathVariable("id") int id, @RequestBody Facilities facility )
 	{
-		ResponseEntity<ResponseWrapper<Facilities>> response;
-
-		try
-		{
-			facility.setFacilityId( id );
-			Facilities savedFacility = facilitiesRepository.save( facility );
-
-			Link selfRel = HATEOASProvider.sysFacilitySelfLinkProvider( savedFacility.getFacilityId() );
-			savedFacility.add( selfRel );
-
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "UPDATED", SystemMessages.FACILITY_UPDATE_SUCCESS.getReasonPhrase(), savedFacility ) );
-		}
-		catch( Exception e )
-		{
-			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.FACILITY_UPDATE_FAILED, e );
-		}
-
-		return response;
+		return facilityService.updateFacility( id, facility );
 	}
 
 	/**
@@ -152,23 +88,7 @@ public class SysFacilityController extends AbstractController<Facilities>
 	@DeleteMapping("/facilities/{id}")
 	public ResponseEntity<ResponseWrapper<Facilities>> deleteTag( @PathVariable("id") int id )
 	{
-		ResponseEntity<ResponseWrapper<Facilities>> response;
-
-		try
-		{
-			facilitiesRepository.deleteById( id );
-
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "DELETED", SystemMessages.FACILITY_DELETE_SUCCESS.getReasonPhrase(), null ) );
-		}
-		catch( Exception e )
-		{
-			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.FACILITY_DELETE_FAILED, e );
-		}
-
-		return response;
+		return facilityService.deleteFacility( id );
 	}
 
 

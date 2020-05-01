@@ -2,8 +2,10 @@ package com.solution.x.dao.sys;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.solution.x.dao.PropFacilities;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
@@ -24,6 +26,8 @@ import java.util.Set;
  * @author Tharinda Wickramaarachchi
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "sys_facilities")

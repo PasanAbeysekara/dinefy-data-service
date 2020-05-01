@@ -14,7 +14,7 @@ public class HTTPHeaderInterceptor extends HandlerInterceptorAdapter
 	@Override
 	public void afterCompletion( HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception ) throws Exception
 	{
-		System.out.println( "afterCompletion" );
+		System.out.println( "[HTTPHeaderInterceptor] After Completion" );
 	}
 
 	@Override
@@ -22,14 +22,14 @@ public class HTTPHeaderInterceptor extends HandlerInterceptorAdapter
 	{
 		response.setHeader( "Access-Control-Allow-Origin2aa", "http://localhost:4200" );
 		response.setHeader( "xxx-zzz", "sasas" );
-		System.out.println( "postHandle" );
+		System.out.println( "[HTTPHeaderInterceptor] Post Handle" );
 	}
 
 	@Override
 	public boolean preHandle( HttpServletRequest request, HttpServletResponse response, Object handler ) throws Exception
 	{
 
-		System.out.println( "preHandle" );
+		System.out.println( "[HTTPHeaderInterceptor] Pre Handle" );
 
 		return true;
 	}
