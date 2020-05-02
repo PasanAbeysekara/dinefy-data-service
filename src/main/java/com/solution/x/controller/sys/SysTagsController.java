@@ -3,14 +3,8 @@ package com.solution.x.controller.sys;
 import com.solution.x.controller.AbstractController;
 import com.solution.x.dao.sys.Tags;
 import com.solution.x.facade.ResponseWrapper;
-import com.solution.x.facade.SystemMessages;
-import com.solution.x.repo.sys.TagsRepository;
-import com.solution.x.util.HATEOASProvider;
+import com.solution.x.service.SysTagsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.hateoas.Link;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -30,7 +23,7 @@ import java.util.Optional;
 public class SysTagsController extends AbstractController<Tags>
 {
 	@Autowired
-	private TagsRepository tagsRepository;
+	private SysTagsService sysTagsService;
 
 	/**
 	 * Get All Tags
@@ -40,12 +33,7 @@ public class SysTagsController extends AbstractController<Tags>
 	@GetMapping("/tags")
 	public ResponseEntity<ResponseWrapper<List<Tags>>> getTags()
 	{
-		List<Tags> tags = tagsRepository.findAll( Sort.by( Sort.Direction.ASC, "name" ) );
-		tags.forEach( fac -> fac.add( HATEOASProvider.sysTagsSelfLinkProvider( fac.getTagId() ) ) );
-
-		return ResponseEntity.ok()
-				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( new ResponseWrapper<>( "OK", tags ) );
+		return sysTagsService.getTags();
 	}
 
 	/**
@@ -57,25 +45,7 @@ public class SysTagsController extends AbstractController<Tags>
 	@GetMapping("/tags/{id}")
 	public ResponseEntity<ResponseWrapper<Tags>> getTag( @PathVariable("id") int id )
 	{
-		Optional<Tags> optionalTags = tagsRepository.findById( id );
-
-		ResponseEntity<ResponseWrapper<Tags>> response;
-
-		if( optionalTags.isPresent() )
-		{
-			Tags tags = optionalTags.get();
-			Link selfRel = HATEOASProvider.sysTagsSelfLinkProvider( tags.getTagId() );
-			tags.add( selfRel );
-
-			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( new ResponseWrapper<>( "OK", tags ) );
-		}
-		else
-		{
-			response = buildNotFoundResponseWrapped();
-		}
-
-		return response;
-
+		return sysTagsService.getTag( id );
 	}
 
 	/**
@@ -87,26 +57,7 @@ public class SysTagsController extends AbstractController<Tags>
 	@PostMapping("/tags")
 	public ResponseEntity<ResponseWrapper<Tags>> createTag( @RequestBody Tags tag )
 	{
-		ResponseEntity<ResponseWrapper<Tags>> response;
-
-		try
-		{
-			Tags savedTag = tagsRepository.save( tag );
-
-			Link selfRel = HATEOASProvider.sysTagsSelfLinkProvider( savedTag.getTagId() );
-			savedTag.add( selfRel );
-
-			response = ResponseEntity.status( HttpStatus.CREATED )
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "CREATED", SystemMessages.TAG_CREATE_SUCCESS.getReasonPhrase(), savedTag ) );
-		}
-		catch( Exception e )
-		{
-			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.TAG_CREATE_FAILED, e );
-		}
-
-		return response;
+		return sysTagsService.createTag( tag );
 	}
 
 
@@ -120,27 +71,7 @@ public class SysTagsController extends AbstractController<Tags>
 	@PutMapping("/tags/{id}")
 	public ResponseEntity<ResponseWrapper<Tags>> updateTag( @PathVariable("id") int id, @RequestBody Tags tags )
 	{
-		ResponseEntity<ResponseWrapper<Tags>> response;
-
-		try
-		{
-			tags.setTagId( id );
-			Tags savedTag = tagsRepository.save( tags );
-
-			Link selfRel = HATEOASProvider.sysTagsSelfLinkProvider( savedTag.getTagId() );
-			savedTag.add( selfRel );
-
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "UPDATED", SystemMessages.TAG_UPDATE_SUCCESS.getReasonPhrase(), savedTag ) );
-		}
-		catch( Exception e )
-		{
-			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.TAG_UPDATE_FAILED, e );
-		}
-
-		return response;
+		return sysTagsService.updateTag( id, tags );
 	}
 
 	/**
@@ -152,23 +83,7 @@ public class SysTagsController extends AbstractController<Tags>
 	@DeleteMapping("/tags/{id}")
 	public ResponseEntity<ResponseWrapper<Tags>> deleteTag( @PathVariable("id") int id )
 	{
-		ResponseEntity<ResponseWrapper<Tags>> response;
-
-		try
-		{
-			tagsRepository.deleteById( id );
-
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "DELETED", SystemMessages.TAG_DELETE_SUCCESS.getReasonPhrase(), null ) );
-		}
-		catch( Exception e )
-		{
-			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.TAG_DELETE_FAILED, e );
-		}
-
-		return response;
+		return sysTagsService.deleteTag( id );
 	}
 
 
