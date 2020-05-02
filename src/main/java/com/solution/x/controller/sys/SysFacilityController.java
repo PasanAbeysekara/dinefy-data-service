@@ -3,7 +3,6 @@ package com.solution.x.controller.sys;
 import com.solution.x.controller.AbstractController;
 import com.solution.x.dao.sys.Facilities;
 import com.solution.x.facade.ResponseWrapper;
-import com.solution.x.repo.sys.FacilitiesRepository;
 import com.solution.x.service.SysFacilityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,6 @@ import java.util.List;
 @Slf4j
 public class SysFacilityController extends AbstractController<Facilities>
 {
-	@Autowired
-	private FacilitiesRepository facilitiesRepository;
-
 	@Autowired
 	private SysFacilityService facilityService;
 
