@@ -1,7 +1,8 @@
 package com.solution.x.dao;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.ano.GuestFacingName;
 import com.solution.x.dao.key.ContractID;
 import lombok.Data;
@@ -28,9 +29,9 @@ import java.util.Set;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true) //Lombok HashCode issues , Need to explicitly add include with onlyExplicitlyIncluded = true
 @ToString
 @Table(name = "contracts")
-//@JsonIdentityInfo(
-//		generator = ObjectIdGenerators.PropertyGenerator.class,
-//		property = "contractId")
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "contractId")
 public class Contract implements Serializable
 {
 	@EmbeddedId
@@ -57,7 +58,7 @@ public class Contract implements Serializable
 	//	@JoinColumn(name = "prop_id", insertable = false, updatable = false)
 	//	private Property contractProp;
 
-	@JsonManagedReference
+	//@JsonManagedReference
 	@OneToMany(mappedBy = "contract", fetch = FetchType.LAZY)
 	private Set<Seasons> seasons;
 }

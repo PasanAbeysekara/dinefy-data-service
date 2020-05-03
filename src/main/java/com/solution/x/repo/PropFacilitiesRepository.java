@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface PropFacilitiesRepository extends JpaRepository<PropFacilities, PropFacilityID>
 {
-	List<PropFacilities> findByPropFacilityIDPropId( @Param("propId") int propId );
+	List<PropFacilities> findByPropFacilityIdPropId( @Param("propId") int propId );
 }

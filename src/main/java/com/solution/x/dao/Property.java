@@ -4,7 +4,6 @@ package com.solution.x.dao;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.dao.sys.PaymentOptions;
 import com.solution.x.dao.sys.PropertySpeciality;
@@ -107,7 +106,7 @@ public class Property extends RepresentationModel<Property>
 	private Set<PropAvailabilityUnit> availabilityUnits;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JsonManagedReference
+	//@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@JoinColumn(name = "based_location_id")
 	private LocationBased basedLocation;
@@ -135,7 +134,7 @@ public class Property extends RepresentationModel<Property>
 	@JoinColumn(name = "contact_id")
 	private Contacts contacts;
 
-	@JsonManagedReference
+	//@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "prop_speciality",
@@ -144,7 +143,7 @@ public class Property extends RepresentationModel<Property>
 	)
 	private Set<PropertySpeciality> propertySpecialities;
 
-	@JsonManagedReference
+	//@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "prop_payment_options",

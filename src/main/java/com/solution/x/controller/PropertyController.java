@@ -63,7 +63,7 @@ public class PropertyController extends AbstractController<Property>
 	{
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( propFacilitiesRepository.findByPropFacilityIDPropId( (int) id ) );
+				.body( propFacilitiesRepository.findByPropFacilityIdPropId( (int) id ) );
 	}
 
 
@@ -118,7 +118,7 @@ public class PropertyController extends AbstractController<Property>
 			int sysFacilityID = facility.getSysFacility().getFacilityId();
 
 			Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider( sysFacilityID );
-			Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );
+			Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityId().getPropId() );
 
 			facility.getSysFacility().add( selfRelSysFacility );
 			facility.add( selfRelPropFacility );

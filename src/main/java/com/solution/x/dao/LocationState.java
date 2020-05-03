@@ -1,8 +1,9 @@
 package com.solution.x.dao;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.dao.key.StateID;
 import lombok.Data;
 
@@ -25,6 +26,9 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "location_state")
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "stateId")
 public class LocationState
 {
 	@EmbeddedId
@@ -38,7 +42,7 @@ public class LocationState
 	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
 	private Set<LocationBased> basedLocation;
 
-	@JsonManagedReference
+	//@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("countryId")

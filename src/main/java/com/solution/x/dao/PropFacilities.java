@@ -2,7 +2,6 @@ package com.solution.x.dao;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.dao.key.PropFacilityID;
 import com.solution.x.dao.sys.Facilities;
@@ -29,12 +28,12 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "propFacilityID")
+		property = "propFacilityId")
 public class PropFacilities extends RepresentationModel<PropFacilities>
 {
 	@EmbeddedId
 	@EqualsAndHashCode.Include
-	private PropFacilityID propFacilityID;
+	private PropFacilityID propFacilityId;
 
 	@Size(max = 100)
 	@Column(name = "name")
@@ -43,7 +42,7 @@ public class PropFacilities extends RepresentationModel<PropFacilities>
 	@Column(name = "description")
 	private String description;
 
-	@JsonManagedReference
+	//@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // No serializer found for class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("facility_id")

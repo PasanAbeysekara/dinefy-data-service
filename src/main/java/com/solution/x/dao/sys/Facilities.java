@@ -1,6 +1,8 @@
 package com.solution.x.dao.sys;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.dao.PropFacilities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +33,9 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "sys_facilities")
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "facilityId")
 public class Facilities extends RepresentationModel<Facilities>
 {
 	@Id

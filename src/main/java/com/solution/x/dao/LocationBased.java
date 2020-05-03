@@ -1,8 +1,9 @@
 package com.solution.x.dao;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -29,6 +30,9 @@ import javax.validation.constraints.Size;
 @Table(name = "location_city")
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "locationId")
 public class LocationBased
 {
 	@Id
@@ -53,7 +57,7 @@ public class LocationBased
 	//	@Column(name = "state_id")
 	//	private Short stateId;
 
-	@JsonManagedReference
+	//@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumns(

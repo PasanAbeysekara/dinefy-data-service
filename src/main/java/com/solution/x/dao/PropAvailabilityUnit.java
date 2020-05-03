@@ -2,7 +2,6 @@ package com.solution.x.dao;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.dao.key.PropAvailabilityUnitKey;
 import com.solution.x.dao.sys.AvailabilityUnit;
@@ -46,7 +45,7 @@ public class PropAvailabilityUnit extends RepresentationModel<PropAvailabilityUn
 	@Column(name = "capacity")
 	private Short capacity;
 
-	@JsonManagedReference
+	//@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // No serializer found for class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("unit_id")

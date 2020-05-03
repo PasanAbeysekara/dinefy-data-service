@@ -1,7 +1,8 @@
 package com.solution.x.dao;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.ano.GuestFacingName;
 import com.solution.x.dao.key.SeasonID;
 import com.solution.x.dao.sys.WeekDefinition;
@@ -34,9 +35,9 @@ import java.util.Set;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true) //Lombok HashCode issues , Need to explicitly add include with onlyExplicitlyIncluded = true
 @ToString
 @Table(name = "contract_season")
-//@JsonIdentityInfo(
-//		generator = ObjectIdGenerators.PropertyGenerator.class,
-//		property = "seasonId")
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "seasonId")
 public class Seasons
 {
 	@EmbeddedId
@@ -67,7 +68,7 @@ public class Seasons
 	})
 	private Contract contract;
 
-	@JsonManagedReference
+	//@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "contract_availability",
@@ -79,7 +80,7 @@ public class Seasons
 	)
 	private Set<WeekDefinition> weekDefinitions;
 
-	@JsonManagedReference
+	//@JsonManagedReference
 	@OneToMany(mappedBy = "seasons", fetch = FetchType.LAZY)
 	private Set<ContractAvailability> availabilities;
 }
