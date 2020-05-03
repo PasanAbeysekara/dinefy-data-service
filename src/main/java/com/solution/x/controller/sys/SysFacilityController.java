@@ -3,9 +3,12 @@ package com.solution.x.controller.sys;
 import com.solution.x.controller.AbstractController;
 import com.solution.x.dao.sys.Facilities;
 import com.solution.x.facade.ResponseWrapper;
+import com.solution.x.facade.dto.FacilitiesModel;
 import com.solution.x.service.SysFacilityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -33,9 +34,9 @@ public class SysFacilityController extends AbstractController<Facilities>
 	 * @return all sys facilities
 	 */
 	@GetMapping("/facilities")
-	public ResponseEntity<ResponseWrapper<List<Facilities>>> getFacilities()
+	public ResponseEntity<ResponseWrapper<PagedModel<FacilitiesModel>>> getFacilities( Pageable pageable )
 	{
-		return facilityService.getFacilities();
+		return facilityService.getFacilities( pageable );
 	}
 
 	/**

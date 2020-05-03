@@ -1,21 +1,25 @@
 package com.solution.x.service;
 
 import com.solution.x.controller.AbstractController;
+import com.solution.x.controller.assembler.FacilitiesModelAssembler;
 import com.solution.x.dao.sys.Facilities;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.SystemMessages;
+import com.solution.x.facade.dto.FacilitiesModel;
 import com.solution.x.repo.sys.FacilitiesRepository;
 import com.solution.x.util.HATEOASProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,19 +33,27 @@ public class SysFacilityService extends AbstractController<Facilities>
 	@Autowired
 	private FacilitiesRepository facilitiesRepository;
 
+	@Autowired
+	private PagedResourcesAssembler<Facilities> pagedResourcesAssembler;
+
+	@Autowired
+	private FacilitiesModelAssembler facilitiesModelAssembler;
+
 	/**
 	 * Get All Facilities
 	 *
+	 * @param pageable Pageable
 	 * @return all sys facilities
 	 */
-	public ResponseEntity<ResponseWrapper<List<Facilities>>> getFacilities()
+	public ResponseEntity<ResponseWrapper<PagedModel<FacilitiesModel>>> getFacilities( Pageable pageable )
 	{
-		List<Facilities> facilities = facilitiesRepository.findAll( Sort.by( Sort.Direction.ASC, "name" ) );
-		facilities.forEach( fac -> fac.add( HATEOASProvider.sysFacilitySelfLinkProvider( fac.getFacilityId() ) ) );
+		Page<Facilities> facilitiesPage = facilitiesRepository.findAll( pageable );
+
+		PagedModel<FacilitiesModel> collModel = pagedResourcesAssembler.toModel( facilitiesPage, facilitiesModelAssembler );
 
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( new ResponseWrapper<>( "OK", facilities ) );
+				.body( new ResponseWrapper<>( "OK", collModel ) );
 	}
 
 
