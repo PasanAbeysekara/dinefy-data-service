@@ -2,18 +2,20 @@ package com.solution.x.controller.sys;
 
 import com.solution.x.controller.AbstractController;
 import com.solution.x.dao.sys.AvailabilityUnit;
-import com.solution.x.repo.sys.AvailabilityUnitRepository;
-import com.solution.x.util.HATEOASProvider;
+import com.solution.x.facade.ResponseWrapper;
+import com.solution.x.facade.dto.AvailabilityUnitModel;
+import com.solution.x.service.SysAvailabilityUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -22,23 +24,18 @@ import java.util.stream.Collectors;
 public class SysAvailabilityUnitController extends AbstractController<AvailabilityUnit>
 {
 	@Autowired
-	private AvailabilityUnitRepository availabilityUnitRepository;
+	private SysAvailabilityUnitService availabilityUnitService;
 
 	/**
 	 * Get All AvailabilityUnit
 	 *
+	 * @param pageable Pageable
 	 * @return all sys AvailabilityUnits
 	 */
 	@GetMapping("/availability-units")
-	public ResponseEntity<List<AvailabilityUnit>> getAvailabilityUnits()
+	public ResponseEntity<ResponseWrapper<PagedModel<AvailabilityUnitModel>>> getAvailabilityUnits( Pageable pageable )
 	{
-		List<AvailabilityUnit> availabilityUnits = availabilityUnitRepository.findAll().stream()
-				.map( unit -> unit.add( HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( unit.getUnitId() ) ) )
-				.collect( Collectors.toList() );
-
-		return ResponseEntity.ok()
-				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( availabilityUnits );
+		return availabilityUnitService.getAvailabilityUnits( pageable );
 	}
 
 
@@ -49,14 +46,46 @@ public class SysAvailabilityUnitController extends AbstractController<Availabili
 	 * @return The AvailabilityUnit
 	 */
 	@GetMapping("/availability-units/{id}")
-	public ResponseEntity<AvailabilityUnit> getAvailabilityUnit( @PathVariable("id") int id )
+	public ResponseEntity<ResponseWrapper<AvailabilityUnit>> getAvailabilityUnit( @PathVariable("id") int id )
 	{
-		Optional<AvailabilityUnit> optionalAvailabilityUnit = availabilityUnitRepository.findById( id );
+		return availabilityUnitService.getAvailabilityUnit( id );
+	}
 
-		return optionalAvailabilityUnit.map( availabilityUnit -> ResponseEntity.ok()
-				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( availabilityUnit.add( HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnit.getUnitId() ) ) ) )
-				.orElseGet( this::buildNotFoundResponse );
+	/**
+	 * Create a AvailabilityUnit
+	 *
+	 * @param availabilityUnit The AvailabilityUnit
+	 * @return Saved AvailabilityUnit response
+	 */
+	@PostMapping("/availability-units")
+	public ResponseEntity<ResponseWrapper<AvailabilityUnit>> createAvailabilityUnit( @RequestBody AvailabilityUnit availabilityUnit )
+	{
+		return availabilityUnitService.createAvailabilityUnit( availabilityUnit );
+	}
+
+	/**
+	 * Update a AvailabilityUnit
+	 *
+	 * @param id               The AvailabilityUnit ID
+	 * @param availabilityUnit The AvailabilityUnit
+	 * @return Updated AvailabilityUnit response
+	 */
+	@PutMapping("/availability-units/{id}")
+	public ResponseEntity<ResponseWrapper<AvailabilityUnit>> updateAvailabilityUnit( @PathVariable("id") int id, @RequestBody AvailabilityUnit availabilityUnit )
+	{
+		return availabilityUnitService.updateAvailabilityUnit( id, availabilityUnit );
+	}
+
+	/**
+	 * Delete a AvailabilityUnit
+	 *
+	 * @param id The AvailabilityUnit ID
+	 * @return Delete response
+	 */
+	@DeleteMapping("/availability-units/{id}")
+	public ResponseEntity<ResponseWrapper<AvailabilityUnit>> deleteTag( @PathVariable("id") int id )
+	{
+		return availabilityUnitService.deleteAvailabilityUnit( id );
 	}
 
 
