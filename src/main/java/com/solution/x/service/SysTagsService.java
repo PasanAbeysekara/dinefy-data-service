@@ -1,21 +1,25 @@
 package com.solution.x.service;
 
 import com.solution.x.controller.AbstractController;
+import com.solution.x.controller.assembler.TagsModelAssembler;
 import com.solution.x.dao.sys.Tags;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.SystemMessages;
+import com.solution.x.facade.dto.TagsModel;
 import com.solution.x.repo.sys.TagsRepository;
 import com.solution.x.util.HATEOASProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -28,19 +32,25 @@ public class SysTagsService extends AbstractController<Tags>
 	@Autowired
 	private TagsRepository tagsRepository;
 
+	@Autowired
+	private PagedResourcesAssembler<Tags> pagedResourcesAssembler;
+
+	@Autowired
+	private TagsModelAssembler tagsModelAssembler;
+
 	/**
 	 * Get All Tags
 	 *
 	 * @return all sys Tags
 	 */
-	public ResponseEntity<ResponseWrapper<List<Tags>>> getTags()
+	public ResponseEntity<ResponseWrapper<PagedModel<TagsModel>>> getTags( Pageable pageable )
 	{
-		List<Tags> tags = tagsRepository.findAll( Sort.by( Sort.Direction.ASC, "name" ) );
-		tags.forEach( fac -> fac.add( HATEOASProvider.sysTagsSelfLinkProvider( fac.getTagId() ) ) );
+		Page<Tags> tagsPaged = tagsRepository.findAll( pageable );
+		PagedModel<TagsModel> collModel = pagedResourcesAssembler.toModel( tagsPaged, tagsModelAssembler );
 
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( new ResponseWrapper<>( "OK", tags ) );
+				.body( new ResponseWrapper<>( "OK", collModel ) );
 	}
 
 	/**

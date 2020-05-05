@@ -3,8 +3,11 @@ package com.solution.x.controller.sys;
 import com.solution.x.controller.AbstractController;
 import com.solution.x.dao.sys.Tags;
 import com.solution.x.facade.ResponseWrapper;
+import com.solution.x.facade.dto.TagsModel;
 import com.solution.x.service.SysTagsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -31,9 +32,9 @@ public class SysTagsController extends AbstractController<Tags>
 	 * @return all sys Tags
 	 */
 	@GetMapping("/tags")
-	public ResponseEntity<ResponseWrapper<List<Tags>>> getTags()
+	public ResponseEntity<ResponseWrapper<PagedModel<TagsModel>>> getTags( Pageable pageable )
 	{
-		return sysTagsService.getTags();
+		return sysTagsService.getTags( pageable );
 	}
 
 	/**
