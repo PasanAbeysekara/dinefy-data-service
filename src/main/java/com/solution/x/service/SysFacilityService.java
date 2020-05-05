@@ -49,11 +49,11 @@ public class SysFacilityService extends AbstractController<Facilities>
 	{
 		Page<Facilities> facilitiesPage = facilitiesRepository.findAll( pageable );
 
-		PagedModel<FacilitiesModel> collModel = pagedResourcesAssembler.toModel( facilitiesPage, facilitiesModelAssembler );
+		PagedModel<FacilitiesModel> facilitiesPageModel = pagedResourcesAssembler.toModel( facilitiesPage, facilitiesModelAssembler );
 
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( new ResponseWrapper<>( "OK", collModel ) );
+				.body( new ResponseWrapper<>( "OK", facilitiesPageModel ) );
 	}
 
 
