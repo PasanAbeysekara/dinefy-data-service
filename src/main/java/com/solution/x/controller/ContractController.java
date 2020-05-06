@@ -1,17 +1,15 @@
 package com.solution.x.controller;
 
+import com.solution.x.controller.service.ContractService;
 import com.solution.x.dao.Contract;
-import com.solution.x.dao.key.ContractID;
-import com.solution.x.repo.ContractsRepository;
+import com.solution.x.facade.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -20,26 +18,12 @@ import java.util.Optional;
 public class ContractController extends AbstractController<Contract>
 {
 	@Autowired
-	private ContractsRepository contractsRepository;
+	private ContractService contractService;
 
 	@GetMapping("/contracts")
 	public ResponseEntity<List<Contract>> getProperty()
 	{
-
-		List<Contract> orgList = contractsRepository.findAll();
-
-		ResponseEntity<List<Contract>> responseEntity = null;
-		if( orgList.isEmpty() )
-		{
-			responseEntity = ResponseEntity.notFound().headers( addCommonHeaders( new HttpHeaders() ) ).build();
-		}
-		else
-		{
-			responseEntity = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( orgList );
-		}
-
-
-		return responseEntity;
+		return contractService.getProperty();
 	}
 
 	/**
@@ -49,16 +33,11 @@ public class ContractController extends AbstractController<Contract>
 	 * @return The Property
 	 */
 	@GetMapping("/contracts/{id~version}")
-	public ResponseEntity<Contract> getProperty( @PathVariable("id~version") String identification )
+	public ResponseEntity<ResponseWrapper<Contract>> getContract( @PathVariable("id~version") String identification )
 	{
-
 		String[] ids = identification.split( "~" );
 
-		Optional<Contract> contractOptional = contractsRepository.findById( new ContractID( Long.parseLong( ids[0] ), Short.parseShort( ids[1] ) ) );
-
-		return contractOptional.map( propertyDAO -> ResponseEntity.ok()
-				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( propertyDAO ) ).orElseGet( this::buildNotFoundResponse );
+		return contractService.getContract( Long.parseLong( ids[0] ), Short.parseShort( ids[1] ) );
 
 	}
 

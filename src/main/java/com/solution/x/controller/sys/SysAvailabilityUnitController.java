@@ -1,10 +1,9 @@
 package com.solution.x.controller.sys;
 
-import com.solution.x.controller.AbstractController;
+import com.solution.x.controller.service.SysAvailabilityUnitService;
 import com.solution.x.dao.sys.AvailabilityUnit;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.dto.AvailabilityUnitModel;
-import com.solution.x.service.SysAvailabilityUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Tharinda Wickramaarachchi
  */
 @RestController
-public class SysAvailabilityUnitController extends AbstractController<AvailabilityUnit>
+public class SysAvailabilityUnitController
 {
 	@Autowired
 	private SysAvailabilityUnitService availabilityUnitService;

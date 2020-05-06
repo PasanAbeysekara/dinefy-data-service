@@ -1,5 +1,6 @@
 package com.solution.x.util;
 
+import com.solution.x.controller.ContractController;
 import com.solution.x.controller.OrganizationController;
 import com.solution.x.controller.PropertyController;
 import com.solution.x.controller.sys.SysAvailabilityUnitController;
@@ -48,6 +49,11 @@ public class HATEOASProvider
 	public static Link propFacilitySelfLinkProvider( long id )
 	{
 		return linkTo( methodOn( PropertyController.class ).getPropFacilities( id ) ).withSelfRel();
+	}
+
+	public static Link contractSelfLinkProvider( long id, short version )
+	{
+		return linkTo( methodOn( ContractController.class ).getContract( id + "~" + version ) ).withSelfRel();
 	}
 
 }

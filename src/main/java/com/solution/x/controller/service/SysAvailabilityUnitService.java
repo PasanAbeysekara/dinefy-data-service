@@ -1,4 +1,4 @@
-package com.solution.x.service;
+package com.solution.x.controller.service;
 
 import com.solution.x.controller.AbstractController;
 import com.solution.x.controller.assembler.AvailUnitModelAssembler;
@@ -18,14 +18,14 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 /**
  * @author Tharinda Wickramaarachchi
  */
-@RestController
+@Service
 @Slf4j
 public class SysAvailabilityUnitService extends AbstractController<AvailabilityUnit>
 {

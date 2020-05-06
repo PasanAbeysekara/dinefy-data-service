@@ -1,10 +1,9 @@
 package com.solution.x.controller.sys;
 
-import com.solution.x.controller.AbstractController;
+import com.solution.x.controller.service.SysFacilityService;
 import com.solution.x.dao.sys.Facilities;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.dto.FacilitiesModel;
-import com.solution.x.service.SysFacilityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Slf4j
-public class SysFacilityController extends AbstractController<Facilities>
+public class SysFacilityController
 {
 	@Autowired
 	private SysFacilityService facilityService;

@@ -8,6 +8,7 @@ import com.solution.x.dao.key.ContractID;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -17,7 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -26,13 +26,13 @@ import java.util.Set;
 @Data
 @Entity
 @GuestFacingName
-@EqualsAndHashCode(onlyExplicitlyIncluded = true) //Lombok HashCode issues , Need to explicitly add include with onlyExplicitlyIncluded = true
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false) //Lombok HashCode issues , Need to explicitly add include with onlyExplicitlyIncluded = true
 @ToString
 @Table(name = "contracts")
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
 		property = "contractId")
-public class Contract implements Serializable
+public class Contract extends RepresentationModel<Contract>
 {
 	@EmbeddedId
 	@EqualsAndHashCode.Include

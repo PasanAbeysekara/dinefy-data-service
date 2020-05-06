@@ -1,4 +1,4 @@
-package com.solution.x.service;
+package com.solution.x.controller.service;
 
 import com.solution.x.controller.AbstractController;
 import com.solution.x.controller.assembler.TagsModelAssembler;

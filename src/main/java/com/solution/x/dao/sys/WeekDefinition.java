@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.solution.x.dao.Seasons;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +27,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "week_definition")
-public class WeekDefinition extends RepresentationModel<WeekDefinition>
+public class WeekDefinition
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
