@@ -6,18 +6,21 @@ import com.solution.x.dao.PropAvailabilityUnit;
 import com.solution.x.dao.PropFacilities;
 import com.solution.x.dao.PropTags;
 import com.solution.x.dao.Property;
+import com.solution.x.facade.ResponseWrapper;
+import com.solution.x.facade.SystemMessages;
 import com.solution.x.messaging.producer.PropertyQueueProducer;
 import com.solution.x.repo.PropFacilitiesRepository;
 import com.solution.x.repo.PropertyRepository;
 import com.solution.x.util.HATEOASProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,6 +32,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
  * @author Tharinda Wickramaarachchi
  */
 @Service
+@Slf4j
 public class PropertyService extends AbstractController<Property>
 {
 	@Autowired
@@ -110,33 +114,42 @@ public class PropertyService extends AbstractController<Property>
 			property.add( orgSelfLink );
 		}
 
-		for( PropFacilities facility : property.getFacilities() )
+		if( property.getFacilities() != null )
 		{
-			int sysFacilityID = facility.getSysFacility().getFacilityId();
+			for( PropFacilities facility : property.getFacilities() )
+			{
+				int sysFacilityID = facility.getSysFacility().getFacilityId();
 
-			Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider( sysFacilityID );
-			Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityId().getPropId() );
+				Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider( sysFacilityID );
+				Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityId().getPropId() );
 
-			facility.getSysFacility().add( selfRelSysFacility );
-			facility.add( selfRelPropFacility );
+				facility.getSysFacility().add( selfRelSysFacility );
+				facility.add( selfRelPropFacility );
+			}
 		}
 
-		for( PropTags tags : property.getPropTags() )
+		if( property.getPropTags() != null )
 		{
-			Link selfRelSysTags = HATEOASProvider.sysTagsSelfLinkProvider( tags.getSysTags().getTagId() );
-			//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( tags.getPropTagID().getPropId() );
+			for( PropTags tags : property.getPropTags() )
+			{
+				Link selfRelSysTags = HATEOASProvider.sysTagsSelfLinkProvider( tags.getSysTags().getTagId() );
+				//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( tags.getPropTagID().getPropId() );
 
-			tags.getSysTags().add( selfRelSysTags );
-			//tags.add( selfRelPropFacility );
+				tags.getSysTags().add( selfRelSysTags );
+				//tags.add( selfRelPropFacility );
+			}
 		}
 
-		for( PropAvailabilityUnit availabilityUnit : property.getAvailabilityUnits() )
+		if( property.getAvailabilityUnits() != null )
 		{
-			Link selfRelSysAvailabilityUnit = HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnit.getSysAvailabilityUnit().getUnitId() );
-			//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );
+			for( PropAvailabilityUnit availabilityUnit : property.getAvailabilityUnits() )
+			{
+				Link selfRelSysAvailabilityUnit = HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnit.getSysAvailabilityUnit().getUnitId() );
+				//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );
 
-			availabilityUnit.getSysAvailabilityUnit().add( selfRelSysAvailabilityUnit );
-			//facility.add( selfRelPropFacility );
+				availabilityUnit.getSysAvailabilityUnit().add( selfRelSysAvailabilityUnit );
+				//facility.add( selfRelPropFacility );
+			}
 		}
 	}
 
@@ -147,29 +160,61 @@ public class PropertyService extends AbstractController<Property>
 	 * @param property property
 	 * @return saved property
 	 */
-	public ResponseEntity<Property> saveProperty( @RequestBody Property property )
+	@org.springframework.transaction.annotation.Transactional // TODO transactional not working
+	public ResponseEntity<ResponseWrapper<Property>> saveProperty( Property property )
 	{
-		HttpHeaders responseHeaders = new HttpHeaders();
-
 		Property savedProp = null;
-		ResponseEntity<Property> response;
+		ResponseEntity<ResponseWrapper<Property>> response;
 
 		try
 		{
-			savedProp = propertyRepository.save( property );
-			queueProducer.produceMessage( property );
+			savedProp = propertyRepository.saveAndFlush( property );
+			//queueProducer.produceMessage( property );
+			linkPropertyEntities( savedProp );
 
-			response = ResponseEntity.ok().headers( responseHeaders ).body( savedProp );
+			response = ResponseEntity.ok()
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( "CREATED", SystemMessages.PROPERTY_CREATE_SUCCESS.getReasonPhrase(), savedProp ) );
 		}
 		catch( Exception e )
 		{
-			e.printStackTrace();
-			response = ResponseEntity.noContent().headers( responseHeaders ).build();
+			log.error( "Error Occurred during property creating : ", e );
+			response = buildErrorResponse( SystemMessages.PROPERTY_CREATE_FAILED, e );
 		}
 
 		return response;
 	}
 
+	/**
+	 * Update a property
+	 *
+	 * @param id       The property ID
+	 * @param property The property
+	 * @return Updated property response
+	 */
+	@Transactional
+	public ResponseEntity<ResponseWrapper<Property>> updateProperty( long id, Property property )
+	{
+		ResponseEntity<ResponseWrapper<Property>> response;
+
+		try
+		{
+			property.setPropId( id );
+			Property savedProperty = propertyRepository.save( property );
+			linkPropertyEntities( savedProperty );
+
+			response = ResponseEntity.ok()
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( "UPDATED", SystemMessages.PROPERTY_UPDATE_SUCCESS.getReasonPhrase(), savedProperty ) );
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+			response = buildErrorResponse( SystemMessages.PROPERTY_UPDATE_FAILED, e );
+		}
+
+		return response;
+	}
 
 	/**
 	 * Get Property Names

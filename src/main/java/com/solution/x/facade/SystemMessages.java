@@ -29,7 +29,14 @@ public enum SystemMessages
 	AVAIL_UNIT_UPDATE_SUCCESS( "1302", "Availability Unit successfully updated" ),
 	AVAIL_UNIT_UPDATE_FAILED( "1303", "Availability Unit update failed" ),
 	AVAIL_UNIT_DELETE_SUCCESS( "1304", "Availability Unit successfully deleted" ),
-	AVAIL_UNIT_DELETE_FAILED( "1305", "Availability Unit delete failed" );
+	AVAIL_UNIT_DELETE_FAILED( "1305", "Availability Unit delete failed" ),
+
+	PROPERTY_CREATE_SUCCESS( "1400", "Property successfully saved" ),
+	PROPERTY_CREATE_FAILED( "1401", "Property saving failed" ),
+	PROPERTY_UPDATE_SUCCESS( "1402", "Property successfully updated" ),
+	PROPERTY_UPDATE_FAILED( "1403", "Property update failed" ),
+	PROPERTY_DELETE_SUCCESS( "1404", "Property successfully deleted" ),
+	PROPERTY_DELETE_FAILED( "1405", "Property delete failed" );
 
 	private final String code;
 	private final String reasonPhrase;

@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 /**
@@ -89,6 +90,7 @@ public class SysAvailabilityUnitService extends AbstractController<AvailabilityU
 	 * @param availUnit The AvailabilityUnit
 	 * @return Saved AvailabilityUnit response
 	 */
+	@Transactional
 	public ResponseEntity<ResponseWrapper<AvailabilityUnit>> createAvailabilityUnit( AvailabilityUnit availUnit )
 	{
 		ResponseEntity<ResponseWrapper<AvailabilityUnit>> response;

@@ -3,11 +3,13 @@ package com.solution.x.controller;
 import com.solution.x.controller.service.PropertyService;
 import com.solution.x.dao.PropFacilities;
 import com.solution.x.dao.Property;
+import com.solution.x.facade.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -63,9 +65,15 @@ public class PropertyController
 	 * @return saved property
 	 */
 	@PostMapping("/properties")
-	public ResponseEntity<Property> saveProperty( @RequestBody Property property )
+	public ResponseEntity<ResponseWrapper<Property>> saveProperty( @RequestBody Property property )
 	{
 		return propertyService.saveProperty( property );
+	}
+
+	@PutMapping("/properties/{id}")
+	public ResponseEntity<ResponseWrapper<Property>> updateProperty( @PathVariable("id") long id, @RequestBody Property property )
+	{
+		return propertyService.updateProperty( id, property );
 	}
 
 	/**
