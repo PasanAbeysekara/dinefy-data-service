@@ -37,7 +37,7 @@ public abstract class AbstractController<DAO>
 				.body( new ResponseWrapper<>( "NOT FOUND", SystemMessages.NOT_FOUND.getReasonPhrase(), null ) );
 	}
 
-	protected ResponseEntity<ResponseWrapper<DAO>> buildErrorResponse( SystemMessages message, Exception e )
+	protected ResponseEntity<ResponseWrapper<DAO>> buildExceptionErrorResponse( SystemMessages message, Exception e )
 	{
 		Error error = new Error();
 		error.setCode( message.code() );

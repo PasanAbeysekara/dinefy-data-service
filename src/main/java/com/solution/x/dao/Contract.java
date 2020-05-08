@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -52,6 +53,7 @@ public class Contract extends RepresentationModel<Contract>
 	@JsonBackReference
 	@ToString.Exclude
 	@OneToOne(mappedBy = "currentContract", fetch = FetchType.LAZY)
+	@JoinColumn(name = "prop_id")
 	private Property property;
 
 	//	@ManyToOne(fetch = FetchType.LAZY)

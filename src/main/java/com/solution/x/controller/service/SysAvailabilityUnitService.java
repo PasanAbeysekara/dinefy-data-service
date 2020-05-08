@@ -109,7 +109,7 @@ public class SysAvailabilityUnitService extends AbstractController<AvailabilityU
 		catch( Exception e )
 		{
 			log.error( "Error Occurred during availUnit creating : ", e );
-			response = buildErrorResponse( SystemMessages.AVAIL_UNIT_CREATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemMessages.AVAIL_UNIT_CREATE_FAILED, e );
 		}
 
 		return response;
@@ -142,7 +142,7 @@ public class SysAvailabilityUnitService extends AbstractController<AvailabilityU
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.AVAIL_UNIT_UPDATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemMessages.AVAIL_UNIT_UPDATE_FAILED, e );
 		}
 
 		return response;
@@ -169,7 +169,7 @@ public class SysAvailabilityUnitService extends AbstractController<AvailabilityU
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.FACILITY_DELETE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemMessages.FACILITY_DELETE_FAILED, e );
 		}
 
 		return response;

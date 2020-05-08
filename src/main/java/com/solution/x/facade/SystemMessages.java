@@ -9,6 +9,7 @@ package com.solution.x.facade;
 public enum SystemMessages
 {
 	NOT_FOUND( "100", "Requested data not found" ),
+	INVALID_DATA( "101", "Invalid data State" ),
 
 	FACILITY_CREATE_SUCCESS( "1100", "Facility successfully saved" ),
 	FACILITY_CREATE_FAILED( "1101", "Facility saving failed" ),
@@ -36,7 +37,11 @@ public enum SystemMessages
 	PROPERTY_UPDATE_SUCCESS( "1402", "Property successfully updated" ),
 	PROPERTY_UPDATE_FAILED( "1403", "Property update failed" ),
 	PROPERTY_DELETE_SUCCESS( "1404", "Property successfully deleted" ),
-	PROPERTY_DELETE_FAILED( "1405", "Property delete failed" );
+	PROPERTY_DELETE_FAILED( "1405", "Property delete failed" ),
+
+
+	PROPERTY_VALIDATION_CONTRACT( "1410", "The contract already associated with a property" );
+
 
 	private final String code;
 	private final String reasonPhrase;

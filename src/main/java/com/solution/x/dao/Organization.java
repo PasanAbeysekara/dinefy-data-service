@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.ano.GuestFacingName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Entity;
@@ -26,6 +27,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @GuestFacingName
+@ToString
 @Table(name = "organization")
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -50,6 +52,7 @@ public class Organization extends RepresentationModel<Organization>
 	private String name;
 
 	//@JsonManagedReference
+	@ToString.Exclude
 	@OneToMany(mappedBy = "organizations", fetch = FetchType.LAZY)
 	private Set<Property> properties;
 }

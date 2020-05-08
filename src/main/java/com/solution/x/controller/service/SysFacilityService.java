@@ -109,7 +109,7 @@ public class SysFacilityService extends AbstractController<Facilities>
 		catch( Exception e )
 		{
 			log.error( "Error Occurred during facility creating : ", e );
-			response = buildErrorResponse( SystemMessages.FACILITY_CREATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemMessages.FACILITY_CREATE_FAILED, e );
 		}
 
 		return response;
@@ -142,7 +142,7 @@ public class SysFacilityService extends AbstractController<Facilities>
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.FACILITY_UPDATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemMessages.FACILITY_UPDATE_FAILED, e );
 		}
 
 		return response;
@@ -169,7 +169,7 @@ public class SysFacilityService extends AbstractController<Facilities>
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.FACILITY_DELETE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemMessages.FACILITY_DELETE_FAILED, e );
 		}
 
 		return response;

@@ -83,17 +83,17 @@ public class Property extends RepresentationModel<Property>
 	//	private Point geo_location;
 
 	@Column(name = "current_cont_id")
-	private Integer current_cont_id;
+	private Integer currentContId;
 
 	@Column(name = "current_cont_version")
-	private Short current_cont_version;
+	private Short currentContVersion;
 
 	@Column(name = "start_time")
-	private LocalTime start_time;
+	private LocalTime startTime;
 
 	//@JsonIgnore
 	@Column(name = "end_time")
-	private LocalTime end_time;
+	private LocalTime endTime;
 
 	@JsonBackReference
 	@ToString.Exclude

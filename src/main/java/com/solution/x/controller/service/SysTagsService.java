@@ -106,7 +106,7 @@ public class SysTagsService extends AbstractController<Tags>
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.TAG_CREATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemMessages.TAG_CREATE_FAILED, e );
 		}
 
 		return response;
@@ -139,7 +139,7 @@ public class SysTagsService extends AbstractController<Tags>
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.TAG_UPDATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemMessages.TAG_UPDATE_FAILED, e );
 		}
 
 		return response;
@@ -166,7 +166,7 @@ public class SysTagsService extends AbstractController<Tags>
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.TAG_DELETE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemMessages.TAG_DELETE_FAILED, e );
 		}
 
 		return response;

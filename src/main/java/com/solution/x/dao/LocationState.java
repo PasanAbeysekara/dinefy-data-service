@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.dao.key.StateID;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -26,6 +27,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "location_state")
+@ToString
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
 		property = "stateId")
@@ -39,6 +41,7 @@ public class LocationState
 	private String name;
 
 	@JsonBackReference
+	@ToString.Exclude
 	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
 	private Set<LocationBased> basedLocation;
 

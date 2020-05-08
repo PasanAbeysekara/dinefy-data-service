@@ -2,12 +2,15 @@ package com.solution.x.controller.service;
 
 import com.solution.x.controller.AbstractController;
 import com.solution.x.controller.OrganizationController;
+import com.solution.x.controller.validator.PropertyValidator;
 import com.solution.x.dao.PropAvailabilityUnit;
 import com.solution.x.dao.PropFacilities;
 import com.solution.x.dao.PropTags;
 import com.solution.x.dao.Property;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.SystemMessages;
+import com.solution.x.global.DataCarrier;
+import com.solution.x.global.SystemOperation;
 import com.solution.x.messaging.producer.PropertyQueueProducer;
 import com.solution.x.repo.PropFacilitiesRepository;
 import com.solution.x.repo.PropertyRepository;
@@ -44,6 +47,9 @@ public class PropertyService extends AbstractController<Property>
 	@Autowired
 	private PropFacilitiesRepository propFacilitiesRepository;
 
+	@Autowired
+	private PropertyValidator validator;
+
 	/**
 	 * Get all properties
 	 *
@@ -75,7 +81,7 @@ public class PropertyService extends AbstractController<Property>
 	 * @param id property ID
 	 * @return The Property
 	 */
-	public ResponseEntity<Property> getProperty( @PathVariable("id") long id )
+	public ResponseEntity<Property> getProperty( long id )
 	{
 		Optional<Property> optionalProperty = propertyRepository.findById( id );
 
@@ -160,7 +166,7 @@ public class PropertyService extends AbstractController<Property>
 	 * @param property property
 	 * @return saved property
 	 */
-	@org.springframework.transaction.annotation.Transactional // TODO transactional not working
+	//@org.springframework.transaction.annotation.Transactional // TODO transactional not working
 	public ResponseEntity<ResponseWrapper<Property>> saveProperty( Property property )
 	{
 		Property savedProp = null;
@@ -168,18 +174,28 @@ public class PropertyService extends AbstractController<Property>
 
 		try
 		{
-			savedProp = propertyRepository.saveAndFlush( property );
-			//queueProducer.produceMessage( property );
-			linkPropertyEntities( savedProp );
+			DataCarrier<ResponseEntity<ResponseWrapper<Property>>> dataCarrierValidation = validator.validateCreate( property );
 
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "CREATED", SystemMessages.PROPERTY_CREATE_SUCCESS.getReasonPhrase(), savedProp ) );
+			if( dataCarrierValidation.isSuccess() )
+			{
+				savedProp = propertyRepository.saveAndFlush( property );
+				//queueProducer.produceMessage( property );
+				linkPropertyEntities( savedProp );
+
+				response = ResponseEntity.ok()
+						.headers( addCommonHeaders( new HttpHeaders() ) )
+						.body( new ResponseWrapper<>( SystemOperation.CREATE, SystemMessages.PROPERTY_CREATE_SUCCESS, savedProp ) );
+			}
+			else
+			{
+				response = dataCarrierValidation.getData();
+			}
+
 		}
 		catch( Exception e )
 		{
 			log.error( "Error Occurred during property creating : ", e );
-			response = buildErrorResponse( SystemMessages.PROPERTY_CREATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemMessages.PROPERTY_CREATE_FAILED, e );
 		}
 
 		return response;
@@ -210,7 +226,7 @@ public class PropertyService extends AbstractController<Property>
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildErrorResponse( SystemMessages.PROPERTY_UPDATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemMessages.PROPERTY_UPDATE_FAILED, e );
 		}
 
 		return response;

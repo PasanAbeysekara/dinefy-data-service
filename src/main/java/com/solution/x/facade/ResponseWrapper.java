@@ -1,14 +1,19 @@
 package com.solution.x.facade;
 
+import com.solution.x.global.SystemOperation;
+import lombok.Data;
+
 /**
  * @author Tharinda Wickramaarachchi
  * @since 4/28/2020 3:29 PM
  */
 
+@Data
 public class ResponseWrapper<T>
 {
 
 	private String code;
+	private String operation;
 	private String prettyMessage;
 	private Error error;
 	private T data;
@@ -19,6 +24,7 @@ public class ResponseWrapper<T>
 		this.data = data;
 	}
 
+	@Deprecated
 	public ResponseWrapper( String code, String prettyMessage, T data )
 	{
 		this.code = code;
@@ -26,6 +32,22 @@ public class ResponseWrapper<T>
 		this.data = data;
 	}
 
+	public ResponseWrapper( SystemOperation operation, SystemMessages systemMessages, T data )
+	{
+		this.operation = operation.toString();
+		this.code = systemMessages.code();
+		this.prettyMessage = systemMessages.getReasonPhrase();
+		this.data = data;
+	}
+
+	public ResponseWrapper( SystemOperation operation, SystemMessages systemMessages, String messageAppender )
+	{
+		this.operation = operation.toString();
+		this.code = systemMessages.code();
+		this.prettyMessage = systemMessages.getReasonPhrase() + " : " + messageAppender;
+	}
+
+	@Deprecated
 	public ResponseWrapper( String code, String prettyMessage, Error error )
 	{
 		this.code = code;
@@ -43,33 +65,14 @@ public class ResponseWrapper<T>
 		this.code = code;
 	}
 
-	public String getPrettyMessage()
+	public String getOperation()
 	{
-		return prettyMessage;
+		return operation;
 	}
 
-	public void setPrettyMessage( String prettyMessage )
+	public void setOperation( String operation )
 	{
-		this.prettyMessage = prettyMessage;
+		this.operation = operation;
 	}
 
-	public Error getError()
-	{
-		return error;
-	}
-
-	public void setError( Error error )
-	{
-		this.error = error;
-	}
-
-	public T getData()
-	{
-		return data;
-	}
-
-	public void setData( T data )
-	{
-		this.data = data;
-	}
 }
