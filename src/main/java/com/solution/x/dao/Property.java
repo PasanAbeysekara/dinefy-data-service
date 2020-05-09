@@ -133,7 +133,7 @@ public class Property extends RepresentationModel<Property>
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "contact_id")
-	private Contacts contacts;
+	private ContactDetails contactDetails;
 
 	//@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY)

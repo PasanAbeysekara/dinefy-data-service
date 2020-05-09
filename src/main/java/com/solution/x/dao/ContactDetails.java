@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 @Table(name = "contacts")
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-public class Contacts
+public class ContactDetails
 {
 	@Id
 	@SequenceGenerator(
@@ -79,6 +79,6 @@ public class Contacts
 
 	@JsonBackReference
 	@ToString.Exclude
-	@OneToOne(mappedBy = "contacts", fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "contactDetails", fetch = FetchType.LAZY)
 	private Property property;
 }

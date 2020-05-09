@@ -3,7 +3,7 @@ package com.solution.x.facade.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.solution.x.dao.Contacts;
+import com.solution.x.dao.ContactDetails;
 import com.solution.x.dao.Contract;
 import com.solution.x.dao.LocationBased;
 import com.solution.x.dao.Organization;
@@ -130,7 +130,7 @@ public class Property extends RepresentationModel<Property>
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "contact_id")
-	private Contacts contacts;
+	private ContactDetails contactDetails;
 
 	//@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY)
