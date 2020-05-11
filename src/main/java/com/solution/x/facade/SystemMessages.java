@@ -39,8 +39,14 @@ public enum SystemMessages
 	PROPERTY_DELETE_SUCCESS( "1404", "Property successfully deleted" ),
 	PROPERTY_DELETE_FAILED( "1405", "Property delete failed" ),
 
+	PROPERTY_VALIDATION_CONTRACT( "1410", "The contract already associated with a property" ),
 
-	PROPERTY_VALIDATION_CONTRACT( "1410", "The contract already associated with a property" );
+	CONTRACT_CREATE_SUCCESS( "1500", "Contract successfully saved" ),
+	CONTRACT_CREATE_FAILED( "1501", "Contract saving failed" ),
+	CONTRACT_UPDATE_SUCCESS( "1502", "Contract successfully updated" ),
+	CONTRACT_UPDATE_FAILED( "1503", "Contract update failed" ),
+	CONTRACT_DELETE_SUCCESS( "1504", "Contract successfully deleted" ),
+	CONTRACT_DELETE_FAILED( "1505", "Contract delete failed" );
 
 
 	private final String code;

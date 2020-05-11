@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,10 +30,10 @@ public class ContractController extends AbstractController<Contract>
 	}
 
 	/**
-	 * Get Single property
+	 * Get Single Contract
 	 *
-	 * @param identification property ID
-	 * @return The Property
+	 * @param identification Contract ID ~ Contract version
+	 * @return The Contract
 	 */
 	@GetMapping("/contracts/{id~version}")
 	public ResponseEntity<ResponseWrapper<Contract>> getContract( @PathVariable("id~version") String identification )
@@ -40,5 +43,49 @@ public class ContractController extends AbstractController<Contract>
 		return contractService.getContract( Long.parseLong( ids[0] ), Short.parseShort( ids[1] ) );
 
 	}
+
+	/**
+	 * Create Single Contract
+	 *
+	 * @param contract Contract
+	 * @return The Contract
+	 */
+	@PostMapping("/contracts")
+	public ResponseEntity<ResponseWrapper<Contract>> createContract( @RequestBody Contract contract )
+	{
+		return contractService.createContract( contract );
+
+	}
+
+
+	/**
+	 * Update a Contract
+	 *
+	 * @param identification Contract ID ~ Contract version
+	 * @param contract       Contract
+	 * @return The Updated Contract
+	 */
+	@PutMapping("/contracts/{id~version}")
+	public ResponseEntity<ResponseWrapper<Contract>> updateContract( @PathVariable("id~version") String identification, @RequestBody Contract contract )
+	{
+		String[] ids = identification.split( "~" );
+		return contractService.updateContract( Long.parseLong( ids[0] ), Short.parseShort( ids[1] ), contract );
+
+	}
+
+	/**
+	 * Delete a Contract
+	 *
+	 * @param identification Contract ID ~ Contract version
+	 * @return Delete status
+	 */
+	@PutMapping("/contracts/{id~version}")
+	public ResponseEntity<ResponseWrapper<Contract>> updateContract( @PathVariable("id~version") String identification )
+	{
+		String[] ids = identification.split( "~" );
+		return contractService.deleteContract( Long.parseLong( ids[0] ), Short.parseShort( ids[1] ) );
+
+	}
+
 
 }

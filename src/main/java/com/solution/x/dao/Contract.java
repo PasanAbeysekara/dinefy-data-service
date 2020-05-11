@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.hateoas.RepresentationModel;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -61,6 +62,6 @@ public class Contract extends RepresentationModel<Contract>
 	//	private Property contractProp;
 
 	//@JsonManagedReference
-	@OneToMany(mappedBy = "contract", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "contract", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Seasons> seasons;
 }
