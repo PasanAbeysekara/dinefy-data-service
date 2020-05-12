@@ -5,6 +5,7 @@ import com.solution.x.dao.Contract;
 import com.solution.x.facade.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -79,7 +80,7 @@ public class ContractController extends AbstractController<Contract>
 	 * @param identification Contract ID ~ Contract version
 	 * @return Delete status
 	 */
-	@PutMapping("/contracts/{id~version}")
+	@DeleteMapping("/contracts/{id~version}")
 	public ResponseEntity<ResponseWrapper<Contract>> updateContract( @PathVariable("id~version") String identification )
 	{
 		String[] ids = identification.split( "~" );

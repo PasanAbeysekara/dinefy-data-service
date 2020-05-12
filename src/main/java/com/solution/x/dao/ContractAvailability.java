@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.dao.key.AvailabilityID;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -28,7 +27,7 @@ import javax.persistence.Table;
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
 		property = "availabilityID")
-public class ContractAvailability extends RepresentationModel<PropFacilities>
+public class ContractAvailability
 {
 	@EmbeddedId
 	@EqualsAndHashCode.Include

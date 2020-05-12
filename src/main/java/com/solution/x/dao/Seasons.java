@@ -55,10 +55,10 @@ public class Seasons
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "from")
+	@Column(name = "from_date")
 	private Date from;
 
-	@Column(name = "to")
+	@Column(name = "to_date")
 	private Date to;
 
 	@JsonBackReference

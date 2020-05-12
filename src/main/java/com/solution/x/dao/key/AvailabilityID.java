@@ -23,8 +23,8 @@ public class AvailabilityID implements Serializable
 	@Column(name = "contract_version")
 	private Short version;
 
-	@Column(name = "prop_id")
-	private int propId;
+	//	@Column(name = "prop_id")
+	//	private int propId;
 
 	@Column(name = "avail_unit_id")
 	private int availUnitId;
