@@ -77,7 +77,7 @@ public class Seasons
 					@JoinColumn(name = "contract_id", referencedColumnName = "contract_id", insertable = false, updatable = false),
 					@JoinColumn(name = "contract_version", referencedColumnName = "contract_version", insertable = false, updatable = false),
 					@JoinColumn(name = "season_id", referencedColumnName = "season_id", insertable = false, updatable = false)},
-			inverseJoinColumns = @JoinColumn(name = "week_def_id")
+			inverseJoinColumns = @JoinColumn(name = "week_def_id", insertable = false, updatable = false)
 	)
 	private Set<WeekDefinition> weekDefinitions;
 

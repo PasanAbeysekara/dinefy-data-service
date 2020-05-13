@@ -91,6 +91,8 @@ public class ContractService extends AbstractController<Contract>
 
 		try
 		{
+			preProcess( contract );
+
 			Contract savedContract = contractsRepository.save( contract );
 
 			Link selfRel = HATEOASProvider.contractSelfLinkProvider( contract.getContractId().getContractId(), contract.getContractId().getVersion() );
@@ -121,6 +123,8 @@ public class ContractService extends AbstractController<Contract>
 
 		try
 		{
+			preProcess( contract );
+
 			contract.setContractId( new ContractID( id, version ) );
 			Contract savedContract = contractsRepository.save( contract );
 
@@ -138,6 +142,15 @@ public class ContractService extends AbstractController<Contract>
 		}
 
 		return response;
+	}
+
+
+	private void preProcess( Contract contract )
+	{
+		if( contract.getSeasons() != null )
+		{
+			contract.getSeasons().forEach( seasons -> seasons.setWeekDefinitions( null ) ); // TODO Do a proper fix  Issue : Hibernate generate unnecessary insert query  : insert into hngout.contract_availability (contract_id, season_id, contract_version, week_def_id) values (?, ?, ?, ?)
+		}
 	}
 
 	/**
