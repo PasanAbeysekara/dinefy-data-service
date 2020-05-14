@@ -10,6 +10,7 @@ public enum SystemMessages
 {
 	NOT_FOUND( "100", "Requested data not found" ),
 	INVALID_DATA( "101", "Invalid data State" ),
+	SUCCESSFULLY_LOADED( "102", "Data successfully loaded" ),
 
 	FACILITY_CREATE_SUCCESS( "1100", "Facility successfully saved" ),
 	FACILITY_CREATE_FAILED( "1101", "Facility saving failed" ),

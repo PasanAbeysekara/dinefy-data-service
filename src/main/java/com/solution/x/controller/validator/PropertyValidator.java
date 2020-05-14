@@ -30,11 +30,11 @@ public class PropertyValidator
 		DataCarrier<ResponseEntity<ResponseWrapper<Property>>> dataCarrier = DataCarrier.<ResponseEntity<ResponseWrapper<Property>>>init().withSuccess();
 
 
-		Integer withSameContract = propertyRepository.findPropWithSameContract( property.getCurrentContId(), property.getCurrentContVersion() );
+		Integer withSameContract = propertyRepository.findPropWithSameContract( property.getCurrentContId() );
 
 		if( withSameContract > 0 )
 		{
-			String messageAppender = "Contact ID = " + property.getCurrentContId() + " Version : " + property.getCurrentContVersion();
+			String messageAppender = "Contact ID = " + property.getCurrentContId();
 
 			ResponseEntity<ResponseWrapper<Property>> responseEntity = ResponseEntity.status( HttpStatus.CONFLICT )
 					.body( new ResponseWrapper<>( SystemOperation.VALIDATE, SystemMessages.PROPERTY_VALIDATION_CONTRACT, messageAppender ) );

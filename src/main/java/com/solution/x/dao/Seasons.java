@@ -16,9 +16,9 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -63,10 +63,8 @@ public class Seasons
 
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumns({
-			@JoinColumn(name = "contract_id", referencedColumnName = "contract_id", insertable = false, updatable = false),
-			@JoinColumn(name = "contract_version", referencedColumnName = "version", insertable = false, updatable = false)
-	})
+	@JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
+	@MapsId("contract_id")
 	private Contract contract;
 
 	//@JsonManagedReference
@@ -75,7 +73,6 @@ public class Seasons
 			name = "contract_availability",
 			joinColumns = {
 					@JoinColumn(name = "contract_id", referencedColumnName = "contract_id", insertable = false, updatable = false),
-					@JoinColumn(name = "contract_version", referencedColumnName = "contract_version", insertable = false, updatable = false),
 					@JoinColumn(name = "season_id", referencedColumnName = "season_id", insertable = false, updatable = false)},
 			inverseJoinColumns = @JoinColumn(name = "week_def_id", insertable = false, updatable = false)
 	)

@@ -20,9 +20,6 @@ public class SeasonID implements Serializable
 	@Column(name = "contract_id")
 	private long contractId;
 
-	@Column(name = "contract_version")
-	private Short version;
-
 	@Column(name = "season_id")
 	private Short seasonId;
 }

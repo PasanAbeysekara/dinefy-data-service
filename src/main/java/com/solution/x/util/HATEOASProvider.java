@@ -51,9 +51,9 @@ public class HATEOASProvider
 		return linkTo( methodOn( PropertyController.class ).getPropFacilities( id ) ).withSelfRel();
 	}
 
-	public static Link contractSelfLinkProvider( long id, short version )
+	public static Link contractSelfLinkProvider( long id )
 	{
-		return linkTo( methodOn( ContractController.class ).getContract( id + "~" + version ) ).withSelfRel();
+		return linkTo( methodOn( ContractController.class ).getContract( id ) ).withSelfRel();
 	}
 
 }

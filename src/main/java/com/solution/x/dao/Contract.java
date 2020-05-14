@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.ano.GuestFacingName;
-import com.solution.x.dao.key.ContractID;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -12,12 +11,15 @@ import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -36,9 +38,19 @@ import java.util.Set;
 		property = "contractId")
 public class Contract extends RepresentationModel<Contract>
 {
-	@EmbeddedId
-	@EqualsAndHashCode.Include
-	private ContractID contractId;
+	@Id
+	@SequenceGenerator(
+			name = "contracts_gen",
+			sequenceName = "contract_seq",
+			initialValue = 0,
+			allocationSize = 1
+	)
+	@GeneratedValue(generator = "contracts_gen", strategy = GenerationType.SEQUENCE)
+	@Column(name = "contract_id")
+	private Long contractId;
+
+	@Column(name = "version")
+	private Short version;
 
 	@Column(name = "prop_id")
 	private Integer propId;

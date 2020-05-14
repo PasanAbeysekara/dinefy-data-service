@@ -33,16 +33,13 @@ public class ContractController extends AbstractController<Contract>
 	/**
 	 * Get Single Contract
 	 *
-	 * @param identification Contract ID ~ Contract version
+	 * @param id Contract ID
 	 * @return The Contract
 	 */
-	@GetMapping("/contracts/{id~version}")
-	public ResponseEntity<ResponseWrapper<Contract>> getContract( @PathVariable("id~version") String identification )
+	@GetMapping("/contracts/{id}")
+	public ResponseEntity<ResponseWrapper<Contract>> getContract( @PathVariable("id") Long id )
 	{
-		String[] ids = identification.split( "~" );
-
-		return contractService.getContract( Long.parseLong( ids[0] ), Short.parseShort( ids[1] ) );
-
+		return contractService.getContract( id );
 	}
 
 	/**
@@ -62,30 +59,26 @@ public class ContractController extends AbstractController<Contract>
 	/**
 	 * Update a Contract
 	 *
-	 * @param identification Contract ID ~ Contract version
-	 * @param contract       Contract
+	 * @param id       Contract ID
+	 * @param contract Contract
 	 * @return The Updated Contract
 	 */
-	@PutMapping("/contracts/{id~version}")
-	public ResponseEntity<ResponseWrapper<Contract>> updateContract( @PathVariable("id~version") String identification, @RequestBody Contract contract )
+	@PutMapping("/contracts/{id}")
+	public ResponseEntity<ResponseWrapper<Contract>> updateContract( @PathVariable("id") Long id, @RequestBody Contract contract )
 	{
-		String[] ids = identification.split( "~" );
-		return contractService.updateContract( Long.parseLong( ids[0] ), Short.parseShort( ids[1] ), contract );
-
+		return contractService.updateContract( id, contract );
 	}
 
 	/**
 	 * Delete a Contract
 	 *
-	 * @param identification Contract ID ~ Contract version
+	 * @param id Contract ID
 	 * @return Delete status
 	 */
-	@DeleteMapping("/contracts/{id~version}")
-	public ResponseEntity<ResponseWrapper<Contract>> updateContract( @PathVariable("id~version") String identification )
+	@DeleteMapping("/contracts/{id}")
+	public ResponseEntity<ResponseWrapper<Contract>> updateContract( @PathVariable("id") Long id )
 	{
-		String[] ids = identification.split( "~" );
-		return contractService.deleteContract( Long.parseLong( ids[0] ), Short.parseShort( ids[1] ) );
-
+		return contractService.deleteContract( id );
 	}
 
 

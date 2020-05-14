@@ -14,6 +14,6 @@ public interface PropertyRepository extends JpaRepository<Property, Long>
 {
 	List<Property> findByCode( @Param("code") String code );
 
-	@Query(value = "SELECT count(p) FROM Property p where p.currentContId =:id and p.currentContVersion = :version")
-	Integer findPropWithSameContract( @Param("id") Integer currentContId, @Param("version") Short currentContVersion );
+	@Query(value = "SELECT count(p) FROM Property p where p.currentContId =:id")
+	Integer findPropWithSameContract( @Param("id") Integer currentContId );
 }

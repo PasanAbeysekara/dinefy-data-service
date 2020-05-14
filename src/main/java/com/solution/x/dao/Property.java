@@ -20,7 +20,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -85,9 +84,6 @@ public class Property extends RepresentationModel<Property>
 	@Column(name = "current_cont_id")
 	private Integer currentContId;
 
-	@Column(name = "current_cont_version")
-	private Short currentContVersion;
-
 	@Column(name = "start_time")
 	private LocalTime startTime;
 
@@ -115,10 +111,7 @@ public class Property extends RepresentationModel<Property>
 	@ToString.Exclude
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumns({
-			@JoinColumn(name = "current_cont_id", referencedColumnName = "contract_id", insertable = false, updatable = false),
-			@JoinColumn(name = "current_cont_version", referencedColumnName = "version", insertable = false, updatable = false)
-	})
+	@JoinColumn(name = "current_cont_id", referencedColumnName = "contract_id", insertable = false, updatable = false)
 	private Contract currentContract;
 
 	@ToString.Exclude

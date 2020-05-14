@@ -2,7 +2,8 @@ package com.solution.x.controller.service;
 
 import com.solution.x.controller.AbstractController;
 import com.solution.x.dao.Contract;
-import com.solution.x.dao.key.ContractID;
+import com.solution.x.dao.ContractAvailability;
+import com.solution.x.dao.Seasons;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.SystemMessages;
 import com.solution.x.global.SystemOperation;
@@ -52,23 +53,24 @@ public class ContractService extends AbstractController<Contract>
 	/**
 	 * Get Single Contract
 	 *
-	 * @param id      contract ID
-	 * @param version contract version
+	 * @param id contract ID
 	 * @return The Contract
 	 */
-	public ResponseEntity<ResponseWrapper<Contract>> getContract( long id, short version )
+	public ResponseEntity<ResponseWrapper<Contract>> getContract( long id )
 	{
-		Optional<Contract> contractOptional = contractsRepository.findById( new ContractID( id, version ) );
+		Optional<Contract> contractOptional = contractsRepository.findById( id );
 
 		ResponseEntity<ResponseWrapper<Contract>> response;
 
 		if( contractOptional.isPresent() )
 		{
 			Contract contract = contractOptional.get();
-			Link selfRel = HATEOASProvider.contractSelfLinkProvider( contract.getContractId().getContractId(), contract.getContractId().getVersion() );
+			Link selfRel = HATEOASProvider.contractSelfLinkProvider( contract.getContractId() );
 			contract.add( selfRel );
 
-			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( new ResponseWrapper<>( "OK", contract ) );
+			response = ResponseEntity.ok()
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.READ, SystemMessages.SUCCESSFULLY_LOADED, contract ) );
 		}
 		else
 		{
@@ -91,11 +93,12 @@ public class ContractService extends AbstractController<Contract>
 
 		try
 		{
-			preProcess( contract );
+			contract.getSeasons().forEach( seasons -> seasons.setWeekDefinitions( null ) );
+			//preProcess( contract );
 
 			Contract savedContract = contractsRepository.save( contract );
 
-			Link selfRel = HATEOASProvider.contractSelfLinkProvider( contract.getContractId().getContractId(), contract.getContractId().getVersion() );
+			Link selfRel = HATEOASProvider.contractSelfLinkProvider( contract.getContractId() );
 			contract.add( selfRel );
 
 			response = ResponseEntity.status( HttpStatus.CREATED )
@@ -117,18 +120,18 @@ public class ContractService extends AbstractController<Contract>
 	 * @param contract Contract
 	 * @return Saved Contract Response wrapper
 	 */
-	public ResponseEntity<ResponseWrapper<Contract>> updateContract( long id, short version, Contract contract )
+	public ResponseEntity<ResponseWrapper<Contract>> updateContract( long id, Contract contract )
 	{
 		ResponseEntity<ResponseWrapper<Contract>> response;
 
 		try
 		{
+			contract.setContractId( id );
 			preProcess( contract );
 
-			contract.setContractId( new ContractID( id, version ) );
 			Contract savedContract = contractsRepository.save( contract );
 
-			Link selfRel = HATEOASProvider.contractSelfLinkProvider( contract.getContractId().getContractId(), contract.getContractId().getVersion() );
+			Link selfRel = HATEOASProvider.contractSelfLinkProvider( contract.getContractId() );
 			contract.add( selfRel );
 
 			response = ResponseEntity.status( HttpStatus.CREATED )
@@ -149,24 +152,40 @@ public class ContractService extends AbstractController<Contract>
 	{
 		if( contract.getSeasons() != null )
 		{
+			long contractId = contract.getContractId();
+
 			contract.getSeasons().forEach( seasons -> seasons.setWeekDefinitions( null ) ); // TODO Do a proper fix  Issue : Hibernate generate unnecessary insert query  : insert into hngout.contract_availability (contract_id, season_id, contract_version, week_def_id) values (?, ?, ?, ?)
+
+			for( Seasons season : contract.getSeasons() )
+			{
+				season.getSeasonId().setContractId( contractId );
+
+				if( season.getAvailabilities() != null )
+				{
+					for( ContractAvailability availability : season.getAvailabilities() )
+					{
+						availability.getAvailabilityID().setContractId( contractId );
+						availability.getAvailabilityID().setSeasonId( season.getSeasonId().getSeasonId() );
+					}
+				}
+			}
 		}
+
 	}
 
 	/**
 	 * Delete contract
 	 *
-	 * @param id      contract ID
-	 * @param version contract version
+	 * @param id contract ID
 	 * @return
 	 */
-	public ResponseEntity<ResponseWrapper<Contract>> deleteContract( long id, short version )
+	public ResponseEntity<ResponseWrapper<Contract>> deleteContract( long id )
 	{
 		ResponseEntity<ResponseWrapper<Contract>> response;
 
 		try
 		{
-			contractsRepository.deleteById( new ContractID( id, version ) );
+			contractsRepository.deleteById( id );
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )

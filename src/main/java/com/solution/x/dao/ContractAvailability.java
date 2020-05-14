@@ -36,17 +36,10 @@ public class ContractAvailability
 	@Column(name = "count")
 	private Short count;
 
-	//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	//	@ManyToOne(fetch = FetchType.LAZY)
-	//	@MapsId("weekDefId")
-	//	@JoinColumn(name = "week_def_id")
-	//	private WeekDefinition weekDefinition;
-
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumns({
 			@JoinColumn(name = "contract_id", referencedColumnName = "contract_id", insertable = false, updatable = false),
-			@JoinColumn(name = "contract_version", referencedColumnName = "contract_version", insertable = false, updatable = false),
 			@JoinColumn(name = "season_id", referencedColumnName = "season_id", insertable = false, updatable = false)
 	})
 	private Seasons seasons;

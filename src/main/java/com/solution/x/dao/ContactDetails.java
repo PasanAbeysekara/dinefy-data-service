@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
  */
 @Data
 @Entity
-@Table(name = "contacts")
+@Table(name = "sys_contacts")
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class ContactDetails
