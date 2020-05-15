@@ -102,7 +102,7 @@ public class ContractService extends AbstractController<Contract>
 			Contract savedContract = contractsRepository.save( contract );
 
 			Link selfRel = HATEOASProvider.contractSelfLinkProvider( contract.getContractId() );
-			contract.add( selfRel );
+			savedContract.add( selfRel );
 
 			response = ResponseEntity.status( HttpStatus.CREATED )
 					.headers( addCommonHeaders( new HttpHeaders() ) )
@@ -135,7 +135,7 @@ public class ContractService extends AbstractController<Contract>
 			Contract savedContract = contractsRepository.save( contract );
 
 			Link selfRel = HATEOASProvider.contractSelfLinkProvider( contract.getContractId() );
-			contract.add( selfRel );
+			savedContract.add( selfRel );
 
 			response = ResponseEntity.status( HttpStatus.CREATED )
 					.headers( addCommonHeaders( new HttpHeaders() ) )
