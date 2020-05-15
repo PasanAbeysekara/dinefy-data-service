@@ -93,8 +93,11 @@ public class ContractService extends AbstractController<Contract>
 
 		try
 		{
-			contract.getSeasons().forEach( seasons -> seasons.setWeekDefinitions( null ) );
-			//preProcess( contract );
+
+			Long contractNextVal = contractsRepository.getContractNextVal();
+			contract.setContractId( contractNextVal );
+
+			preProcess( contract );
 
 			Contract savedContract = contractsRepository.save( contract );
 

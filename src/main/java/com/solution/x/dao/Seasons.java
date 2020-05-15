@@ -18,7 +18,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -62,9 +61,9 @@ public class Seasons
 	private Date to;
 
 	@JsonBackReference
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
-	@MapsId("contract_id")
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "contract_id", referencedColumnName = "contract_id", insertable = false, updatable = false)
+	//@MapsId("contractId")
 	private Contract contract;
 
 	//@JsonManagedReference

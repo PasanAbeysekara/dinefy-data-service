@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class SeasonID implements Serializable
 {
 	@Column(name = "contract_id")
-	private long contractId;
+	private Long contractId;
 
 	@Column(name = "season_id")
 	private Short seasonId;

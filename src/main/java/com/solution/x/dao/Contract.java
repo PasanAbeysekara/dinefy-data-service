@@ -13,13 +13,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -39,17 +36,19 @@ import java.util.Set;
 public class Contract extends RepresentationModel<Contract>
 {
 	@Id
-	@SequenceGenerator(
-			name = "contracts_gen",
-			sequenceName = "contract_seq",
-			initialValue = 0,
-			allocationSize = 1
-	)
-	@GeneratedValue(generator = "contracts_gen", strategy = GenerationType.SEQUENCE)
+	//	@SequenceGenerator(
+	//			name = "contracts_gen",
+	//			sequenceName = "contract_seq",
+	//			initialValue = 0,
+	//			allocationSize = 1
+	//	)
+	//	@GeneratedValue(generator = "contracts_gen", strategy = GenerationType.SEQUENCE)
 	@Column(name = "contract_id")
+	@EqualsAndHashCode.Include
 	private Long contractId;
 
 	@Column(name = "version")
+	@EqualsAndHashCode.Include
 	private Short version;
 
 	@Column(name = "prop_id")
@@ -63,17 +62,17 @@ public class Contract extends RepresentationModel<Contract>
 	@EqualsAndHashCode.Include
 	private String versionTxt;
 
+	@OneToMany(mappedBy = "contract", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<Seasons> seasons;
+
+	//region Reverse FK mappings
+
 	@JsonBackReference
 	@ToString.Exclude
 	@OneToOne(mappedBy = "currentContract", fetch = FetchType.LAZY)
 	@JoinColumn(name = "prop_id")
 	private Property property;
 
-	//	@ManyToOne(fetch = FetchType.LAZY)
-	//	@JoinColumn(name = "prop_id", insertable = false, updatable = false)
-	//	private Property contractProp;
+	//endregion
 
-	//@JsonManagedReference
-	@OneToMany(mappedBy = "contract", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Seasons> seasons;
 }
