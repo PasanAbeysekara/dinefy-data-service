@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import java.sql.Date;
 import java.util.Set;
 
 /**
@@ -53,6 +54,16 @@ public class Contract extends RepresentationModel<Contract>
 
 	@Column(name = "prop_id")
 	private Integer propId;
+
+	@Size(max = 100)
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "from_date")
+	private Date validFrom;
+
+	@Column(name = "to_date")
+	private Date validTo;
 
 	@Column(name = "timeslot")
 	private Short timeSlot;

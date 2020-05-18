@@ -20,7 +20,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.util.Set;
@@ -43,12 +42,6 @@ public class Seasons
 	@EmbeddedId
 	@EqualsAndHashCode.Include
 	private SeasonID seasonId;
-
-	@NotBlank
-	@Size(max = 10, message = "Season code cannot exceed 10 characters")
-	@Column(name = "code")
-	@EqualsAndHashCode.Include //Lombok HashCode issues , Need to explicitly add include with onlyExplicitlyIncluded = true
-	private String code;
 
 	@Size(max = 100)
 	@Column(name = "name")
