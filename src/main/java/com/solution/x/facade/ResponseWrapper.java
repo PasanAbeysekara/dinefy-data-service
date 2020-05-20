@@ -13,6 +13,7 @@ public class ResponseWrapper<T>
 {
 
 	private String code;
+	private String status;
 	private String operation;
 	private String prettyMessage;
 	private Error error;

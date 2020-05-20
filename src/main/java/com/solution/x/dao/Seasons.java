@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.ano.GuestFacingName;
 import com.solution.x.dao.key.SeasonID;
-import com.solution.x.dao.sys.WeekDefinition;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -16,7 +15,6 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -59,16 +57,16 @@ public class Seasons
 	//@MapsId("contractId")
 	private Contract contract;
 
-	//@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "contract_availability",
-			joinColumns = {
-					@JoinColumn(name = "contract_id", referencedColumnName = "contract_id", insertable = false, updatable = false),
-					@JoinColumn(name = "season_id", referencedColumnName = "season_id", insertable = false, updatable = false)},
-			inverseJoinColumns = @JoinColumn(name = "week_def_id", insertable = false, updatable = false)
-	)
-	private Set<WeekDefinition> weekDefinitions;
+
+	//	@OneToMany(fetch = FetchType.LAZY)
+	//	@JoinTable(
+	//			name = "contract_availability",
+	//			joinColumns = {
+	//					@JoinColumn(name = "contract_id", referencedColumnName = "contract_id", insertable = false, updatable = false),
+	//					@JoinColumn(name = "season_id", referencedColumnName = "season_id", insertable = false, updatable = false)},
+	//			inverseJoinColumns = @JoinColumn(name = "week_def_id", insertable = false, updatable = false)
+	//	)
+	//	private Set<WeekDefinition> weekDefinitions;
 
 	//@JsonManagedReference
 	@OneToMany(mappedBy = "seasons", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

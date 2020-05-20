@@ -157,7 +157,7 @@ public class ContractService extends AbstractController<Contract>
 		{
 			long contractId = contract.getContractId();
 
-			contract.getSeasons().forEach( seasons -> seasons.setWeekDefinitions( null ) ); // TODO Do a proper fix  Issue : Hibernate generate unnecessary insert query  : insert into hngout.contract_availability (contract_id, season_id, contract_version, week_def_id) values (?, ?, ?, ?)
+			//contract.getSeasons().forEach( seasons -> seasons.setWeekDefinitions( null ) ); // TODO Do a proper fix  Issue : Hibernate generate unnecessary insert query  : insert into hngout.contract_availability (contract_id, season_id, contract_version, week_def_id) values (?, ?, ?, ?)
 
 			for( Seasons season : contract.getSeasons() )
 			{

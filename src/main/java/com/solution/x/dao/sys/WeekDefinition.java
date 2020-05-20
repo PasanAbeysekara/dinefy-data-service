@@ -1,24 +1,17 @@
 package com.solution.x.dao.sys;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.solution.x.dao.Seasons;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -61,15 +54,15 @@ public class WeekDefinition
 	//	@PrimaryKeyJoinColumn
 	//	private Set<ContractAvailability> contractAvailabilities;
 
-	@JsonBackReference
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "contract_availability",
-			inverseJoinColumns = {
-					@JoinColumn(name = "contract_id", referencedColumnName = "contract_id", insertable = false, updatable = false),
-					@JoinColumn(name = "season_id", referencedColumnName = "season_id", insertable = false, updatable = false)},
-			joinColumns = @JoinColumn(name = "week_def_id", insertable = false, updatable = false)
-	)
-	private Set<Seasons> seasons;
+	//	@JsonBackReference
+	//	@OneToMany(fetch = FetchType.LAZY)
+	//	@JoinTable(
+	//			name = "contract_availability",
+	//			inverseJoinColumns = {
+	//					@JoinColumn(name = "contract_id", referencedColumnName = "contract_id", insertable = false, updatable = false),
+	//					@JoinColumn(name = "season_id", referencedColumnName = "season_id", insertable = false, updatable = false)},
+	//			joinColumns = @JoinColumn(name = "week_def_id", insertable = false, updatable = false)
+	//	)
+	//	private Set<Seasons> seasons;
 
 }
