@@ -70,7 +70,7 @@ public class ContractService extends AbstractController<Contract>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.READ, SystemMessages.SUCCESSFULLY_LOADED, contract ) );
+					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, contract ) );
 		}
 		else
 		{
@@ -106,12 +106,12 @@ public class ContractService extends AbstractController<Contract>
 
 			response = ResponseEntity.status( HttpStatus.CREATED )
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.CREATE, SystemMessages.CONTRACT_CREATE_SUCCESS, savedContract ) );
+					.body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.CONTRACT_CREATE_SUCCESS, savedContract ) );
 		}
 		catch( Exception e )
 		{
 			log.error( "Error Occurred during contract saving : ", e );
-			response = buildExceptionErrorResponse( SystemMessages.CONTRACT_CREATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.CREATE, SystemMessages.CONTRACT_CREATE_FAILED, e );
 		}
 
 		return response;
@@ -139,12 +139,12 @@ public class ContractService extends AbstractController<Contract>
 
 			response = ResponseEntity.status( HttpStatus.CREATED )
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.MODIFY, SystemMessages.CONTRACT_UPDATE_SUCCESS, savedContract ) );
+					.body( new ResponseWrapper<>( SystemOperation.MODIFY.withSuccess(), SystemMessages.CONTRACT_UPDATE_SUCCESS, savedContract ) );
 		}
 		catch( Exception e )
 		{
 			log.error( "Error Occurred during contract updating : ", e );
-			response = buildExceptionErrorResponse( SystemMessages.CONTRACT_UPDATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.MODIFY, SystemMessages.CONTRACT_UPDATE_FAILED, e );
 		}
 
 		return response;
@@ -192,12 +192,12 @@ public class ContractService extends AbstractController<Contract>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.DELETE, SystemMessages.CONTRACT_DELETE_SUCCESS, null ) );
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.CONTRACT_DELETE_SUCCESS, "" ) );
 		}
 		catch( Exception e )
 		{
 			log.error( "Error Occurred during contract deleting : ", e );
-			response = buildExceptionErrorResponse( SystemMessages.CONTRACT_DELETE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.CONTRACT_DELETE_FAILED, e );
 		}
 
 		return response;

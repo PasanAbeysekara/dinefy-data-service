@@ -6,6 +6,7 @@ import com.solution.x.dao.sys.Tags;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.SystemMessages;
 import com.solution.x.facade.dto.TagsModel;
+import com.solution.x.global.SystemOperation;
 import com.solution.x.repo.sys.TagsRepository;
 import com.solution.x.util.HATEOASProvider;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +51,7 @@ public class SysTagsService extends AbstractController<Tags>
 
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( new ResponseWrapper<>( "OK", collModel ) );
+				.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, collModel ) );
 	}
 
 	/**
@@ -71,7 +72,9 @@ public class SysTagsService extends AbstractController<Tags>
 			Link selfRel = HATEOASProvider.sysTagsSelfLinkProvider( tags.getTagId() );
 			tags.add( selfRel );
 
-			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( new ResponseWrapper<>( "OK", tags ) );
+			response = ResponseEntity.ok()
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, tags ) );
 		}
 		else
 		{
@@ -101,12 +104,12 @@ public class SysTagsService extends AbstractController<Tags>
 
 			response = ResponseEntity.status( HttpStatus.CREATED )
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "CREATED", SystemMessages.TAG_CREATE_SUCCESS.getReasonPhrase(), savedTag ) );
+					.body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.TAG_CREATE_SUCCESS, savedTag ) );
 		}
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildExceptionErrorResponse( SystemMessages.TAG_CREATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.CREATE, SystemMessages.TAG_CREATE_FAILED, e );
 		}
 
 		return response;
@@ -134,12 +137,12 @@ public class SysTagsService extends AbstractController<Tags>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "UPDATED", SystemMessages.TAG_UPDATE_SUCCESS.getReasonPhrase(), savedTag ) );
+					.body( new ResponseWrapper<>( SystemOperation.MODIFY.withSuccess(), SystemMessages.TAG_UPDATE_SUCCESS, savedTag ) );
 		}
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildExceptionErrorResponse( SystemMessages.TAG_UPDATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.MODIFY, SystemMessages.TAG_UPDATE_FAILED, e );
 		}
 
 		return response;
@@ -161,12 +164,12 @@ public class SysTagsService extends AbstractController<Tags>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "DELETED", SystemMessages.TAG_DELETE_SUCCESS.getReasonPhrase(), null ) );
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.TAG_DELETE_SUCCESS, "" ) );
 		}
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildExceptionErrorResponse( SystemMessages.TAG_DELETE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.TAG_DELETE_FAILED, e );
 		}
 
 		return response;

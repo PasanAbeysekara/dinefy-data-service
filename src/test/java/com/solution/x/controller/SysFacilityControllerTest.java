@@ -5,6 +5,7 @@ import com.solution.x.controller.sys.SysFacilityController;
 import com.solution.x.dao.sys.Facilities;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.SystemMessages;
+import com.solution.x.global.SystemOperation;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,12 +51,12 @@ public class SysFacilityControllerTest
 
 		Facilities facilities2 = new Facilities( 2, "ABC2", "Name ABC2", "Description ABC2", null );
 
-		ResponseEntity<ResponseWrapper<Facilities>> responseEntity = ResponseEntity.ok().body( new ResponseWrapper<>( "OK", facility ) );
+		ResponseEntity<ResponseWrapper<Facilities>> responseEntity = ResponseEntity.ok().body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, facility ) );
 
 		BDDMockito.given( controller.getFacility( 1 ) ).willReturn( responseEntity );
 
 		ResponseEntity<ResponseWrapper<Facilities>> response = ResponseEntity.status( HttpStatus.CREATED )
-				.body( new ResponseWrapper<>( "CREATED", SystemMessages.FACILITY_CREATE_SUCCESS.getReasonPhrase(), facility ) );
+				.body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.FACILITY_CREATE_SUCCESS, facility ) );
 
 		BDDMockito.given( controller.createFacility( facility ) ).willReturn( response );
 
@@ -70,7 +71,7 @@ public class SysFacilityControllerTest
 				.contentType( MediaType.APPLICATION_JSON ) )
 				.andDo( print() )
 				.andExpect( status().isCreated() )
-				.andExpect( jsonPath( "$.code", Matchers.is( "CREATED" ) ) )
+				.andExpect( jsonPath( "$.code", Matchers.is( SystemMessages.FACILITY_CREATE_SUCCESS.code() ) ) )
 				.andExpect( jsonPath( "$.prettyMessage", Matchers.is( SystemMessages.FACILITY_CREATE_SUCCESS.getReasonPhrase() ) ) )
 				.andExpect( jsonPath( "$.data.code", Matchers.is( facility.getCode() ) ) )
 				.andExpect( jsonPath( "$.data.name", Matchers.is( facility.getName() ) ) )
@@ -84,7 +85,8 @@ public class SysFacilityControllerTest
 				.contentType( MediaType.APPLICATION_JSON ) )
 				.andDo( print() )
 				.andExpect( status().isOk() )
-				.andExpect( jsonPath( "$.code", Matchers.is( "OK" ) ) )
+				.andExpect( jsonPath( "$.code", Matchers.is( SystemMessages.SUCCESSFULLY_LOADED.code() ) ) )
+				.andExpect( jsonPath( "$.prettyMessage", Matchers.is( SystemMessages.SUCCESSFULLY_LOADED.getReasonPhrase() ) ) )
 				.andExpect( jsonPath( "$.data.code", Matchers.is( facility.getCode() ) ) )
 				.andExpect( jsonPath( "$.data.name", Matchers.is( facility.getName() ) ) )
 				.andExpect( jsonPath( "$.data.description", Matchers.is( facility.getDescription() ) ) );

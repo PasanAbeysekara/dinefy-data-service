@@ -6,6 +6,7 @@ import com.solution.x.dao.sys.Facilities;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.SystemMessages;
 import com.solution.x.facade.dto.FacilitiesModel;
+import com.solution.x.global.SystemOperation;
 import com.solution.x.repo.sys.FacilitiesRepository;
 import com.solution.x.util.HATEOASProvider;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +54,7 @@ public class SysFacilityService extends AbstractController<Facilities>
 
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( new ResponseWrapper<>( "OK", facilitiesPageModel ) );
+				.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, facilitiesPageModel ) );
 	}
 
 
@@ -75,7 +76,8 @@ public class SysFacilityService extends AbstractController<Facilities>
 			Link selfRel = HATEOASProvider.sysFacilitySelfLinkProvider( facility.getFacilityId() );
 			facility.add( selfRel );
 
-			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( new ResponseWrapper<>( "OK", facility ) );
+			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, facility ) );
 		}
 		else
 		{
@@ -104,12 +106,12 @@ public class SysFacilityService extends AbstractController<Facilities>
 
 			response = ResponseEntity.status( HttpStatus.CREATED )
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "CREATED", SystemMessages.FACILITY_CREATE_SUCCESS.getReasonPhrase(), savedFacility ) );
+					.body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.FACILITY_CREATE_SUCCESS, savedFacility ) );
 		}
 		catch( Exception e )
 		{
 			log.error( "Error Occurred during facility creating : ", e );
-			response = buildExceptionErrorResponse( SystemMessages.FACILITY_CREATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.CREATE, SystemMessages.FACILITY_CREATE_FAILED, e );
 		}
 
 		return response;
@@ -137,12 +139,12 @@ public class SysFacilityService extends AbstractController<Facilities>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "UPDATED", SystemMessages.FACILITY_UPDATE_SUCCESS.getReasonPhrase(), savedFacility ) );
+					.body( new ResponseWrapper<>( SystemOperation.MODIFY.withSuccess(), SystemMessages.FACILITY_UPDATE_SUCCESS, savedFacility ) );
 		}
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildExceptionErrorResponse( SystemMessages.FACILITY_UPDATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.MODIFY, SystemMessages.FACILITY_UPDATE_FAILED, e );
 		}
 
 		return response;
@@ -164,12 +166,12 @@ public class SysFacilityService extends AbstractController<Facilities>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "DELETED", SystemMessages.FACILITY_DELETE_SUCCESS.getReasonPhrase(), null ) );
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.FACILITY_DELETE_SUCCESS, "" ) );
 		}
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildExceptionErrorResponse( SystemMessages.FACILITY_DELETE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.FACILITY_DELETE_FAILED, e );
 		}
 
 		return response;

@@ -3,6 +3,7 @@ package com.solution.x.controller;
 import com.solution.x.facade.Error;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.SystemMessages;
+import com.solution.x.global.SystemOperation;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,10 +35,10 @@ public abstract class AbstractController<DAO>
 	{
 		return ResponseEntity.status( HttpStatus.NOT_FOUND )
 				.headers( new HttpHeaders() )
-				.body( new ResponseWrapper<>( "NOT FOUND", SystemMessages.NOT_FOUND.getReasonPhrase(), null ) );
+				.body( new ResponseWrapper<>( SystemOperation.READ.withError(), SystemMessages.NOT_FOUND, "" ) );
 	}
 
-	protected ResponseEntity<ResponseWrapper<DAO>> buildExceptionErrorResponse( SystemMessages message, Exception e )
+	protected ResponseEntity<ResponseWrapper<DAO>> buildExceptionErrorResponse( SystemOperation operation, SystemMessages message, Exception e )
 	{
 		Error error = new Error();
 		error.setCode( message.code() );
@@ -80,7 +81,7 @@ public abstract class AbstractController<DAO>
 
 		return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR )
 				.headers( new HttpHeaders() )
-				.body( new ResponseWrapper<>( "ERROR", message.getReasonPhrase(), error ) );
+				.body( new ResponseWrapper<>( operation.withError(), message, error ) );
 	}
 
 }

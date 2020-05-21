@@ -185,7 +185,7 @@ public class PropertyService extends AbstractController<Property>
 
 				response = ResponseEntity.status( HttpStatus.CREATED )
 						.headers( addCommonHeaders( new HttpHeaders() ) )
-						.body( new ResponseWrapper<>( SystemOperation.CREATE, SystemMessages.PROPERTY_CREATE_SUCCESS, savedProp ) );
+						.body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.PROPERTY_CREATE_SUCCESS, savedProp ) );
 			}
 			else
 			{
@@ -196,7 +196,7 @@ public class PropertyService extends AbstractController<Property>
 		catch( Exception e )
 		{
 			log.error( "Error Occurred during property creating : ", e );
-			response = buildExceptionErrorResponse( SystemMessages.PROPERTY_CREATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.CREATE, SystemMessages.PROPERTY_CREATE_FAILED, e );
 		}
 
 		return response;
@@ -222,12 +222,12 @@ public class PropertyService extends AbstractController<Property>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "UPDATED", SystemMessages.PROPERTY_UPDATE_SUCCESS.getReasonPhrase(), savedProperty ) );
+					.body( new ResponseWrapper<>( SystemOperation.MODIFY.withSuccess(), SystemMessages.PROPERTY_UPDATE_SUCCESS, savedProperty ) );
 		}
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildExceptionErrorResponse( SystemMessages.PROPERTY_UPDATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.MODIFY, SystemMessages.PROPERTY_UPDATE_FAILED, e );
 		}
 
 		return response;

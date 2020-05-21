@@ -6,6 +6,7 @@ import com.solution.x.dao.sys.AvailabilityUnit;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.SystemMessages;
 import com.solution.x.facade.dto.AvailabilityUnitModel;
+import com.solution.x.global.SystemOperation;
 import com.solution.x.repo.sys.AvailabilityUnitRepository;
 import com.solution.x.util.HATEOASProvider;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +54,7 @@ public class SysAvailabilityUnitService extends AbstractController<AvailabilityU
 
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( new ResponseWrapper<>( "OK", facilitiesPageModel ) );
+				.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, facilitiesPageModel ) );
 	}
 
 	/**
@@ -74,7 +75,9 @@ public class SysAvailabilityUnitService extends AbstractController<AvailabilityU
 			Link selfRel = HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availUnit.getUnitId() );
 			availUnit.add( selfRel );
 
-			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( new ResponseWrapper<>( "OK", availUnit ) );
+			response = ResponseEntity.ok()
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, availUnit ) );
 		}
 		else
 		{
@@ -104,12 +107,12 @@ public class SysAvailabilityUnitService extends AbstractController<AvailabilityU
 
 			response = ResponseEntity.status( HttpStatus.CREATED )
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "CREATED", SystemMessages.AVAIL_UNIT_CREATE_SUCCESS.getReasonPhrase(), savedAvailabilityUnit ) );
+					.body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.AVAIL_UNIT_CREATE_SUCCESS, savedAvailabilityUnit ) );
 		}
 		catch( Exception e )
 		{
 			log.error( "Error Occurred during availUnit creating : ", e );
-			response = buildExceptionErrorResponse( SystemMessages.AVAIL_UNIT_CREATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.CREATE, SystemMessages.AVAIL_UNIT_CREATE_FAILED, e );
 		}
 
 		return response;
@@ -137,12 +140,12 @@ public class SysAvailabilityUnitService extends AbstractController<AvailabilityU
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "UPDATED", SystemMessages.AVAIL_UNIT_UPDATE_SUCCESS.getReasonPhrase(), savedAvailabilityUnit ) );
+					.body( new ResponseWrapper<>( SystemOperation.MODIFY.withSuccess(), SystemMessages.AVAIL_UNIT_UPDATE_SUCCESS, savedAvailabilityUnit ) );
 		}
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildExceptionErrorResponse( SystemMessages.AVAIL_UNIT_UPDATE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.MODIFY, SystemMessages.AVAIL_UNIT_UPDATE_FAILED, e );
 		}
 
 		return response;
@@ -164,12 +167,12 @@ public class SysAvailabilityUnitService extends AbstractController<AvailabilityU
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( "DELETED", SystemMessages.FACILITY_DELETE_SUCCESS.getReasonPhrase(), null ) );
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.FACILITY_DELETE_SUCCESS, "" ) );
 		}
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildExceptionErrorResponse( SystemMessages.FACILITY_DELETE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.FACILITY_DELETE_FAILED, e );
 		}
 
 		return response;

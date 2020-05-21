@@ -11,6 +11,8 @@ import lombok.Data;
 @Data
 public class ResponseWrapper<T>
 {
+	private static final String SUCCESS = "SUCCESS";
+	private static final String FAIL = "FAIL";
 
 	private String code;
 	private String status;
@@ -19,23 +21,10 @@ public class ResponseWrapper<T>
 	private Error error;
 	private T data;
 
-	public ResponseWrapper( String code, T data )
-	{
-		this.code = code;
-		this.data = data;
-	}
-
-	@Deprecated
-	public ResponseWrapper( String code, String prettyMessage, T data )
-	{
-		this.code = code;
-		this.prettyMessage = prettyMessage;
-		this.data = data;
-	}
-
 	public ResponseWrapper( SystemOperation operation, SystemMessages systemMessages, T data )
 	{
 		this.operation = operation.toString();
+		this.status = operation.status() ? SUCCESS : FAIL;
 		this.code = systemMessages.code();
 		this.prettyMessage = systemMessages.getReasonPhrase();
 		this.data = data;
@@ -44,36 +33,18 @@ public class ResponseWrapper<T>
 	public ResponseWrapper( SystemOperation operation, SystemMessages systemMessages, String messageAppender )
 	{
 		this.operation = operation.toString();
+		this.status = operation.status() ? SUCCESS : FAIL;
 		this.code = systemMessages.code();
 		this.prettyMessage = systemMessages.getReasonPhrase() + " : " + messageAppender;
 	}
 
-	@Deprecated
-	public ResponseWrapper( String code, String prettyMessage, Error error )
+	public ResponseWrapper( SystemOperation operation, SystemMessages systemMessages, Error error )
 	{
-		this.code = code;
-		this.prettyMessage = prettyMessage;
+		this.operation = operation.toString();
+		this.status = operation.status() ? SUCCESS : FAIL;
+		this.code = systemMessages.code();
+		this.prettyMessage = systemMessages.getReasonPhrase();
 		this.error = error;
-	}
-
-	public String getCode()
-	{
-		return code;
-	}
-
-	public void setCode( String code )
-	{
-		this.code = code;
-	}
-
-	public String getOperation()
-	{
-		return operation;
-	}
-
-	public void setOperation( String operation )
-	{
-		this.operation = operation;
 	}
 
 }
