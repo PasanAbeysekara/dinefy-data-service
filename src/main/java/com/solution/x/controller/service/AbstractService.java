@@ -14,8 +14,6 @@ import org.springframework.http.ResponseEntity;
  */
 public abstract class AbstractService<DAO>
 {
-	private static final short CAUSED_BY_DEEP = 5;
-
 	protected HttpHeaders addCommonHeaders( HttpHeaders responseHeaders )
 	{
 		responseHeaders.add( "Access-Control-Allow-Origin", "http://localhost:4200" );

@@ -1,6 +1,6 @@
 package com.solution.x.controller.sys;
 
-import com.solution.x.controller.service.SysAvailabilityUnitService;
+import com.solution.x.controller.service.sys.SysAvailabilityUnitService;
 import com.solution.x.dao.sys.AvailabilityUnit;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.dto.AvailabilityUnitModel;

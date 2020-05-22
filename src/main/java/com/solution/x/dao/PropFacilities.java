@@ -50,7 +50,7 @@ public class PropFacilities extends RepresentationModel<PropFacilities>
 	private Facilities sysFacility;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("propId")
-	@JoinColumn(name = "prop_id")
+	//@MapsId("propId")
+	@JoinColumn(name = "prop_id", insertable = false, updatable = false)
 	private Property properties;
 }

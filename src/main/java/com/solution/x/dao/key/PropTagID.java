@@ -18,8 +18,8 @@ import java.io.Serializable;
 public class PropTagID implements Serializable
 {
 	@Column(name = "prop_id")
-	private int propId;
+	private Long propId;
 
 	@Column(name = "tag_id")
-	private int tag_id;
+	private Integer tagId;
 }

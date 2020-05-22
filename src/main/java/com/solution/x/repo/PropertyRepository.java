@@ -16,4 +16,7 @@ public interface PropertyRepository extends JpaRepository<Property, Long>
 
 	@Query(value = "SELECT count(p) FROM Property p where p.currentContId =:id")
 	Integer findPropWithSameContract( @Param("id") Integer currentContId );
+
+	@Query(value = "select nextval('{h-schema}property_prop_id_seq')", nativeQuery = true)
+	public Long getNextVal();
 }

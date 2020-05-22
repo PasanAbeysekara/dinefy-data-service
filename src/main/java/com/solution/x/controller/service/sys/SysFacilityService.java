@@ -1,6 +1,7 @@
-package com.solution.x.controller.service;
+package com.solution.x.controller.service.sys;
 
 import com.solution.x.controller.assembler.FacilitiesModelAssembler;
+import com.solution.x.controller.service.AbstractService;
 import com.solution.x.dao.sys.Facilities;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.SystemMessages;

@@ -1,6 +1,6 @@
 package com.solution.x.controller.sys;
 
-import com.solution.x.controller.service.SysTagsService;
+import com.solution.x.controller.service.sys.SysTagsService;
 import com.solution.x.dao.sys.Tags;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.dto.TagsModel;

@@ -10,5 +10,5 @@ import org.springframework.data.jpa.repository.Query;
 public interface ContractsRepository extends JpaRepository<Contract, Long>
 {
 	@Query(value = "select nextval('{h-schema}contract_seq')", nativeQuery = true)
-	public Long getContractNextVal();
+	public Long getNextVal();
 }

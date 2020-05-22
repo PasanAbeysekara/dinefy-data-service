@@ -177,7 +177,12 @@ public class PropertyService extends AbstractService<Property>
 
 			if( dataCarrierValidation.isSuccess() )
 			{
-				savedProp = propertyRepository.saveAndFlush( property );
+				Long propNextVal = propertyRepository.getNextVal();
+				property.setPropId( propNextVal );
+
+				preProcess( property );
+
+				savedProp = propertyRepository.save( property );
 				//queueProducer.produceMessage( property );
 				linkPropertyEntities( savedProp );
 
@@ -198,6 +203,27 @@ public class PropertyService extends AbstractService<Property>
 		}
 
 		return response;
+	}
+
+	private void preProcess( Property property )
+	{
+		long propId = property.getPropId();
+
+		if( property.getFacilities() != null )
+		{
+			for( PropFacilities facility : property.getFacilities() )
+			{
+				facility.getPropFacilityId().setPropId( propId );
+			}
+		}
+
+		if( property.getPropTags() != null )
+		{
+			for( PropTags propTag : property.getPropTags() )
+			{
+				propTag.getPropTagID().setPropId( propId );
+			}
+		}
 	}
 
 	/**

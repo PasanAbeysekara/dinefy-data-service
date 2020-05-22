@@ -16,15 +16,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -45,13 +42,13 @@ import java.util.Set;
 public class Property extends RepresentationModel<Property>
 {
 	@Id
-	@SequenceGenerator(
-			name = "prop_gen",
-			sequenceName = "property_prop_id_seq",
-			initialValue = 0,
-			allocationSize = 1
-	)
-	@GeneratedValue(generator = "prop_gen", strategy = GenerationType.SEQUENCE)
+	//	@SequenceGenerator(
+	//			name = "prop_gen",
+	//			sequenceName = "property_prop_id_seq",
+	//			initialValue = 0,
+	//			allocationSize = 1
+	//	)
+	//	@GeneratedValue(generator = "prop_gen", strategy = GenerationType.SEQUENCE)
 	@EqualsAndHashCode.Include //Lombok HashCode issues , Need to explicitly add include with onlyExplicitlyIncluded = true
 	@Column(name = "prop_id")
 	private long propId;
@@ -91,13 +88,6 @@ public class Property extends RepresentationModel<Property>
 	@Column(name = "end_time")
 	private LocalTime endTime;
 
-	@JsonBackReference
-	@ToString.Exclude
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "org_id")
-	private Organization organizations;
-
 	@ToString.Exclude
 	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
 	private Set<PropAvailabilityUnit> availabilityUnits;
@@ -114,7 +104,7 @@ public class Property extends RepresentationModel<Property>
 	private Contract currentContract;
 
 	@ToString.Exclude
-	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<PropFacilities> facilities;
 
 	@ToString.Exclude
@@ -145,7 +135,12 @@ public class Property extends RepresentationModel<Property>
 	)
 	private Set<PaymentOptions> paymentOptions;
 
-	//@OneToMany(mappedBy = "contractProp", fetch = FetchType.LAZY)
-	//private Set<Contract> allContracts;
+
+	@JsonBackReference
+	@ToString.Exclude
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "org_id")
+	private Organization organizations;
 
 }

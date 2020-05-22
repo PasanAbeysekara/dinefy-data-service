@@ -93,7 +93,7 @@ public class ContractService extends AbstractService<Contract>
 		try
 		{
 
-			Long contractNextVal = contractsRepository.getContractNextVal();
+			Long contractNextVal = contractsRepository.getNextVal();
 			contract.setContractId( contractNextVal );
 
 			preProcess( contract );

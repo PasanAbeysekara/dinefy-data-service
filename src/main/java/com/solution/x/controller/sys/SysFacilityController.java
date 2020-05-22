@@ -1,6 +1,6 @@
 package com.solution.x.controller.sys;
 
-import com.solution.x.controller.service.SysFacilityService;
+import com.solution.x.controller.service.sys.SysFacilityService;
 import com.solution.x.dao.sys.Facilities;
 import com.solution.x.facade.ResponseWrapper;
 import com.solution.x.facade.dto.FacilitiesModel;
