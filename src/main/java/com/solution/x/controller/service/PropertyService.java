@@ -1,6 +1,5 @@
 package com.solution.x.controller.service;
 
-import com.solution.x.controller.AbstractController;
 import com.solution.x.controller.OrganizationController;
 import com.solution.x.controller.validator.PropertyValidator;
 import com.solution.x.dao.PropAvailabilityUnit;
@@ -36,7 +35,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
  */
 @Service
 @Slf4j
-public class PropertyService extends AbstractController<Property>
+public class PropertyService extends AbstractService<Property>
 {
 	@Autowired
 	private PropertyRepository propertyRepository;

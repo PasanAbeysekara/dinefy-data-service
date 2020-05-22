@@ -1,6 +1,5 @@
 package com.solution.x.controller.service;
 
-import com.solution.x.controller.AbstractController;
 import com.solution.x.controller.assembler.AvailUnitModelAssembler;
 import com.solution.x.dao.sys.AvailabilityUnit;
 import com.solution.x.facade.ResponseWrapper;
@@ -29,7 +28,7 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
-public class SysAvailabilityUnitService extends AbstractController<AvailabilityUnit>
+public class SysAvailabilityUnitService extends AbstractService<AvailabilityUnit>
 {
 	@Autowired
 	private AvailabilityUnitRepository availabilityUnitRepository;

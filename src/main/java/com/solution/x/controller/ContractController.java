@@ -19,7 +19,7 @@ import java.util.List;
  * @author Tharinda Wickramaarachchi
  */
 @RestController
-public class ContractController extends AbstractController<Contract>
+public class ContractController
 {
 	@Autowired
 	private ContractService contractService;

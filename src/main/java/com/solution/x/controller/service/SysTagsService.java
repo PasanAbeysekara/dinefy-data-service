@@ -1,6 +1,5 @@
 package com.solution.x.controller.service;
 
-import com.solution.x.controller.AbstractController;
 import com.solution.x.controller.assembler.TagsModelAssembler;
 import com.solution.x.dao.sys.Tags;
 import com.solution.x.facade.ResponseWrapper;
@@ -28,7 +27,7 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
-public class SysTagsService extends AbstractController<Tags>
+public class SysTagsService extends AbstractService<Tags>
 {
 	@Autowired
 	private TagsRepository tagsRepository;

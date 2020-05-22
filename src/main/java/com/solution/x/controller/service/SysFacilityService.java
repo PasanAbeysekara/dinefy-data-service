@@ -1,6 +1,5 @@
 package com.solution.x.controller.service;
 
-import com.solution.x.controller.AbstractController;
 import com.solution.x.controller.assembler.FacilitiesModelAssembler;
 import com.solution.x.dao.sys.Facilities;
 import com.solution.x.facade.ResponseWrapper;
@@ -29,7 +28,7 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
-public class SysFacilityService extends AbstractController<Facilities>
+public class SysFacilityService extends AbstractService<Facilities>
 {
 	@Autowired
 	private FacilitiesRepository facilitiesRepository;

@@ -1,5 +1,6 @@
 package com.solution.x.controller;
 
+import com.solution.x.controller.service.AbstractService;
 import com.solution.x.dao.Organization;
 import com.solution.x.dao.PropFacilities;
 import com.solution.x.dao.Property;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
  * @author Tharinda Wickramaarachchi
  */
 @RestController
-public class OrganizationController extends AbstractController<Organization>
+public class OrganizationController extends AbstractService<Organization>
 {
 	@Autowired
 	private OrganizationRepository organizationRepository;

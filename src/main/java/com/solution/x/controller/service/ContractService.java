@@ -1,6 +1,5 @@
 package com.solution.x.controller.service;
 
-import com.solution.x.controller.AbstractController;
 import com.solution.x.dao.Contract;
 import com.solution.x.dao.ContractAvailability;
 import com.solution.x.dao.Seasons;
@@ -25,7 +24,7 @@ import java.util.Optional;
  */
 @RestController
 @Slf4j
-public class ContractService extends AbstractController<Contract>
+public class ContractService extends AbstractService<Contract>
 {
 	@Autowired
 	private ContractsRepository contractsRepository;

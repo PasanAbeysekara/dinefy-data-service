@@ -1,4 +1,4 @@
-package com.solution.x.controller;
+package com.solution.x.controller.service;
 
 import com.solution.x.facade.Error;
 import com.solution.x.facade.ResponseWrapper;
@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 /**
  * @author Tharinda Wickramaarachchi
  */
-public abstract class AbstractController<DAO>
+public abstract class AbstractService<DAO>
 {
 	private static final short CAUSED_BY_DEEP = 5;
 
