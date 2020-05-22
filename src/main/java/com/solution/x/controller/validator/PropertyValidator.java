@@ -37,7 +37,7 @@ public class PropertyValidator
 			String messageAppender = "Contact ID = " + property.getCurrentContId();
 
 			ResponseEntity<ResponseWrapper<Property>> responseEntity = ResponseEntity.status( HttpStatus.CONFLICT )
-					.body( new ResponseWrapper<>( SystemOperation.VALIDATE, SystemMessages.PROPERTY_VALIDATION_CONTRACT, messageAppender ) );
+					.body( new ResponseWrapper<>( SystemOperation.VALIDATE.withError(), SystemMessages.PROPERTY_VALIDATION_CONTRACT, messageAppender ) );
 
 			dataCarrier.setData( responseEntity );
 			dataCarrier.setStatus( DataCarrier.CarrierStatus.ERROR );

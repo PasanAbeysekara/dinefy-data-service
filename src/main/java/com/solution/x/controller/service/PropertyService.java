@@ -24,7 +24,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -209,7 +208,6 @@ public class PropertyService extends AbstractController<Property>
 	 * @param property The property
 	 * @return Updated property response
 	 */
-	@Transactional
 	public ResponseEntity<ResponseWrapper<Property>> updateProperty( long id, Property property )
 	{
 		ResponseEntity<ResponseWrapper<Property>> response;
@@ -228,6 +226,33 @@ public class PropertyService extends AbstractController<Property>
 		{
 			e.printStackTrace();
 			response = buildExceptionErrorResponse( SystemOperation.MODIFY, SystemMessages.PROPERTY_UPDATE_FAILED, e );
+		}
+
+		return response;
+	}
+
+	/**
+	 * Delete property
+	 *
+	 * @param id contract ID
+	 * @return
+	 */
+	public ResponseEntity<ResponseWrapper<Property>> deleteProperty( long id )
+	{
+		ResponseEntity<ResponseWrapper<Property>> response;
+
+		try
+		{
+			propertyRepository.deleteById( id );
+
+			response = ResponseEntity.ok()
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.PROPERTY_DELETE_SUCCESS, "" ) );
+		}
+		catch( Exception e )
+		{
+			log.error( "Error Occurred during property deleting : ", e );
+			response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.PROPERTY_DELETE_FAILED, e );
 		}
 
 		return response;

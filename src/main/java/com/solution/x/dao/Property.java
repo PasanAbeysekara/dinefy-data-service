@@ -103,7 +103,6 @@ public class Property extends RepresentationModel<Property>
 	private Set<PropAvailabilityUnit> availabilityUnits;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	//@JsonManagedReference
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@JoinColumn(name = "based_location_id")
 	private LocationBased basedLocation;

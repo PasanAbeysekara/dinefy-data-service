@@ -10,7 +10,8 @@ public enum SystemOperation
 	CREATE,
 	MODIFY,
 	DELETE,
-	VALIDATE;
+	VALIDATE,
+	Deserialize;
 
 	private boolean status = false;
 
