@@ -51,6 +51,6 @@ public class PropFacilities extends RepresentationModel<PropFacilities>
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	//@MapsId("propId")
-	@JoinColumn(name = "prop_id", insertable = false, updatable = false)
+	@JoinColumn(name = "prop_id", insertable = false, updatable = false) // attempted to assign id from null one-to-one property , remove @MapsId("propId")
 	private Property properties;
 }

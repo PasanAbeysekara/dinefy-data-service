@@ -92,9 +92,10 @@ public class Property extends RepresentationModel<Property>
 	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
 	private Set<PropAvailabilityUnit> availabilityUnits;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@JoinColumn(name = "based_location_id")
+	@ToString.Exclude
 	private LocationBased basedLocation;
 
 	@ToString.Exclude
@@ -104,12 +105,12 @@ public class Property extends RepresentationModel<Property>
 	private Contract currentContract;
 
 	@ToString.Exclude
-	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<PropFacilities> facilities;
 
 	@ToString.Exclude
-	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
-	private Set<PropTags> propTags;
+	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<PropTags> tags;
 
 	@ToString.Exclude
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

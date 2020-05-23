@@ -50,7 +50,7 @@ public class PropTags extends RepresentationModel<PropTags>
 	private Tags sysTags;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@MapsId("propId")
-	@JoinColumn(name = "prop_id")
+	//@MapsId("propId")
+	@JoinColumn(name = "prop_id", insertable = false, updatable = false)
 	private Property properties;
 }

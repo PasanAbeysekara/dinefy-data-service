@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@ToString
 @Table(name = "location_country")
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -38,6 +40,7 @@ public class LocationCountry
 	@Column(name = "name")
 	private String name;
 
+	@ToString.Exclude
 	@JsonBackReference
 	@OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
 	private Set<LocationState> states;

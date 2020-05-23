@@ -123,25 +123,31 @@ public class PropertyService extends AbstractService<Property>
 		{
 			for( PropFacilities facility : property.getFacilities() )
 			{
-				int sysFacilityID = facility.getSysFacility().getFacilityId();
+				if( facility.getSysFacility() != null )
+				{
+					int sysFacilityID = facility.getSysFacility().getFacilityId();
 
-				Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider( sysFacilityID );
-				Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityId().getPropId() );
+					Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider( sysFacilityID );
+					Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityId().getPropId() );
 
-				facility.getSysFacility().add( selfRelSysFacility );
-				facility.add( selfRelPropFacility );
+					facility.getSysFacility().add( selfRelSysFacility );
+					facility.add( selfRelPropFacility );
+				}
 			}
 		}
 
-		if( property.getPropTags() != null )
+		if( property.getTags() != null )
 		{
-			for( PropTags tags : property.getPropTags() )
+			for( PropTags tags : property.getTags() )
 			{
-				Link selfRelSysTags = HATEOASProvider.sysTagsSelfLinkProvider( tags.getSysTags().getTagId() );
-				//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( tags.getPropTagID().getPropId() );
+				if( tags.getSysTags() != null )
+				{
+					Link selfRelSysTags = HATEOASProvider.sysTagsSelfLinkProvider( tags.getSysTags().getTagId() );
+					//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( tags.getPropTagID().getPropId() );
 
-				tags.getSysTags().add( selfRelSysTags );
-				//tags.add( selfRelPropFacility );
+					tags.getSysTags().add( selfRelSysTags );
+					//tags.add( selfRelPropFacility );
+				}
 			}
 		}
 
@@ -149,11 +155,14 @@ public class PropertyService extends AbstractService<Property>
 		{
 			for( PropAvailabilityUnit availabilityUnit : property.getAvailabilityUnits() )
 			{
-				Link selfRelSysAvailabilityUnit = HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnit.getSysAvailabilityUnit().getUnitId() );
-				//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );
+				if( availabilityUnit.getSysAvailabilityUnit() != null )
+				{
+					Link selfRelSysAvailabilityUnit = HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnit.getSysAvailabilityUnit().getUnitId() );
+					//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );
 
-				availabilityUnit.getSysAvailabilityUnit().add( selfRelSysAvailabilityUnit );
-				//facility.add( selfRelPropFacility );
+					availabilityUnit.getSysAvailabilityUnit().add( selfRelSysAvailabilityUnit );
+					//facility.add( selfRelPropFacility );
+				}
 			}
 		}
 	}
@@ -209,6 +218,8 @@ public class PropertyService extends AbstractService<Property>
 	{
 		long propId = property.getPropId();
 
+		property.setCode( "x" + propId ); // TODO remove
+
 		if( property.getFacilities() != null )
 		{
 			for( PropFacilities facility : property.getFacilities() )
@@ -217,9 +228,9 @@ public class PropertyService extends AbstractService<Property>
 			}
 		}
 
-		if( property.getPropTags() != null )
+		if( property.getTags() != null )
 		{
-			for( PropTags propTag : property.getPropTags() )
+			for( PropTags propTag : property.getTags() )
 			{
 				propTag.getPropTagID().setPropId( propId );
 			}
@@ -240,6 +251,9 @@ public class PropertyService extends AbstractService<Property>
 		try
 		{
 			property.setPropId( id );
+			preProcess( property );
+
+
 			Property savedProperty = propertyRepository.save( property );
 			linkPropertyEntities( savedProperty );
 

@@ -17,10 +17,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -42,7 +43,7 @@ public class LocationBased
 			initialValue = 0,
 			allocationSize = 1
 	)
-	@GeneratedValue(generator = "location_gen", strategy = GenerationType.IDENTITY) //TODO change to sequence
+	@GeneratedValue(generator = "location_gen", strategy = GenerationType.SEQUENCE)
 	@EqualsAndHashCode.Include
 	@Column(name = "id")
 	private Long locationId;
@@ -69,7 +70,7 @@ public class LocationBased
 
 	@JsonBackReference
 	@ToString.Exclude
-	@OneToOne(mappedBy = "basedLocation", fetch = FetchType.LAZY)
-	private Property property;
+	@OneToMany(mappedBy = "basedLocation", fetch = FetchType.LAZY)
+	private Set<Property> properties;
 
 }
