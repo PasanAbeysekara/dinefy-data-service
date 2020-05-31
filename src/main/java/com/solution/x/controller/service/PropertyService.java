@@ -80,27 +80,26 @@ public class PropertyService extends AbstractService<Property>
 	 * @param id property ID
 	 * @return The Property
 	 */
-	public ResponseEntity<Property> getProperty( long id )
+	public ResponseEntity<ResponseWrapper<Property>> getProperty( long id )
 	{
 		Optional<Property> optionalProperty = propertyRepository.findById( id );
 
-		ResponseEntity<Property> response;
+		ResponseEntity<ResponseWrapper<Property>> response;
 
 		if( optionalProperty.isPresent() )
 		{
 			Property property = optionalProperty.get();
 			linkPropertyEntities( property );
 
-			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( property );
+			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, property ) );
 		}
 		else
 		{
-			response = buildNotFoundResponse();
+			response = buildNotFoundResponseWrapped();
 		}
 
-
 		return response;
-
 	}
 
 	/**

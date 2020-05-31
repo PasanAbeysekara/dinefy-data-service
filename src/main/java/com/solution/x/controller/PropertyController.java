@@ -54,7 +54,7 @@ public class PropertyController
 	 * @return The Property
 	 */
 	@GetMapping("/properties/{id}")
-	public ResponseEntity<Property> getProperty( @PathVariable("id") long id )
+	public ResponseEntity<ResponseWrapper<Property>> getProperty( @PathVariable("id") long id )
 	{
 		return propertyService.getProperty( id );
 	}
