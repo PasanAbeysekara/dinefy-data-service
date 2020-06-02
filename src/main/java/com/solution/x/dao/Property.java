@@ -10,6 +10,7 @@ import com.solution.x.dao.sys.PropertySpeciality;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.Where;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.CascadeType;
@@ -136,6 +137,9 @@ public class Property extends RepresentationModel<Property>
 	)
 	private Set<PaymentOptions> paymentOptions;
 
+	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
+	@Where(clause = "live = true")
+	private Set<Promotion> livePromotions;
 
 	@JsonBackReference
 	@ToString.Exclude

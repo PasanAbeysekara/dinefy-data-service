@@ -1,6 +1,8 @@
 package com.solution.x.dao;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.dao.key.PromoID;
 import lombok.Data;
@@ -10,6 +12,9 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.sql.Date;
@@ -26,7 +31,7 @@ import java.sql.Date;
 @ToString
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "availabilityID")
+		property = "promoId")
 public class Promotion
 {
 	@EmbeddedId
@@ -53,5 +58,16 @@ public class Promotion
 	@Column(name = "end_date")
 	private Date end;
 
+	@Column(name = "live")
+	private Boolean live;
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tier_id", insertable = false, updatable = false)
+	private PromotionTier tier;
+
+	@JsonBackReference
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "prop_id", insertable = false, updatable = false)
+	private Property properties;
 }
