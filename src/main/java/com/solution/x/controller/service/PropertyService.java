@@ -21,7 +21,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -66,7 +65,7 @@ public class PropertyService extends AbstractService<Property>
 	 *
 	 * @return return All properties
 	 */
-	public ResponseEntity<List<PropFacilities>> getPropFacilities( @PathVariable("id") long id )
+	public ResponseEntity<List<PropFacilities>> getPropFacilities( long id )
 	{
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
@@ -163,6 +162,11 @@ public class PropertyService extends AbstractService<Property>
 					//facility.add( selfRelPropFacility );
 				}
 			}
+		}
+
+		if( property.getLivePromotions() != null )
+		{
+			property.getLivePromotions().forEach( promotion -> promotion.add( HATEOASProvider.promotionSelfLinkProvider( promotion.getPromoId() )) );
 		}
 	}
 

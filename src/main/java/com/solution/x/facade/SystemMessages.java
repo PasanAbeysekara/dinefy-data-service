@@ -48,7 +48,14 @@ public enum SystemMessages
 	CONTRACT_UPDATE_SUCCESS( "1502", "Contract successfully updated" ),
 	CONTRACT_UPDATE_FAILED( "1503", "Contract update failed" ),
 	CONTRACT_DELETE_SUCCESS( "1504", "Contract successfully deleted" ),
-	CONTRACT_DELETE_FAILED( "1505", "Contract delete failed" );
+	CONTRACT_DELETE_FAILED( "1505", "Contract delete failed" ),
+
+	PROMOTION_CREATE_SUCCESS( "1600", "Promotion successfully saved" ),
+	PROMOTION_CREATE_FAILED( "1601", "Promotion saving failed" ),
+	PROMOTION_UPDATE_SUCCESS( "1602", "Promotion successfully updated" ),
+	PROMOTION_UPDATE_FAILED( "1603", "Promotion update failed" ),
+	PROMOTION_DELETE_SUCCESS( "1604", "Promotion successfully deleted" ),
+	PROMOTION_DELETE_FAILED( "1605", "Promotion delete failed" );
 
 
 	private final String code;

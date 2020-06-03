@@ -167,12 +167,12 @@ public class SysAvailabilityUnitService extends AbstractService<AvailabilityUnit
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.FACILITY_DELETE_SUCCESS, "" ) );
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.AVAIL_UNIT_DELETE_SUCCESS, "" ) );
 		}
 		catch( Exception e )
 		{
 			e.printStackTrace();
-			response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.FACILITY_DELETE_FAILED, e );
+			response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.AVAIL_UNIT_DELETE_FAILED, e );
 		}
 
 		return response;

@@ -2,10 +2,12 @@ package com.solution.x.util;
 
 import com.solution.x.controller.ContractController;
 import com.solution.x.controller.OrganizationController;
+import com.solution.x.controller.PromotionController;
 import com.solution.x.controller.PropertyController;
 import com.solution.x.controller.sys.SysAvailabilityUnitController;
 import com.solution.x.controller.sys.SysFacilityController;
 import com.solution.x.controller.sys.SysTagsController;
+import com.solution.x.dao.key.PromoID;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
 
@@ -54,6 +56,11 @@ public class HATEOASProvider
 	public static Link contractSelfLinkProvider( long id )
 	{
 		return linkTo( methodOn( ContractController.class ).getContract( id ) ).withSelfRel();
+	}
+
+	public static Link promotionSelfLinkProvider( PromoID promoId )
+	{
+		return linkTo( methodOn( PromotionController.class ).getPromotion( promoId.getPropId(), promoId.getPromoId() ) ).withSelfRel();
 	}
 
 }

@@ -8,6 +8,7 @@ import com.solution.x.dao.key.PromoID;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -32,7 +33,7 @@ import java.sql.Date;
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
 		property = "promoId")
-public class Promotion
+public class Promotion extends RepresentationModel<Promotion>
 {
 	@EmbeddedId
 	@EqualsAndHashCode.Include

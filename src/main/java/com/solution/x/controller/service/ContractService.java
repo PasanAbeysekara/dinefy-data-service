@@ -14,7 +14,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +22,7 @@ import java.util.Optional;
 /**
  * @author Tharinda Wickramaarachchi
  */
-@RestController
+@Service
 @Slf4j
 public class ContractService extends AbstractService<Contract>
 {
