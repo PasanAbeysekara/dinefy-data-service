@@ -1,4 +1,4 @@
-package com.solution.x.config;
+package com.solution.x.app.config;
 
 import com.solution.x.interceptor.HTTPHeaderInterceptor;
 import org.springframework.context.annotation.Configuration;

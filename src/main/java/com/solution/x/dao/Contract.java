@@ -73,6 +73,9 @@ public class Contract extends RepresentationModel<Contract>
 	@EqualsAndHashCode.Include
 	private String versionTxt;
 
+	@Column(name = "bookable_horizon")
+	private Short bookableHorizon;
+
 	@OneToMany(mappedBy = "contract", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Seasons> seasons;
 

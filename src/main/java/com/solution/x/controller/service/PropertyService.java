@@ -221,8 +221,6 @@ public class PropertyService extends AbstractService<Property>
 	{
 		long propId = property.getPropId();
 
-		property.setCode( "x" + propId ); // TODO remove
-
 		if( property.getFacilities() != null )
 		{
 			for( PropFacilities facility : property.getFacilities() )

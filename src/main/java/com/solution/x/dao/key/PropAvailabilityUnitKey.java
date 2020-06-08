@@ -18,8 +18,8 @@ import java.io.Serializable;
 public class PropAvailabilityUnitKey implements Serializable
 {
 	@Column(name = "prop_id")
-	private int propId;
+	private Long propId;
 
 	@Column(name = "unit_id")
-	private int unit_id;
+	private Integer unit_id;
 }

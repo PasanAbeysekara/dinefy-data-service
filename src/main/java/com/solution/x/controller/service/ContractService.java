@@ -1,5 +1,6 @@
 package com.solution.x.controller.service;
 
+import com.solution.x.controller.service.functionality.PropAvailDataAsyncExecutor;
 import com.solution.x.dao.Contract;
 import com.solution.x.dao.ContractAvailability;
 import com.solution.x.dao.Seasons;
@@ -28,6 +29,9 @@ public class ContractService extends AbstractService<Contract>
 {
 	@Autowired
 	private ContractsRepository contractsRepository;
+
+	@Autowired
+	private PropAvailDataAsyncExecutor availDataAsyncExecutor;
 
 
 	public ResponseEntity<List<Contract>> getProperty()
@@ -70,6 +74,8 @@ public class ContractService extends AbstractService<Contract>
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
 					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, contract ) );
+
+			availDataAsyncExecutor.executeAsynchronously( contract );
 		}
 		else
 		{
@@ -92,7 +98,6 @@ public class ContractService extends AbstractService<Contract>
 
 		try
 		{
-
 			Long contractNextVal = contractsRepository.getNextVal();
 			contract.setContractId( contractNextVal );
 
@@ -106,6 +111,9 @@ public class ContractService extends AbstractService<Contract>
 			response = ResponseEntity.status( HttpStatus.CREATED )
 					.headers( addCommonHeaders( new HttpHeaders() ) )
 					.body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.CONTRACT_CREATE_SUCCESS, savedContract ) );
+
+			availDataAsyncExecutor.executeAsynchronously( contract );
+
 		}
 		catch( Exception e )
 		{
