@@ -23,11 +23,17 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -89,6 +95,10 @@ public class Property extends RepresentationModel<Property>
 	@Column(name = "end_time")
 	private LocalTime endTime;
 
+	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderBy("time_start ASC")
+	private Set<OperationHours> operationHours;
+
 	@ToString.Exclude
 	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY)
 	private Set<PropAvailabilityUnit> availabilityUnits;
@@ -105,11 +115,9 @@ public class Property extends RepresentationModel<Property>
 	@JoinColumn(name = "current_cont_id", referencedColumnName = "contract_id", insertable = false, updatable = false)
 	private Contract currentContract;
 
-	@ToString.Exclude
 	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<PropFacilities> facilities;
 
-	@ToString.Exclude
 	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<PropTags> tags;
 
@@ -147,5 +155,34 @@ public class Property extends RepresentationModel<Property>
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "org_id")
 	private Organization organizations;
+
+	@Transient
+	//TODO Cache this value using ehcache
+	private List<LocalTime> timeSlots;
+
+	public List<LocalTime> getTimeSlots()
+	{
+		Short timeSlotMinutes = currentContract.getTimeSlot(); // In minutes , 30 (1/2 hr), 60 (1hr) , 90 (1 1/2 hr) , 120 (2hr)
+
+		List<OperationHours> sortedOperationHours = operationHours.stream().sorted( Comparator.comparing( OperationHours::getTimeStart ) ).collect( Collectors.toList() );
+
+		List<LocalTime> timeSlots = new ArrayList<>();
+
+		for( OperationHours operationHour : sortedOperationHours )
+		{
+			LocalTime timeStart = operationHour.getTimeStart();
+			timeSlots.add( timeStart );
+
+			LocalTime currentTime = timeStart;
+			while( currentTime.isBefore( operationHour.getTimeEnd().minusMinutes( timeSlotMinutes ) ) )
+			{
+				currentTime = currentTime.plusMinutes( timeSlotMinutes );
+				timeSlots.add( currentTime );
+			}
+		}
+
+		return timeSlots;
+
+	}
 
 }

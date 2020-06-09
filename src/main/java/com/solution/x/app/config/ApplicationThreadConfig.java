@@ -14,7 +14,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  */
 @Configuration
 @Slf4j
-public class ApplicationThreadConfigs
+public class ApplicationThreadConfig
 {
 	@Bean
 	public TaskExecutor threadPoolTaskExecutor()

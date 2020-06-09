@@ -4,6 +4,7 @@ import com.solution.x.dao.Contract;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -19,10 +20,19 @@ public class PropAvailDataAsyncExecutor
 	@Qualifier("async-avail-data")
 	private AsyncTaskExecutor asyncTaskExecutor;
 
+	@Autowired
+	private ApplicationContext applicationContext;
+
 
 	public void executeAsynchronously( Contract contract )
 	{
-		asyncTaskExecutor.submit( new PropAvailDataFlattener( contract ) );
+
+		PropAvailDataExploder dataFlattener = new PropAvailDataExploder();
+		dataFlattener.setContract( contract );
+		applicationContext.getAutowireCapableBeanFactory().autowireBean( dataFlattener );
+
+		asyncTaskExecutor.submit( dataFlattener );
+
 		log.info( "PropAvailDataFlattener - Submitted for contract " + contract.getContractId() );
 	}
 }

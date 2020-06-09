@@ -19,7 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 /**
@@ -46,10 +46,10 @@ public class Seasons
 	private String name;
 
 	@Column(name = "from_date")
-	private Date from;
+	private LocalDate from;
 
 	@Column(name = "to_date")
-	private Date to;
+	private LocalDate to;
 
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
