@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.DayOfWeek;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -47,6 +48,11 @@ public class WeekDefinition
 	public Boolean[] getWeekDays()
 	{
 		return new Boolean[]{week.charAt( 0 ) == '1', week.charAt( 1 ) == '1', week.charAt( 2 ) == '1', week.charAt( 3 ) == '1', week.charAt( 4 ) == '1', week.charAt( 5 ) == '1', week.charAt( 6 ) == '1'};
+	}
+
+	public boolean isValidDay( DayOfWeek dayOfWeek )
+	{
+		return week.charAt( dayOfWeek.getValue() - 1 ) == '1'; // day-of-week, from 1 (Monday) to 7 (Sunday)
 	}
 
 	//	@JsonBackReference // Could not write JSON: Infinite recursion (StackOverflowError)

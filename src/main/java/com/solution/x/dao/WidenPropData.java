@@ -3,7 +3,6 @@ package com.solution.x.dao;
 import com.solution.x.dao.key.WidenDataGridKey;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -15,12 +14,21 @@ import javax.persistence.Table;
  * @since 6/5/2020 12:21 PM
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "prop_widen_data_grid")
 public class WidenPropData
 {
+	public WidenPropData()
+	{
+		this.contractAvailCount = 0;
+		this.close = 0;
+		this.open = 0;
+		this.hold = 0;
+		this.booked = 0;
+		this.bookable = 0;
+	}
+
 	@EmbeddedId
 	private WidenDataGridKey widenDataGridKey;
 
@@ -36,9 +44,17 @@ public class WidenPropData
 	@Column(name = "bookable")
 	private Short bookable;
 
+	@Column(name = "hold")
+	private Short hold;
+
 	@Column(name = "booked")
 	private Short booked;
 
 	@Column(name = "reservation_id")
 	private Long reservationId;
+
+	public void calculateBookable()
+	{
+		this.bookable = (short) ( this.contractAvailCount + this.open - this.close - this.hold - this.booked );
+	}
 }

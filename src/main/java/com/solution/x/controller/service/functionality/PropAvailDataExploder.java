@@ -4,12 +4,14 @@ import com.solution.x.app.config.ApplicationPropertyConfig;
 import com.solution.x.dao.Contract;
 import com.solution.x.dao.ContractAvailability;
 import com.solution.x.dao.PropAvailabilityUnit;
-import com.solution.x.dao.Property;
 import com.solution.x.dao.Seasons;
 import com.solution.x.dao.WidenPropData;
 import com.solution.x.dao.key.PropAvailabilityUnitKey;
 import com.solution.x.dao.key.WidenDataGridKey;
+import com.solution.x.dao.sys.WeekDefinition;
+import com.solution.x.global.DataCarrier;
 import com.solution.x.repo.AvailDataRepository;
+import com.solution.x.repo.sys.WeekDefinitionRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,12 +21,14 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
@@ -38,7 +42,7 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class PropAvailDataExploder implements Callable<String>
+public class PropAvailDataExploder implements Callable<DataCarrier<String>>
 {
 	private Contract contract;
 
@@ -48,8 +52,11 @@ public class PropAvailDataExploder implements Callable<String>
 	@Autowired
 	private AvailDataRepository availDataRepository;
 
+	@Autowired
+	private WeekDefinitionRepository weekDefinitionRepository;
+
 	@Override
-	public String call() throws Exception
+	public DataCarrier<String> call() throws Exception
 	{
 
 		short bookableHorizon = ( contract.getBookableHorizon() == null || config.BOOKABLE_HORIZON < contract.getBookableHorizon() ) ? config.BOOKABLE_HORIZON : contract.getBookableHorizon();
@@ -60,70 +67,86 @@ public class PropAvailDataExploder implements Callable<String>
 		LocalDate validFrom = contract.getValidFrom().toLocalDate();
 		LocalDate validTo = contract.getValidTo().toLocalDate();
 
-		LocalDate from = validFrom.isBefore( now ) ? now : validFrom;
+		LocalDate expandFrom = validFrom.isBefore( now ) ? now : validFrom;
 
-		LocalDate to = from.plusDays( bookableHorizon ).isBefore( validTo ) ? from.plusDays( bookableHorizon ) : validTo;
+		LocalDate expandTo = expandFrom.plusDays( bookableHorizon ).isBefore( validTo ) ? expandFrom.plusDays( bookableHorizon ) : validTo;
 
-		LocalDate currentDate = from;
-		Property property = contract.getProperty();
+		LocalDate currentDate = expandFrom;
 
-		List<LocalTime> timeSlots = property.getTimeSlots();
+		List<LocalTime> timeSlots = contract.getProperty().getTimeSlots();
 
-		//List<OperationHours> sortedOperationHours = operationHours.stream().sorted( Comparator.comparing( OperationHours::getTimeStart ) ).collect( Collectors.toList() );
-		List<Seasons> collect = contract.getSeasons().stream().sorted( Comparator.comparing( Seasons::getFrom ) ).collect( Collectors.toList() );
+		List<Seasons> sortedSeasons = contract.getSeasons().stream().sorted( Comparator.comparing( Seasons::getFrom ) ).collect( Collectors.toList() );
 
-		for( Seasons season : contract.getSeasons() )
+		Map<Short, WeekDefinition> weekDefinitionMap = weekDefinitionRepository.findAll().stream().collect( Collectors.toMap( WeekDefinition::getWeekDefId, o -> o ) );// TODO cache this
+
+		List<WidenPropData> data = new ArrayList<>();
+		while( currentDate.isBefore( expandTo ) )
 		{
-			boolean seasonValid = false;
-			boolean dateAtEdge = from.isEqual( season.getFrom() ) || from.isEqual( season.getTo() ) || to.isEqual( season.getFrom() ) || to.isEqual( season.getTo() );
-			if( dateAtEdge )
+			LocalDate date = currentDate;
+
+			Optional<Seasons> optional = sortedSeasons.stream()
+					.filter( o -> date.isEqual( o.getFrom() ) || date.isEqual( o.getTo() ) || ( date.isBefore( o.getTo() ) && date.isAfter( o.getFrom() ) ) )
+					.findFirst();
+
+			LocalDate maxDateWithingTheSeason;
+			if( optional.isPresent() )
 			{
-				seasonValid = true;
-			}
-			else
-			{
-				boolean fromInsideSeason = from.isAfter( season.getFrom() ) && ( from.isBefore( season.getTo() ) );
-				if( fromInsideSeason )
+				Seasons matchingSeason = optional.get();
+
+				if( matchingSeason.getTo().isBefore( expandTo ) )
 				{
-					seasonValid = true;
+					maxDateWithingTheSeason = matchingSeason.getTo().plusDays( 1L ); // +1 to match edge case while checking isBefore : date.isBefore(date) == false
 				}
 				else
 				{
-					boolean toInsideSeason = to.isAfter( season.getFrom() ) && ( to.isBefore( season.getTo() ) );
-					if( toInsideSeason )
-					{
-						seasonValid = true;
-					}
+					maxDateWithingTheSeason = expandTo.plusDays( 1L ); // +1 to match edge case while checking isBefore : date.isBefore(date) == false
 				}
-			}
 
-			if( seasonValid )
-			{
-				Set<ContractAvailability> availabilities = season.getAvailabilities();
-			}
-		}
-
-		List<WidenPropData> data = new ArrayList<>();
-		while( currentDate.isBefore( to ) )
-		{
-			for( PropAvailabilityUnit availabilityUnit : property.getAvailabilityUnits() )
-			{
-				PropAvailabilityUnitKey availUnitKey = availabilityUnit.getPropAvailabilityUnitId();
-				for( LocalTime timeSlot : timeSlots )
+				while( currentDate.isBefore( maxDateWithingTheSeason ) )
 				{
-					WidenPropData widenPropData = new WidenPropData();
-					widenPropData.setWidenDataGridKey( new WidenDataGridKey( availUnitKey.getPropId(), availUnitKey.getUnit_id(), currentDate, timeSlot ) );
+					for( PropAvailabilityUnit availabilityUnit : contract.getProperty().getAvailabilityUnits() )
+					{
+						PropAvailabilityUnitKey availUnitKey = availabilityUnit.getPropAvailabilityUnitId();
 
-					data.add( widenPropData );
+						DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
 
+						Optional<ContractAvailability> availabilityOpt = matchingSeason.getAvailabilities().stream()
+								.filter( a -> ( availUnitKey.getUnit_id().equals( a.getAvailabilityID().getAvailUnitId() ) )
+										&& ( weekDefinitionMap.get( a.getAvailabilityID().getWeekDefId() ).isValidDay( dayOfWeek ) ) ).findFirst();
+
+						if( availabilityOpt.isPresent() )
+						{
+							ContractAvailability availability = availabilityOpt.get();
+
+							for( LocalTime timeSlot : timeSlots )
+							{
+								WidenPropData widenPropData = new WidenPropData();
+								widenPropData.setWidenDataGridKey( new WidenDataGridKey( availUnitKey.getPropId(), availUnitKey.getUnit_id(), currentDate, timeSlot ) );
+
+								widenPropData.setContractAvailCount( availability.getCount() );
+								widenPropData.calculateBookable();
+
+								data.add( widenPropData );
+
+							}
+						}
+						else
+						{
+							return DataCarrier.<String>init().withError().setMessage( "Cannot find matching availability for " + dayOfWeek + " & Avail Unit : " + availUnitKey );
+						}
+					}
+
+					currentDate = currentDate.plusDays( 1L );
 				}
 			}
-
-			availDataRepository.saveAll( data );
-
-			currentDate = currentDate.plusDays( 1 );
+			else
+			{
+				return DataCarrier.<String>init().withError().setMessage( "Cannot find matching season for the day " + currentDate );
+			}
 		}
 
-		return null;
+		availDataRepository.saveAll( data );
+
+		return DataCarrier.<String>init().withSuccess().setMessage( "Successfully Exploded into  " + data.size() + " availability points" );
 	}
 }

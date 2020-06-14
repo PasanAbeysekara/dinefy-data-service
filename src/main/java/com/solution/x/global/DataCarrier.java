@@ -40,6 +40,12 @@ public class DataCarrier<T>
 		return this;
 	}
 
+	public DataCarrier<T> setMessage( String message )
+	{
+		this.message = message;
+		return this;
+	}
+
 	public enum CarrierStatus
 	{
 		NONE, SUCCESS, ERROR;
