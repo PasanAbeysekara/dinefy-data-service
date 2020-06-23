@@ -11,10 +11,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 @EnableAsync
-public class ProjXApplication
+public class ReservationEngine
 {
 	public static void main( String[] args )
 	{
-		SpringApplication.run( ProjXApplication.class, args );
+		SpringApplication.run( ReservationEngine.class, args );
 	}
 }
