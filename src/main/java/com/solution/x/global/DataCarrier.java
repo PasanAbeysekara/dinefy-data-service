@@ -12,6 +12,7 @@ public class DataCarrier<T>
 	private CarrierStatus status = CarrierStatus.NONE;
 	private String message;
 	private T data;
+	private Exception exception;
 
 	public static <DC> DataCarrier<DC> init()
 	{
@@ -43,6 +44,12 @@ public class DataCarrier<T>
 	public DataCarrier<T> setMessage( String message )
 	{
 		this.message = message;
+		return this;
+	}
+
+	public DataCarrier<T> setException( Exception exception )
+	{
+		this.exception = exception;
 		return this;
 	}
 

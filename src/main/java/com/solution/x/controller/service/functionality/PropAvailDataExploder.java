@@ -55,6 +55,7 @@ public class PropAvailDataExploder implements Callable<DataCarrier<String>>
 	@Autowired
 	private WeekDefinitionRepository weekDefinitionRepository;
 
+	//TODO make it transactional
 	@Override
 	public DataCarrier<String> call() throws Exception
 	{
@@ -145,8 +146,22 @@ public class PropAvailDataExploder implements Callable<DataCarrier<String>>
 			}
 		}
 
-		availDataRepository.saveAll( data );
+		DataCarrier<String> dataCarrier;
+		try
+		{
+			availDataRepository.saveAll( data );
+			dataCarrier = DataCarrier.<String>init().withSuccess().setMessage( "Successfully Exploded into  " + data.size() + " availability points" );
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
 
-		return DataCarrier.<String>init().withSuccess().setMessage( "Successfully Exploded into  " + data.size() + " availability points" );
+			dataCarrier = DataCarrier.<String>init()
+					.withError()
+					.setMessage( "Availability Explosion Failed : " + data.size() + " availability points" )
+					.setException( e );
+		}
+
+		return dataCarrier;
 	}
 }

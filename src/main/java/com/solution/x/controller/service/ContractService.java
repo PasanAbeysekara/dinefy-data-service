@@ -75,7 +75,6 @@ public class ContractService extends AbstractService<Contract>
 					.headers( addCommonHeaders( new HttpHeaders() ) )
 					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, contract ) );
 
-			availDataAsyncExecutor.executeAsynchronously( contract );
 		}
 		else
 		{
