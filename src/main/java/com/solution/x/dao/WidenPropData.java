@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Data
 @AllArgsConstructor
 @Entity
-@Table(name = "prop_widen_data_grid")
+@Table(name = "prop_exploded_avail_data")
 public class WidenPropData
 {
 	public WidenPropData()
@@ -52,6 +52,9 @@ public class WidenPropData
 
 	@Column(name = "reservation_id")
 	private Long reservationId;
+
+	@Column(name = "contract_id")
+	private Long contractId;
 
 	public void calculateBookable()
 	{

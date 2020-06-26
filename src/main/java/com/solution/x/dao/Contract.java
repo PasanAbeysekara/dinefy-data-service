@@ -53,7 +53,7 @@ public class Contract extends RepresentationModel<Contract>
 	private Short version;
 
 	@Column(name = "prop_id")
-	private Integer propId;
+	private Long propId;
 
 	@Size(max = 100)
 	@Column(name = "name")
@@ -64,9 +64,6 @@ public class Contract extends RepresentationModel<Contract>
 
 	@Column(name = "to_date")
 	private Date validTo;
-
-	@Column(name = "timeslot")
-	private Short timeSlot;
 
 	@Size(max = 50)
 	@Column(name = "version_txt")

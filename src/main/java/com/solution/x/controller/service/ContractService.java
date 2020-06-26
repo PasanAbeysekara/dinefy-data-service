@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -88,10 +89,12 @@ public class ContractService extends AbstractService<Contract>
 	/**
 	 * Create a new Contract
 	 *
+	 * @param draft
 	 * @param contract Contract
 	 * @return Saved Contract Response wrapper
 	 */
-	public ResponseEntity<ResponseWrapper<Contract>> createContract( Contract contract )
+	@Transactional
+	public ResponseEntity<ResponseWrapper<Contract>> createContract( boolean draft, Contract contract )
 	{
 		ResponseEntity<ResponseWrapper<Contract>> response;
 
@@ -102,7 +105,7 @@ public class ContractService extends AbstractService<Contract>
 
 			preProcess( contract );
 
-			Contract savedContract = contractsRepository.save( contract );
+			Contract savedContract = contractsRepository.saveAndFlush( contract );
 
 			Link selfRel = HATEOASProvider.contractSelfLinkProvider( contract.getContractId() );
 			savedContract.add( selfRel );
@@ -111,7 +114,10 @@ public class ContractService extends AbstractService<Contract>
 					.headers( addCommonHeaders( new HttpHeaders() ) )
 					.body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.CONTRACT_CREATE_SUCCESS, savedContract ) );
 
-			availDataAsyncExecutor.executeAsynchronously( contract );
+			if( !draft )
+			{
+				availDataAsyncExecutor.executeAsynchronouslyTx( contract );
+			}
 
 		}
 		catch( Exception e )

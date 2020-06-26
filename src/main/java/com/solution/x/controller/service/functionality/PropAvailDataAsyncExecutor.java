@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.task.AsyncTaskExecutor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -24,6 +26,7 @@ public class PropAvailDataAsyncExecutor
 	private ApplicationContext applicationContext;
 
 
+	//TODO make it work : Its
 	public void executeAsynchronously( Contract contract )
 	{
 
@@ -34,5 +37,24 @@ public class PropAvailDataAsyncExecutor
 		asyncTaskExecutor.submit( dataFlattener );
 
 		log.info( "PropAvailDataFlattener - Submitted for contract " + contract.getContractId() );
+	}
+
+	@Async("async-avail-data")
+	@Transactional
+	public void executeAsynchronouslyTx( Contract contract )
+	{
+		PropAvailDataExploder dataFlattener = new PropAvailDataExploder();
+		dataFlattener.setContract( contract );
+
+		applicationContext.getAutowireCapableBeanFactory().autowireBean( dataFlattener );
+
+		try
+		{
+			dataFlattener.call();//TODO remove : Transactional issue , Need to use above method
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+		}
 	}
 }

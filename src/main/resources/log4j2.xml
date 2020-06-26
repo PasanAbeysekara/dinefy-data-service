@@ -8,6 +8,9 @@
         <Console name="Console" target="SYSTEM_OUT" follow="true">
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
+        <Console name="Console-Tx" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="TNXXXXXXXXXXXXXXX : ${LOG_PATTERN}"/>
+        </Console>
 
         <RollingFile name="appLog"
                      fileName="${APP_LOG_ROOT}/SpringBoot2App/application.log"
@@ -24,9 +27,16 @@
         <logger name="org.springframework" level="info" additivity="true">
             <AppenderRef ref="Console" level="info"/>
         </logger>
-        <logger name="org.springframework.amqp.rabbit.core.RabbitTemplate" level="debug" additivity="true">
-            <AppenderRef ref="Console" level="debug"/>
+        <logger name="org.springframework.amqp.rabbit.core.RabbitTemplate" level="info" additivity="true">
+            <AppenderRef ref="Console" level="info"/>
         </logger>
+        <logger name="log4j.logger.org.hibernate.transaction" level="debug" additivity="true">
+            <AppenderRef ref="Console-Tx" level="debug"/>
+        </logger>
+        <!--        <logger name="com.solution.x" level="debug" additivity="true">-->
+        <!--            <AppenderRef ref="Console-Tx" level="debug"/>-->
+        <!--        </logger>-->
+
         <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>

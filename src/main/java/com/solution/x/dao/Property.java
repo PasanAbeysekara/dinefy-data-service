@@ -95,6 +95,9 @@ public class Property extends RepresentationModel<Property>
 	@Column(name = "end_time")
 	private LocalTime endTime;
 
+	@Column(name = "timeslot")
+	private Short timeSlotMinutes; // In minutes , 30 (1/2 hr), 60 (1hr) , 90 (1 1/2 hr) , 120 (2hr)
+
 	@OneToMany(mappedBy = "properties", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@OrderBy("time_start ASC")
 	private Set<OperationHours> operationHours;
@@ -162,7 +165,6 @@ public class Property extends RepresentationModel<Property>
 
 	public List<LocalTime> getTimeSlots()
 	{
-		Short timeSlotMinutes = currentContract.getTimeSlot(); // In minutes , 30 (1/2 hr), 60 (1hr) , 90 (1 1/2 hr) , 120 (2hr)
 
 		List<OperationHours> sortedOperationHours = operationHours.stream().sorted( Comparator.comparing( OperationHours::getTimeStart ) ).collect( Collectors.toList() );
 

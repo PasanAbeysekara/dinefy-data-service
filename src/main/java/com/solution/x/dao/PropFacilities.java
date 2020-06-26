@@ -7,6 +7,7 @@ import com.solution.x.dao.key.PropFacilityID;
 import com.solution.x.dao.sys.Facilities;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
@@ -29,6 +30,7 @@ import javax.validation.constraints.Size;
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
 		property = "propFacilityId")
+@ToString
 public class PropFacilities extends RepresentationModel<PropFacilities>
 {
 	@EmbeddedId
@@ -47,10 +49,12 @@ public class PropFacilities extends RepresentationModel<PropFacilities>
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("facility_id")
 	@JoinColumn(name = "facility_id")
+	@ToString.Exclude
 	private Facilities sysFacility;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	//@MapsId("propId")
 	@JoinColumn(name = "prop_id", insertable = false, updatable = false) // attempted to assign id from null one-to-one property , remove @MapsId("propId")
+	@ToString.Exclude
 	private Property properties;
 }
