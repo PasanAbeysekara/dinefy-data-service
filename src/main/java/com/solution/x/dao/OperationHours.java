@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.solution.x.dao.key.OperationHourKey;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -22,6 +23,7 @@ import java.time.LocalTime;
 @Data
 @Entity
 @Table(name = "prop_operation_hours")
+@ToString
 public class OperationHours
 {
 	@EmbeddedId
@@ -41,5 +43,6 @@ public class OperationHours
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prop_id", insertable = false, updatable = false)
+	@ToString.Exclude
 	private Property properties;
 }

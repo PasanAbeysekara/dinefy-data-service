@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.solution.x.dao.Property;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
@@ -28,6 +29,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "payment_options")
+@ToString
 public class PaymentOptions extends RepresentationModel<PaymentOptions>
 {
 	@Id
@@ -46,5 +48,6 @@ public class PaymentOptions extends RepresentationModel<PaymentOptions>
 			inverseJoinColumns = @JoinColumn(name = "prop_id", referencedColumnName = "prop_id", insertable = false, updatable = false),
 			joinColumns = @JoinColumn(name = "option_id", referencedColumnName = "option_id")
 	)
+	@ToString.Exclude
 	private Set<Property> weekDefinitions;
 }

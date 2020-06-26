@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.solution.x.dao.key.AvailabilityID;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -24,6 +25,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "contract_availability")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@ToString
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
 		property = "availabilityID")
@@ -42,5 +44,6 @@ public class ContractAvailability
 			@JoinColumn(name = "contract_id", referencedColumnName = "contract_id", insertable = false, updatable = false),
 			@JoinColumn(name = "season_id", referencedColumnName = "season_id", insertable = false, updatable = false)
 	})
+	@ToString.Exclude
 	private Seasons seasons;
 }

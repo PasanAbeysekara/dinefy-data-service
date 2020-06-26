@@ -70,5 +70,6 @@ public class Promotion extends RepresentationModel<Promotion>
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "prop_id", insertable = false, updatable = false)
+	@ToString.Exclude
 	private Property properties;
 }

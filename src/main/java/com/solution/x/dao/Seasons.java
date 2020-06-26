@@ -54,7 +54,7 @@ public class Seasons
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "contract_id", referencedColumnName = "contract_id", insertable = false, updatable = false)
-	//@MapsId("contractId")
+	@ToString.Exclude
 	private Contract contract;
 
 

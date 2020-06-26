@@ -7,6 +7,7 @@ import com.solution.x.dao.key.PropAvailabilityUnitKey;
 import com.solution.x.dao.sys.AvailabilityUnit;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
@@ -29,6 +30,7 @@ import javax.validation.constraints.Size;
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
 		property = "propAvailabilityUnitId")
+@ToString
 public class PropAvailabilityUnit extends RepresentationModel<PropAvailabilityUnit>
 {
 	@EmbeddedId
@@ -50,10 +52,12 @@ public class PropAvailabilityUnit extends RepresentationModel<PropAvailabilityUn
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("unit_id")
 	@JoinColumn(name = "unit_id")
+	@ToString.Exclude
 	private AvailabilityUnit sysAvailabilityUnit;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("propId")
 	@JoinColumn(name = "prop_id")
+	@ToString.Exclude
 	private Property properties;
 }

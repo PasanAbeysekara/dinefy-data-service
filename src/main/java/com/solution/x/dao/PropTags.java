@@ -7,6 +7,7 @@ import com.solution.x.dao.key.PropTagID;
 import com.solution.x.dao.sys.Tags;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
@@ -29,6 +30,7 @@ import javax.validation.constraints.Size;
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
 		property = "propTagID")
+@ToString
 public class PropTags extends RepresentationModel<PropTags>
 {
 	@EmbeddedId
@@ -47,10 +49,12 @@ public class PropTags extends RepresentationModel<PropTags>
 	@ManyToOne(fetch = FetchType.LAZY)
 	@MapsId("tag_id")
 	@JoinColumn(name = "tag_id")
+	@ToString.Exclude
 	private Tags sysTags;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	//@MapsId("propId")
 	@JoinColumn(name = "prop_id", insertable = false, updatable = false)
+	@ToString.Exclude
 	private Property properties;
 }
