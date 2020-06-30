@@ -12,6 +12,9 @@ pipelines:
           - maven
         script: # Modify the commands below to build your repository.
           - apt-get update && apt-get install -y
+          - echo $PATH
+          - apt-get update -y
+          - apt-get install -y git
           - git clone git@bitbucket.org:project-x-lk/back-office-api.git
           - cd back-office-api
           - mvn clean install
