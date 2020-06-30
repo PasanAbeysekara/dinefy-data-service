@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.solution</groupId>
-    <artifactId>x</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>x</name>
+    <groupId>com.solution.x</groupId>
+    <artifactId>data-service</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>Reservation Engine data-service</name>
     <description>x for Everyone</description>
 
     <properties>
@@ -21,6 +21,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.solution.x</groupId>
+            <artifactId>persistence-engine</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
