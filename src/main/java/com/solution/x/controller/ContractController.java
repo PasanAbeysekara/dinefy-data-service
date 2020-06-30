@@ -2,7 +2,7 @@ package com.solution.x.controller;
 
 import com.solution.x.controller.service.ContractService;
 import com.solution.x.dao.Contract;
-import com.solution.x.facade.ResponseWrapper;
+import com.solution.x.util.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

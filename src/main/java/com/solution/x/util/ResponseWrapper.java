@@ -1,5 +1,6 @@
-package com.solution.x.facade;
+package com.solution.x.util;
 
+import com.solution.x.facade.Error;
 import com.solution.x.global.SystemOperation;
 import lombok.Data;
 

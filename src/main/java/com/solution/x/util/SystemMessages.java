@@ -1,4 +1,4 @@
-package com.solution.x.facade;
+package com.solution.x.util;
 
 /**
  * @author Tharinda Wickramaarachchi

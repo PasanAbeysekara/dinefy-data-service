@@ -1,7 +1,6 @@
 package com.solution.x.util;
 
 import com.solution.x.facade.Error;
-import com.solution.x.facade.SystemMessages;
 
 import javax.validation.ConstraintViolation;
 import java.sql.SQLException;
