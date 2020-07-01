@@ -1,11 +1,11 @@
 package com.solution.x.controller;
 
-import com.solution.x.controller.service.AbstractService;
 import com.solution.x.dao.Organization;
 import com.solution.x.dao.PropFacilities;
 import com.solution.x.dao.Property;
 import com.solution.x.repo.OrganizationRepository;
-import com.solution.x.util.HATEOASProvider;
+import com.solution.x.search.controller.service.AbstractService;
+import com.solution.x.search.util.HATEOASProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;

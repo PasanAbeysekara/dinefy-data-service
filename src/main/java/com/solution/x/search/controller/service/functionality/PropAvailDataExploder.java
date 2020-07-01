@@ -1,6 +1,5 @@
-package com.solution.x.controller.service.functionality;
+package com.solution.x.search.controller.service.functionality;
 
-import com.solution.x.app.config.ApplicationPropertyConfig;
 import com.solution.x.dao.Contract;
 import com.solution.x.dao.ContractAvailability;
 import com.solution.x.dao.PropAvailabilityUnit;
@@ -10,11 +9,12 @@ import com.solution.x.dao.WidenPropData;
 import com.solution.x.dao.key.PropAvailabilityUnitKey;
 import com.solution.x.dao.key.WidenDataGridKey;
 import com.solution.x.dao.sys.WeekDefinition;
-import com.solution.x.global.DataCarrier;
+import com.solution.x.data.app.config.ApplicationPropertyConfig;
 import com.solution.x.repo.AvailDataRepository;
 import com.solution.x.repo.ContractsRepository;
 import com.solution.x.repo.PropertyRepository;
 import com.solution.x.repo.sys.WeekDefinitionRepository;
+import com.solution.x.search.global.DataCarrier;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
-package com.solution.x.util;
+package com.solution.x.search.util;
 
 import com.solution.x.facade.Error;
-import com.solution.x.global.SystemOperation;
+import com.solution.x.search.global.SystemOperation;
 import lombok.Data;
 
 /**

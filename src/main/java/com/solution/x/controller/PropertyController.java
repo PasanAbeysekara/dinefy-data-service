@@ -1,9 +1,9 @@
 package com.solution.x.controller;
 
-import com.solution.x.controller.service.PropertyService;
 import com.solution.x.dao.PropFacilities;
 import com.solution.x.dao.Property;
-import com.solution.x.util.ResponseWrapper;
+import com.solution.x.search.controller.service.PropertyService;
+import com.solution.x.search.util.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

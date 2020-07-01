@@ -1,4 +1,4 @@
-package com.solution.x.app;
+package com.solution.x.data.app;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.ContextRefreshedEvent;

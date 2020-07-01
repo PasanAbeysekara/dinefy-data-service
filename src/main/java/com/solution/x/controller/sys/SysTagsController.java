@@ -1,9 +1,9 @@
 package com.solution.x.controller.sys;
 
-import com.solution.x.controller.service.sys.SysTagsService;
 import com.solution.x.dao.sys.Tags;
 import com.solution.x.facade.dto.TagsModel;
-import com.solution.x.util.ResponseWrapper;
+import com.solution.x.search.controller.service.sys.SysTagsService;
+import com.solution.x.search.util.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;

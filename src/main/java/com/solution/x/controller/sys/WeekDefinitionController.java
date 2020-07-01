@@ -1,8 +1,8 @@
 package com.solution.x.controller.sys;
 
-import com.solution.x.controller.service.AbstractService;
 import com.solution.x.dao.sys.WeekDefinition;
 import com.solution.x.repo.sys.WeekDefinitionRepository;
+import com.solution.x.search.controller.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;

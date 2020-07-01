@@ -1,4 +1,4 @@
-package com.solution.x.util;
+package com.solution.x.search.util;
 
 import com.solution.x.controller.ContractController;
 import com.solution.x.controller.OrganizationController;

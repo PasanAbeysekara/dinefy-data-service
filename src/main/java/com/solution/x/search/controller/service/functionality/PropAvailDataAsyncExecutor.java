@@ -1,4 +1,4 @@
-package com.solution.x.controller.service.functionality;
+package com.solution.x.search.controller.service.functionality;
 
 import com.solution.x.dao.Contract;
 import lombok.extern.slf4j.Slf4j;

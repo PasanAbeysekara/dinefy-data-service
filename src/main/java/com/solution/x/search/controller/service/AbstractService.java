@@ -1,10 +1,10 @@
-package com.solution.x.controller.service;
+package com.solution.x.search.controller.service;
 
 import com.solution.x.facade.Error;
-import com.solution.x.global.SystemOperation;
-import com.solution.x.util.ErrorUtility;
-import com.solution.x.util.ResponseWrapper;
-import com.solution.x.util.SystemMessages;
+import com.solution.x.search.global.SystemOperation;
+import com.solution.x.search.util.ErrorUtility;
+import com.solution.x.search.util.ResponseWrapper;
+import com.solution.x.search.util.SystemMessages;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

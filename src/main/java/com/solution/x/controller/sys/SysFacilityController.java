@@ -1,9 +1,9 @@
 package com.solution.x.controller.sys;
 
-import com.solution.x.controller.service.sys.SysFacilityService;
 import com.solution.x.dao.sys.Facilities;
 import com.solution.x.facade.dto.FacilitiesModel;
-import com.solution.x.util.ResponseWrapper;
+import com.solution.x.search.controller.service.sys.SysFacilityService;
+import com.solution.x.search.util.ResponseWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

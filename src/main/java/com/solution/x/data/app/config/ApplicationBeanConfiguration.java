@@ -1,4 +1,4 @@
-package com.solution.x.app.config;
+package com.solution.x.data.app.config;
 
 /**
  * @author Tharinda Wickramaarachchi

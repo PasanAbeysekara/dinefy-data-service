@@ -1,14 +1,14 @@
-package com.solution.x.controller.service;
+package com.solution.x.search.controller.service;
 
-import com.solution.x.controller.service.functionality.PropAvailDataAsyncExecutor;
 import com.solution.x.dao.Contract;
 import com.solution.x.dao.ContractAvailability;
 import com.solution.x.dao.Seasons;
-import com.solution.x.global.SystemOperation;
 import com.solution.x.repo.ContractsRepository;
-import com.solution.x.util.HATEOASProvider;
-import com.solution.x.util.ResponseWrapper;
-import com.solution.x.util.SystemMessages;
+import com.solution.x.search.controller.service.functionality.PropAvailDataAsyncExecutor;
+import com.solution.x.search.global.SystemOperation;
+import com.solution.x.search.util.HATEOASProvider;
+import com.solution.x.search.util.ResponseWrapper;
+import com.solution.x.search.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;

@@ -1,4 +1,4 @@
-package com.solution.x.ano;
+package com.solution.x.data.ano;
 
 /**
  * @author Tharinda Wickramaarachchi

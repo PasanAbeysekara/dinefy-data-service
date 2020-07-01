@@ -12,7 +12,7 @@
     <groupId>com.solution.x</groupId>
     <artifactId>data-service</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Reservation Engine data-service</name>
+    <name>data-service</name>
     <description>x for Everyone</description>
 
     <properties>

@@ -1,4 +1,4 @@
-package com.solution.x.util;
+package com.solution.x.search.util;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,9 +1,9 @@
 package com.solution.x.controller.sys;
 
-import com.solution.x.controller.service.sys.SysAvailabilityUnitService;
 import com.solution.x.dao.sys.AvailabilityUnit;
 import com.solution.x.facade.dto.AvailabilityUnitModel;
-import com.solution.x.util.ResponseWrapper;
+import com.solution.x.search.controller.service.sys.SysAvailabilityUnitService;
+import com.solution.x.search.util.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;

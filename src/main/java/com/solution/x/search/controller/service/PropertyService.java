@@ -1,4 +1,4 @@
-package com.solution.x.controller.service;
+package com.solution.x.search.controller.service;
 
 import com.solution.x.controller.OrganizationController;
 import com.solution.x.controller.validator.PropertyValidator;
@@ -6,14 +6,14 @@ import com.solution.x.dao.PropAvailabilityUnit;
 import com.solution.x.dao.PropFacilities;
 import com.solution.x.dao.PropTags;
 import com.solution.x.dao.Property;
-import com.solution.x.global.DataCarrier;
-import com.solution.x.global.SystemOperation;
 import com.solution.x.messaging.producer.PropertyQueueProducer;
 import com.solution.x.repo.PropFacilitiesRepository;
 import com.solution.x.repo.PropertyRepository;
-import com.solution.x.util.HATEOASProvider;
-import com.solution.x.util.ResponseWrapper;
-import com.solution.x.util.SystemMessages;
+import com.solution.x.search.global.DataCarrier;
+import com.solution.x.search.global.SystemOperation;
+import com.solution.x.search.util.HATEOASProvider;
+import com.solution.x.search.util.ResponseWrapper;
+import com.solution.x.search.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;

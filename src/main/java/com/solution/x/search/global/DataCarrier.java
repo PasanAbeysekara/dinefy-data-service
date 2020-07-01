@@ -1,4 +1,4 @@
-package com.solution.x.global;
+package com.solution.x.search.global;
 
 import lombok.Data;
 
