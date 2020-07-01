@@ -1,11 +1,11 @@
 package com.solution.x.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.solution.x.controller.sys.SysFacilityController;
 import com.solution.x.dao.sys.Facilities;
-import com.solution.x.search.global.SystemOperation;
-import com.solution.x.search.util.ResponseWrapper;
-import com.solution.x.search.util.SystemMessages;
+import com.solution.x.data.controller.sys.SysFacilityController;
+import com.solution.x.data.global.SystemOperation;
+import com.solution.x.data.util.ResponseWrapper;
+import com.solution.x.data.util.SystemMessages;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package com.solution.x.data.app.config;
 
-import com.solution.x.interceptor.HTTPHeaderInterceptor;
+import com.solution.x.data.interceptor.HTTPHeaderInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
