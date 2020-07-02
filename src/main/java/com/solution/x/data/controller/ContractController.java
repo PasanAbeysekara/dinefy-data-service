@@ -3,6 +3,7 @@ package com.solution.x.data.controller;
 import com.solution.x.dao.Contract;
 import com.solution.x.data.controller.service.ContractService;
 import com.solution.x.util.ResponseWrapper;
+import com.solution.x.util.URLProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +22,7 @@ import java.util.List;
  * @author Tharinda Wickramaarachchi
  */
 @RestController
+@RequestMapping(URLProvider.SERVICE_DATA)
 public class ContractController
 {
 	@Autowired

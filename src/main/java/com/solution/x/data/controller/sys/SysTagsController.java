@@ -4,6 +4,7 @@ import com.solution.x.dao.sys.Tags;
 import com.solution.x.data.controller.service.sys.SysTagsService;
 import com.solution.x.data.facade.dto.TagsModel;
 import com.solution.x.util.ResponseWrapper;
+import com.solution.x.util.URLProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Tharinda Wickramaarachchi
  */
 @RestController
+@RequestMapping(URLProvider.SERVICE_DATA)
 public class SysTagsController
 {
 	@Autowired

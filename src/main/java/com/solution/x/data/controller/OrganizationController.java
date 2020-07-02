@@ -6,12 +6,14 @@ import com.solution.x.dao.Property;
 import com.solution.x.data.controller.service.AbstractService;
 import com.solution.x.data.controller.service.HATEOASProvider;
 import com.solution.x.repo.OrganizationRepository;
+import com.solution.x.util.URLProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
  * @author Tharinda Wickramaarachchi
  */
 @RestController
+@RequestMapping(URLProvider.SERVICE_DATA)
 public class OrganizationController extends AbstractService<Organization>
 {
 	@Autowired
