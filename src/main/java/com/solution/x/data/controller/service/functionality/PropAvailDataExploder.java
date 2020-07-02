@@ -10,7 +10,7 @@ import com.solution.x.dao.key.PropAvailabilityUnitKey;
 import com.solution.x.dao.key.WidenDataGridKey;
 import com.solution.x.dao.sys.WeekDefinition;
 import com.solution.x.data.app.config.ApplicationPropertyConfig;
-import com.solution.x.data.global.DataCarrier;
+import com.solution.x.global.DataCarrier;
 import com.solution.x.repo.AvailDataRepository;
 import com.solution.x.repo.ContractsRepository;
 import com.solution.x.repo.PropertyRepository;

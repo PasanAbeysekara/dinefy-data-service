@@ -3,7 +3,7 @@ package com.solution.x.data.controller;
 import com.solution.x.dao.PropFacilities;
 import com.solution.x.dao.Property;
 import com.solution.x.data.controller.service.PropertyService;
-import com.solution.x.data.util.ResponseWrapper;
+import com.solution.x.util.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

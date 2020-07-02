@@ -4,7 +4,7 @@ import com.solution.x.dao.Organization;
 import com.solution.x.dao.PropFacilities;
 import com.solution.x.dao.Property;
 import com.solution.x.data.controller.service.AbstractService;
-import com.solution.x.data.util.HATEOASProvider;
+import com.solution.x.data.controller.service.HATEOASProvider;
 import com.solution.x.repo.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;

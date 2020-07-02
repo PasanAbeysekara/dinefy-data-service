@@ -1,9 +1,9 @@
 package com.solution.x.data.controller.assembler;
 
 import com.solution.x.dao.sys.Facilities;
+import com.solution.x.data.controller.service.HATEOASProvider;
 import com.solution.x.data.controller.sys.SysFacilityController;
 import com.solution.x.data.facade.dto.FacilitiesModel;
-import com.solution.x.data.util.HATEOASProvider;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;

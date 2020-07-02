@@ -1,10 +1,10 @@
 package com.solution.x.data.interceptor;
 
-import com.solution.x.data.facade.Error;
-import com.solution.x.data.global.SystemOperation;
-import com.solution.x.data.util.ErrorUtility;
-import com.solution.x.data.util.ResponseWrapper;
-import com.solution.x.data.util.SystemMessages;
+import com.solution.x.global.SystemOperation;
+import com.solution.x.util.Error;
+import com.solution.x.util.ErrorUtility;
+import com.solution.x.util.ResponseWrapper;
+import com.solution.x.util.SystemMessages;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;

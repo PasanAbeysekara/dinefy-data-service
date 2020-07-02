@@ -3,7 +3,7 @@ package com.solution.x.data.controller.sys;
 import com.solution.x.dao.sys.AvailabilityUnit;
 import com.solution.x.data.controller.service.sys.SysAvailabilityUnitService;
 import com.solution.x.data.facade.dto.AvailabilityUnitModel;
-import com.solution.x.data.util.ResponseWrapper;
+import com.solution.x.util.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;

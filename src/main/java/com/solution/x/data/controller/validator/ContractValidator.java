@@ -1,9 +1,9 @@
 package com.solution.x.data.controller.validator;
 
 import com.solution.x.dao.Property;
-import com.solution.x.data.global.DataCarrier;
-import com.solution.x.data.util.ResponseWrapper;
+import com.solution.x.global.DataCarrier;
 import com.solution.x.repo.ContractsRepository;
+import com.solution.x.util.ResponseWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

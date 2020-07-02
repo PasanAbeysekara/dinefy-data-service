@@ -2,7 +2,7 @@ package com.solution.x.data.controller;
 
 import com.solution.x.dao.Promotion;
 import com.solution.x.data.controller.service.PromotionService;
-import com.solution.x.data.util.ResponseWrapper;
+import com.solution.x.util.ResponseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

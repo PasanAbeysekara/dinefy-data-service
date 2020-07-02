@@ -1,9 +1,9 @@
 package com.solution.x.data.controller.assembler;
 
 import com.solution.x.dao.sys.AvailabilityUnit;
+import com.solution.x.data.controller.service.HATEOASProvider;
 import com.solution.x.data.controller.sys.SysAvailabilityUnitController;
 import com.solution.x.data.facade.dto.AvailabilityUnitModel;
-import com.solution.x.data.util.HATEOASProvider;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;

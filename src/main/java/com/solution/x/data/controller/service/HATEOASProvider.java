@@ -1,4 +1,4 @@
-package com.solution.x.data.util;
+package com.solution.x.data.controller.service;
 
 import com.solution.x.dao.key.PromoID;
 import com.solution.x.data.controller.ContractController;
