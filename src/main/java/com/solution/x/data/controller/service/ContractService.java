@@ -6,6 +6,7 @@ import com.solution.x.dao.Seasons;
 import com.solution.x.data.controller.service.functionality.PropAvailDataAsyncExecutor;
 import com.solution.x.global.SystemOperation;
 import com.solution.x.repo.ContractsRepository;
+import com.solution.x.service.AbstractService;
 import com.solution.x.util.ResponseWrapper;
 import com.solution.x.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;

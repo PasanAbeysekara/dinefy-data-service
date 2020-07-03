@@ -2,11 +2,11 @@ package com.solution.x.data.controller.service.sys;
 
 import com.solution.x.dao.sys.AvailabilityUnit;
 import com.solution.x.data.controller.assembler.AvailUnitModelAssembler;
-import com.solution.x.data.controller.service.AbstractService;
 import com.solution.x.data.controller.service.HATEOASProvider;
 import com.solution.x.data.facade.dto.AvailabilityUnitModel;
 import com.solution.x.global.SystemOperation;
 import com.solution.x.repo.sys.AvailabilityUnitRepository;
+import com.solution.x.service.AbstractService;
 import com.solution.x.util.ResponseWrapper;
 import com.solution.x.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;

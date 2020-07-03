@@ -11,6 +11,7 @@ import com.solution.x.global.DataCarrier;
 import com.solution.x.global.SystemOperation;
 import com.solution.x.repo.PropFacilitiesRepository;
 import com.solution.x.repo.PropertyRepository;
+import com.solution.x.service.AbstractService;
 import com.solution.x.util.ResponseWrapper;
 import com.solution.x.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;

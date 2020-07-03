@@ -2,11 +2,11 @@ package com.solution.x.data.controller.service.sys;
 
 import com.solution.x.dao.sys.Tags;
 import com.solution.x.data.controller.assembler.TagsModelAssembler;
-import com.solution.x.data.controller.service.AbstractService;
 import com.solution.x.data.controller.service.HATEOASProvider;
 import com.solution.x.data.facade.dto.TagsModel;
 import com.solution.x.global.SystemOperation;
 import com.solution.x.repo.sys.TagsRepository;
+import com.solution.x.service.AbstractService;
 import com.solution.x.util.ResponseWrapper;
 import com.solution.x.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
