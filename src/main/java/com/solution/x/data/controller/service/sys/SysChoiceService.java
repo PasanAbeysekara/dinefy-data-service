@@ -169,7 +169,7 @@ public class SysChoiceService extends AbstractService<Choices>
         catch( Exception e )
         {
             e.printStackTrace();
-            response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.CHOICE_CREATE_FAILED, e );
+            response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.CHOICE_DELETE_FAILED, e );
         }
 
         return response;
