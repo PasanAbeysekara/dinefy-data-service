@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(URLProvider.SERVICE_DATA)
 @Slf4j
-public class MenuController
-{
+public class MenuController {
     @Autowired
     private MenuService menuService;
 
@@ -29,8 +28,7 @@ public class MenuController
      * @return all menus
      */
     @GetMapping("/menus")
-    public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getMenus( Pageable pageable )
-    {
+    public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getMenus( Pageable pageable ) {
         return menuService.getMenus(pageable);
     }
 
@@ -41,8 +39,7 @@ public class MenuController
      * @return The menu
      */
     @GetMapping("/menus/{id}")
-    public ResponseEntity<ResponseWrapper<Menu>> getMenu( @PathVariable("id") long id )
-    {
+    public ResponseEntity<ResponseWrapper<Menu>> getMenu( @PathVariable("id") long id ) {
         return menuService.getMenu( id );
     }
 
@@ -53,8 +50,7 @@ public class MenuController
      * @return saved menu response
      */
     @PostMapping("/menus")
-    public ResponseEntity<ResponseWrapper<Menu>> createMenu( @RequestBody Menu menu )
-    {
+    public ResponseEntity<ResponseWrapper<Menu>> createMenu( @RequestBody Menu menu ) {
         return menuService.createMenu( menu );
     }
 
@@ -66,8 +62,7 @@ public class MenuController
      * @return Updated menu response
      */
     @PutMapping("/menus/{id}")
-    public ResponseEntity<ResponseWrapper<Menu>> updateMenu( @PathVariable("id") long id, @RequestBody Menu menu )
-    {
+    public ResponseEntity<ResponseWrapper<Menu>> updateMenu( @PathVariable("id") long id, @RequestBody Menu menu ) {
         return menuService.updateMenu( id, menu);
     }
 
@@ -78,8 +73,7 @@ public class MenuController
      * @return Delete response
      */
     @DeleteMapping("/menus/{id}")
-    public ResponseEntity<ResponseWrapper<Menu>> deleteMenu( @PathVariable("id") long id )
-    {
+    public ResponseEntity<ResponseWrapper<Menu>> deleteMenu( @PathVariable("id") long id ) {
         return menuService.deleteMenu( id );
     }
 }

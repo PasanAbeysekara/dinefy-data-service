@@ -13,8 +13,7 @@ import org.springframework.hateoas.RepresentationModel;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class MenuModel extends RepresentationModel<MenuModel>
-{
+public class MenuModel extends RepresentationModel<MenuModel> {
     private Long menuId;
     private String name;
     private String description;

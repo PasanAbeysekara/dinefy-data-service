@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(URLProvider.SERVICE_DATA)
 @Slf4j
-public class SysChoiceController
-{
+public class SysChoiceController {
     @Autowired
     private SysChoiceService choiceService;
 
@@ -29,8 +28,7 @@ public class SysChoiceController
      * @return all sys choices
      */
     @GetMapping("/choices")
-    public ResponseEntity<ResponseWrapper<PagedModel<ChoiceModel>>> getChoices(Pageable pageable )
-    {
+    public ResponseEntity<ResponseWrapper<PagedModel<ChoiceModel>>> getChoices(Pageable pageable ) {
         return choiceService.getChoices( pageable );
     }
 
@@ -41,8 +39,7 @@ public class SysChoiceController
      * @return The Choice
      */
     @GetMapping("/choices/{id}")
-    public ResponseEntity<ResponseWrapper<Choices>> getChoice(@PathVariable("id") long id )
-    {
+    public ResponseEntity<ResponseWrapper<Choices>> getChoice(@PathVariable("id") long id ) {
         return choiceService.getChoice( id );
     }
 
@@ -53,8 +50,7 @@ public class SysChoiceController
      * @return Saved Choice response
      */
     @PostMapping("/choices")
-    public ResponseEntity<ResponseWrapper<Choices>> createChoice( @RequestBody Choices choice )
-    {
+    public ResponseEntity<ResponseWrapper<Choices>> createChoice( @RequestBody Choices choice ) {
         return choiceService.createChoice( choice );
     }
 
@@ -66,8 +62,7 @@ public class SysChoiceController
      * @return Updated Choice response
      */
     @PutMapping("/choices/{id}")
-    public ResponseEntity<ResponseWrapper<Choices>> updateChoice( @PathVariable("id") long id, @RequestBody Choices choice )
-    {
+    public ResponseEntity<ResponseWrapper<Choices>> updateChoice( @PathVariable("id") long id, @RequestBody Choices choice ) {
         return choiceService.updateChoice( id, choice );
     }
 
@@ -78,8 +73,7 @@ public class SysChoiceController
      * @return Delete Choice Response
      */
     @DeleteMapping("/choices/{id}")
-    public ResponseEntity<ResponseWrapper<Choices>> deleteChoice( @PathVariable("id") long id )
-    {
+    public ResponseEntity<ResponseWrapper<Choices>> deleteChoice( @PathVariable("id") long id ) {
         return choiceService.deleteChoice( id );
     }
 }

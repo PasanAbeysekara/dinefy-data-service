@@ -24,7 +24,7 @@ public class ChoiceModelAssembler extends RepresentationModelAssemblerSupport<Ch
         choiceModel.setName( entity.getName() );
         choiceModel.setDescription( entity.getDescription() );
 
-        choiceModel.add( HATEOASProvider.menuSelfLinkProvider( entity.getChoiceId() ));
+        choiceModel.add( HATEOASProvider.sysChoicesSelfLinkProvider( entity.getChoiceId() ));
 
         return choiceModel;
     }

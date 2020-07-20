@@ -1,9 +1,6 @@
 package com.solution.x.data.controller.service;
 
-import com.solution.x.dao.PropAvailabilityUnit;
-import com.solution.x.dao.PropFacilities;
-import com.solution.x.dao.PropTags;
-import com.solution.x.dao.Property;
+import com.solution.x.dao.*;
 import com.solution.x.data.controller.OrganizationController;
 import com.solution.x.data.controller.validator.PropertyValidator;
 import com.solution.x.data.messaging.producer.PropertyQueueProducer;
@@ -168,6 +165,24 @@ public class PropertyService extends AbstractService<Property>
 		{
 			property.getLivePromotions().forEach( promotion -> promotion.add( HATEOASProvider.promotionSelfLinkProvider( promotion.getPromoId() )) );
 		}
+
+		if( property.getMenus() != null )
+		{
+			property.getMenus().forEach( menu -> menu.add( HATEOASProvider.menuSelfLinkProvider( menu.getMenuId() )));
+		}
+
+		if( property.getChoices() != null )
+		{
+			for( PropChoices choices : property.getChoices() )
+			{
+				if( choices.getSysChoice() != null )
+				{
+					Link selfRelSysChoices = HATEOASProvider.sysChoicesSelfLinkProvider( choices.getSysChoice().getChoiceId() );
+
+					choices.getSysChoice().add( selfRelSysChoices );
+				}
+			}
+		}
 	}
 
 
@@ -234,6 +249,14 @@ public class PropertyService extends AbstractService<Property>
 			for( PropTags propTag : property.getTags() )
 			{
 				propTag.getPropTagID().setPropId( propId );
+			}
+		}
+
+		if( property.getChoices() != null)
+		{
+			for( PropChoices propChoice : property.getChoices() )
+			{
+				propChoice.setPropId( propId );
 			}
 		}
 	}
