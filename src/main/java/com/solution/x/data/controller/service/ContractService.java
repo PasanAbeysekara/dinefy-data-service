@@ -114,7 +114,7 @@ public class ContractService extends AbstractService<Contract>
 					.headers( addCommonHeaders( new HttpHeaders() ) )
 					.body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.CONTRACT_CREATE_SUCCESS, savedContract ) );
 
-			if( !draft )
+			if( draft ) // TODO change this
 			{
 				availDataAsyncExecutor.executeAsynchronouslyTx( contract );
 			}
