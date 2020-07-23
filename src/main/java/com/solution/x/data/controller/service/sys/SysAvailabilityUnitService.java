@@ -167,7 +167,7 @@ public class SysAvailabilityUnitService extends AbstractService<AvailabilityUnit
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.AVAIL_UNIT_DELETE_SUCCESS, "" ) );
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.AVAIL_UNIT_DELETE_SUCCESS ) );
 		}
 		catch( Exception e )
 		{

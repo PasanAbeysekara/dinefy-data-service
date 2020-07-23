@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -28,6 +29,38 @@ public class PromotionService extends AbstractService<Promotion>
 	@Autowired
 	private PromotionRepository promotionRepository;
 
+
+	public ResponseEntity<ResponseWrapper<List<Promotion>>> getPromotions( Long propId, Boolean live )
+	{
+		List<Promotion> promotions;
+		if( live != null )
+		{
+			promotions = promotionRepository.findLivePromotions( propId, live );
+		}
+		else
+		{
+			promotions = promotionRepository.findAllPromotionsByPropId( propId );
+		}
+
+		ResponseEntity<ResponseWrapper<List<Promotion>>> response;
+
+		if( !promotions.isEmpty() )
+		{
+			promotions.forEach( promo -> promo.add( HATEOASProvider.promotionSelfLinkProvider( promo.getPromoId() ) ) );
+
+			response = ResponseEntity.ok()
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, promotions ) );
+		}
+		else
+		{
+			response = ResponseEntity.status( HttpStatus.NOT_FOUND )
+					.headers( new HttpHeaders() )
+					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.NOT_FOUND ) );
+		}
+
+		return response;
+	}
 
 	/**
 	 * Get Single Promotion
@@ -155,7 +188,7 @@ public class PromotionService extends AbstractService<Promotion>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.PROMOTION_DELETE_SUCCESS, "" ) );
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.PROMOTION_DELETE_SUCCESS ) );
 		}
 		catch( Exception e )
 		{
