@@ -310,7 +310,7 @@ public class PropertyService extends AbstractService<Property>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.PROPERTY_DELETE_SUCCESS, "" ) );
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.PROPERTY_DELETE_SUCCESS ) );
 		}
 		catch( Exception e )
 		{

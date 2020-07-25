@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -25,6 +28,19 @@ public class PromotionController
 {
 	@Autowired
 	private PromotionService promotionService;
+
+	/**
+	 * Get multiple Promotions
+	 *
+	 * @param propId Property ID
+	 * @param live   Promotion live or not
+	 * @return Matching Promotion
+	 */
+	@GetMapping("/properties/{propId}/promotions")
+	public ResponseEntity<ResponseWrapper<List<Promotion>>> getPromotions( @PathVariable("propId") Long propId, @RequestParam(name = "live", required = false) Boolean live )
+	{
+		return promotionService.getPromotions( propId, live );
+	}
 
 	/**
 	 * Get Single Promotion

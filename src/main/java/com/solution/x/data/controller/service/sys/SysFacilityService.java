@@ -166,7 +166,7 @@ public class SysFacilityService extends AbstractService<Facilities>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.FACILITY_DELETE_SUCCESS, "" ) );
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.FACILITY_DELETE_SUCCESS ) );
 		}
 		catch( Exception e )
 		{

@@ -204,7 +204,7 @@ public class ContractService extends AbstractService<Contract>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.CONTRACT_DELETE_SUCCESS, "" ) );
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.CONTRACT_DELETE_SUCCESS ) );
 		}
 		catch( Exception e )
 		{
