@@ -24,6 +24,7 @@ public class MenuModelAssembler extends RepresentationModelAssemblerSupport<Menu
         menuModel.setMenuId( entity.getMenuId() );
         menuModel.setName( entity.getName() );
         menuModel.setDescription( entity.getDescription() );
+        menuModel.setMenuCategories( entity.getMenuCategories() );
 
         menuModel.add( HATEOASProvider.menuSelfLinkProvider( entity.getMenuId() ));
 

@@ -2,7 +2,9 @@ package com.solution.x.data.controller.service;
 
 import com.solution.x.dao.*;
 import com.solution.x.data.controller.OrganizationController;
+import com.solution.x.data.controller.assembler.MenuModelAssembler;
 import com.solution.x.data.controller.validator.PropertyValidator;
+import com.solution.x.data.facade.dto.MenuModel;
 import com.solution.x.data.messaging.producer.PropertyQueueProducer;
 import com.solution.x.global.DataCarrier;
 import com.solution.x.global.SystemOperation;
@@ -13,7 +15,11 @@ import com.solution.x.util.ResponseWrapper;
 import com.solution.x.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +51,12 @@ public class PropertyService extends AbstractService<Property>
 	@Autowired
 	private PropertyValidator validator;
 
+	@Autowired
+	private PagedResourcesAssembler<Menu> pagedResourcesAssembler;
+
+	@Autowired
+	private MenuModelAssembler menuAssembler;
+
 	/**
 	 * Get all properties
 	 *
@@ -67,6 +79,25 @@ public class PropertyService extends AbstractService<Property>
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
 				.body( propFacilitiesRepository.findByPropFacilityIdPropId( (int) id ) );
+	}
+
+	/**
+	 * Get all property menus
+	 *
+	 * @param id Property ID
+	 * @param pageable Pageable
+	 * @return return All property menus
+	 */
+	public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getPropertyMenus( long id, Pageable pageable )
+	{
+		Page<Menu> menuPage = propertyRepository.findPropertyMenus( id, pageable);
+
+		PagedModel<MenuModel> menuPagedModel = pagedResourcesAssembler.toModel(menuPage, menuAssembler);
+
+		return ResponseEntity.ok()
+				.headers(addCommonHeaders(new HttpHeaders()))
+				.body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, menuPagedModel));
+
 	}
 
 
@@ -259,6 +290,14 @@ public class PropertyService extends AbstractService<Property>
 				propChoice.setPropId( propId );
 			}
 		}
+
+		if( property.getOperationHours() != null )
+		{
+			for( OperationHours operationHour : property.getOperationHours() )
+			{
+				operationHour.getOperationHourKey().setPropId( propId );
+			}
+		}
 	}
 
 	/**
@@ -310,7 +349,7 @@ public class PropertyService extends AbstractService<Property>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.PROPERTY_DELETE_SUCCESS ) );
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.PROPERTY_DELETE_SUCCESS, "" ) );
 		}
 		catch( Exception e )
 		{

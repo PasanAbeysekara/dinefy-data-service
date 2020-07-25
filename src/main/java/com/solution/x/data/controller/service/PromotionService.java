@@ -56,7 +56,7 @@ public class PromotionService extends AbstractService<Promotion>
 		{
 			response = ResponseEntity.status( HttpStatus.NOT_FOUND )
 					.headers( new HttpHeaders() )
-					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.NOT_FOUND ) );
+					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.NOT_FOUND, "" ) );
 		}
 
 		return response;
@@ -188,7 +188,7 @@ public class PromotionService extends AbstractService<Promotion>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.PROMOTION_DELETE_SUCCESS ) );
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.PROMOTION_DELETE_SUCCESS, "" ) );
 		}
 		catch( Exception e )
 		{
