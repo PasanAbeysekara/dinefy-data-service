@@ -81,6 +81,8 @@ public class PaymentOptionService extends AbstractService<PaymentOptions> {
 
         try
         {
+            short nextOptionId = paymentOptionsRepository.nextOptionId();
+            paymentOption.setOptionId( nextOptionId );
             PaymentOptions savedPaymentOption = paymentOptionsRepository.save( paymentOption );
 
             response = ResponseEntity.status( HttpStatus.CREATED )

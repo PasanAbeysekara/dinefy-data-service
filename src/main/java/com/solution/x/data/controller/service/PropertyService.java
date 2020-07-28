@@ -8,6 +8,7 @@ import com.solution.x.data.facade.dto.MenuModel;
 import com.solution.x.data.messaging.producer.PropertyQueueProducer;
 import com.solution.x.global.DataCarrier;
 import com.solution.x.global.SystemOperation;
+import com.solution.x.repo.PropChoicesRepository;
 import com.solution.x.repo.PropFacilitiesRepository;
 import com.solution.x.repo.PropertyRepository;
 import com.solution.x.service.AbstractService;
@@ -49,6 +50,9 @@ public class PropertyService extends AbstractService<Property>
 	private PropFacilitiesRepository propFacilitiesRepository;
 
 	@Autowired
+	private PropChoicesRepository propChoicesRepository;
+
+	@Autowired
 	private PropertyValidator validator;
 
 	@Autowired
@@ -56,6 +60,7 @@ public class PropertyService extends AbstractService<Property>
 
 	@Autowired
 	private MenuModelAssembler menuAssembler;
+
 
 	/**
 	 * Get all properties
@@ -285,8 +290,10 @@ public class PropertyService extends AbstractService<Property>
 
 		if( property.getChoices() != null)
 		{
+			int currentChoiceId = propChoicesRepository.currentPropChoiceId();
 			for( PropChoices propChoice : property.getChoices() )
 			{
+				propChoice.setPropChoiceId( currentChoiceId++ );
 				propChoice.setPropId( propId );
 			}
 		}
@@ -298,6 +305,7 @@ public class PropertyService extends AbstractService<Property>
 				operationHour.getOperationHourKey().setPropId( propId );
 			}
 		}
+
 	}
 
 	/**

@@ -1,23 +1,13 @@
 package com.solution.x.data.controller.service.sys;
 
-import com.solution.x.dao.sys.Choices;
 import com.solution.x.dao.sys.PropertySpeciality;
-import com.solution.x.data.controller.assembler.ChoiceModelAssembler;
-import com.solution.x.data.controller.service.HATEOASProvider;
-import com.solution.x.data.facade.dto.ChoiceModel;
 import com.solution.x.global.SystemOperation;
-import com.solution.x.repo.sys.ChoicesRepository;
 import com.solution.x.repo.sys.PropertySpecialityRepository;
 import com.solution.x.service.AbstractService;
 import com.solution.x.util.ResponseWrapper;
 import com.solution.x.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,6 +81,8 @@ public class PropSpecialityService extends AbstractService<PropertySpeciality> {
 
         try
         {
+            Short nextSpecialityId = propertySpecialityRepository.nextSpecialityId();
+            propertySpeciality.setSpecialityId( nextSpecialityId );
             PropertySpeciality savedSpeciality = propertySpecialityRepository.save( propertySpeciality );
 
             response = ResponseEntity.status( HttpStatus.CREATED )
