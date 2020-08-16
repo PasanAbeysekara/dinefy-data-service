@@ -3,9 +3,12 @@ package com.solution.x.data.controller;
 import com.solution.x.dao.PropFacilities;
 import com.solution.x.dao.Property;
 import com.solution.x.data.controller.service.PropertyService;
+import com.solution.x.data.facade.dto.MenuModel;
 import com.solution.x.util.ResponseWrapper;
 import com.solution.x.util.URLProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +51,19 @@ public class PropertyController
 	public ResponseEntity<List<PropFacilities>> getPropFacilities( @PathVariable("id") long id )
 	{
 		return propertyService.getPropFacilities( id );
+	}
+
+	/**
+	 * Get all property menus
+	 *
+	 * @param id Property ID
+	 * @param pageable Pageable
+	 * @return return All property menus
+	 */
+	@GetMapping("/properties/{id}/menus")
+	public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getPropMenus(@PathVariable("id") long id, Pageable pageable )
+	{
+		return propertyService.getPropertyMenus( id, pageable );
 	}
 
 	/**

@@ -164,7 +164,7 @@ public class SysTagsService extends AbstractService<Tags>
 
 			response = ResponseEntity.ok()
 					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.TAG_DELETE_SUCCESS ) );
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.TAG_DELETE_SUCCESS, "" ) );
 		}
 		catch( Exception e )
 		{

@@ -89,6 +89,4 @@ public class SysFacilityController
 	{
 		return facilityService.deleteFacility( id );
 	}
-
-
 }

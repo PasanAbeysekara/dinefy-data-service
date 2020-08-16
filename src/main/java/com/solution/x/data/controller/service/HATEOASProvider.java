@@ -1,11 +1,9 @@
 package com.solution.x.data.controller.service;
 
 import com.solution.x.dao.key.PromoID;
-import com.solution.x.data.controller.ContractController;
-import com.solution.x.data.controller.OrganizationController;
-import com.solution.x.data.controller.PromotionController;
-import com.solution.x.data.controller.PropertyController;
+import com.solution.x.data.controller.*;
 import com.solution.x.data.controller.sys.SysAvailabilityUnitController;
+import com.solution.x.data.controller.sys.SysChoiceController;
 import com.solution.x.data.controller.sys.SysFacilityController;
 import com.solution.x.data.controller.sys.SysTagsController;
 import org.springframework.hateoas.Link;
@@ -61,6 +59,16 @@ public class HATEOASProvider
 	public static Link promotionSelfLinkProvider( PromoID promoId )
 	{
 		return linkTo( methodOn( PromotionController.class ).getPromotion( promoId.getPropId(), promoId.getPromoId() ) ).withSelfRel();
+	}
+
+	public static  Link menuSelfLinkProvider( long id )
+	{
+		return linkTo( methodOn( MenuController.class ).getMenu( id ) ).withSelfRel();
+	}
+
+	public static  Link sysChoicesSelfLinkProvider( long id )
+	{
+		return linkTo( methodOn( SysChoiceController.class ).getChoice( id ) ).withSelfRel();
 	}
 
 }
