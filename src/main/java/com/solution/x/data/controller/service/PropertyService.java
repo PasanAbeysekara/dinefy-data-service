@@ -61,6 +61,9 @@ public class PropertyService extends AbstractService<Property>
 	@Autowired
 	private MenuModelAssembler menuAssembler;
 
+	@Autowired
+	private SearchService searchService;
+
 
 	/**
 	 * Get all properties
@@ -104,7 +107,6 @@ public class PropertyService extends AbstractService<Property>
 				.body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, menuPagedModel));
 
 	}
-
 
 	/**
 	 * Get Single property
