@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class SearchService extends AbstractService<AvailDataWrapper> {
+public class AvailDataSearchService extends AbstractService<AvailDataWrapper> {
 
     @Autowired
     private PropertyRepository propertyRepository;
@@ -63,7 +63,8 @@ public class SearchService extends AbstractService<AvailDataWrapper> {
         {
             PropContractAndTimeSlots propContractAndTimeSlots = optionalPropContractAndTimeSlot.get();
 
-            Long currentContractId = (long)propContractAndTimeSlots.getCurrentContId();
+            // Long currentContractId = (long)propContractAndTimeSlots.getCurrentContId();
+            Long currentContractId = 170L;
 
             List<AvailabilityUnit> availabilityUnits = propertyRepository.findPropertyAvailableUnits( propertyId, availabilityUnitName, availabilityUnitType );
 
@@ -87,11 +88,7 @@ public class SearchService extends AbstractService<AvailDataWrapper> {
 
             for (LocalDate date : dateList )
             {
-                 DateWiseAvailData dateWiseAvailData = new DateWiseAvailData();
-
-                 dateWiseAvailData.setDate( date );
-
-                 List<TimeWiseAvailData> timeWiseAvailDataList = widenPropDataList.stream()
+                List<TimeWiseAvailData> timeWiseAvailDataList = widenPropDataList.stream()
                         .filter( i -> i.getWidenDataGridKey().getDate().equals(date) )
                         .map( i -> new TimeWiseAvailData(i.getWidenDataGridKey().getTimeSlot(),
                                 i.getWidenDataGridKey().getAvailUnitId(),
@@ -101,11 +98,19 @@ public class SearchService extends AbstractService<AvailDataWrapper> {
                                 i.getBookable(),
                                 i.getHold(),
                                 i.getBooked()))
-                         .collect(Collectors.toList() );
+                        .collect(Collectors.toList() );
 
-                 dateWiseAvailData.setTimeWiseAvailData( timeWiseAvailDataList );
+                if (timeWiseAvailDataList.size() > 0) {
 
-                 dateWiseAvailDataList.add( dateWiseAvailData );
+                    DateWiseAvailData dateWiseAvailData = new DateWiseAvailData();
+
+                    dateWiseAvailData.setDate( date );
+                    dateWiseAvailData.setTimeWiseAvailData( timeWiseAvailDataList );
+
+                    dateWiseAvailDataList.add( dateWiseAvailData );
+
+                }
+
             }
 
             AvailDataWrapper availDataWrapper = new AvailDataWrapper();

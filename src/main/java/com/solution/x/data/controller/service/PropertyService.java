@@ -62,7 +62,7 @@ public class PropertyService extends AbstractService<Property>
 	private MenuModelAssembler menuAssembler;
 
 	@Autowired
-	private SearchService searchService;
+	private AvailDataSearchService availDataSearchService;
 
 
 	/**

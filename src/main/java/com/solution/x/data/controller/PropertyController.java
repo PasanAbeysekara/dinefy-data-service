@@ -3,7 +3,7 @@ package com.solution.x.data.controller;
 import com.solution.x.dao.PropFacilities;
 import com.solution.x.dao.Property;
 import com.solution.x.data.controller.service.PropertyService;
-import com.solution.x.data.controller.service.SearchService;
+import com.solution.x.data.controller.service.AvailDataSearchService;
 import com.solution.x.data.facade.dto.AvailDataWrapper;
 import com.solution.x.data.facade.dto.MenuModel;
 import com.solution.x.util.ResponseWrapper;
@@ -30,7 +30,7 @@ public class PropertyController
 	private PropertyService propertyService;
 
 	@Autowired
-	private SearchService searchService;
+	private AvailDataSearchService availDataSearchService;
 
 	/**
 	 * Get all properties
@@ -95,7 +95,7 @@ public class PropertyController
 																								  @RequestParam( name = "avail_unit") String availabilityUnit,
 																								  Pageable pageable)
 	{
-		return searchService.getPropertyAvailabilities( propId, dateFrom, dateTo, timeFrom, timeTo, availabilityUnitType, availabilityUnit, pageable );
+		return availDataSearchService.getPropertyAvailabilities( propId, dateFrom, dateTo, timeFrom, timeTo, availabilityUnitType, availabilityUnit, pageable );
 	}
 
 	/**
