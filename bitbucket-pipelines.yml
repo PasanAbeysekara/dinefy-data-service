@@ -11,5 +11,5 @@ pipelines:
         caches:
           - maven
         script: # Modify the commands below to build your repository.
-          - echo $PATH
+          # - echo $PATH
           - mvn -B verify -DskipTests=false
