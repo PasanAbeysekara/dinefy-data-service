@@ -19,6 +19,7 @@ pipelines:
         - step:
             name: Build and Test
             script:
+              - chmod 775 mvnw
               - ./mvnw verify --file pom.xml
             caches:
               - maven
