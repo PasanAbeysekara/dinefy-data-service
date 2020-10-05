@@ -20,4 +20,5 @@ pipelines:
         script: # Modify the commands below to build your repository.
           - echo $BUILD_DIR
           - echo $PATH
+          - chmod 775 /usr/local/mvnw
           - ./mvnw -B verify # -B batch mode makes Maven less verbose
