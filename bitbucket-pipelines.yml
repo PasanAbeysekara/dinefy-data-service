@@ -11,17 +11,12 @@
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: atlassian/default-image:2
-
-
 pipelines:
   default:
     - parallel:
         - step:
             name: Build and Test
             script:
-              - apt-get update
-              - apt-get install chmod
-              - chmod 775 mvnw
               - ./mvnw verify --file pom.xml
             caches:
               - maven
