@@ -19,5 +19,6 @@ pipelines:
           - maven
         script: # Modify the commands below to build your repository.
           - echo $MAVEN_HOME
+          - echo MAVEN_CONFIG
           - echo $PATH
-          - mvn -B verify # -B batch mode makes Maven less verbose
+          - /usr/bin/mvn -B verify # -B batch mode makes Maven less verbose
