@@ -5,20 +5,17 @@
 
 # Prerequisites: pom.xml and appropriate project structure should exist in the repository.
 
-image: maven:3.6.3
+# This is a sample build configuration for Java (Maven).
+# Check our guides at https://confluence.atlassian.com/x/zd-5Mw for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: maven:3.6.1
 
 pipelines:
   default:
-    - parallel:
-        - step:
-            name: Build and Test
-            caches:
-              - maven
-            script:
-              - export M2_HOME=/usr/share/maven
-              - echo $M2_HOME
-              - ls $M2_HOME
-              - mvn -B verify --file pom.xml
-            after-script:
-              # Collect checkstyle results, if any, and convert to Bitbucket Code Insights.
-              - pipe: atlassian/checkstyle-report:0.2.0
+    - step:
+        caches:
+          - maven
+        script: # Modify the commands below to build your repository.
+          - mvn -B verify # -B batch mode makes Maven less verbose
