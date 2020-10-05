@@ -17,6 +17,12 @@ pipelines:
         - step:
             name: Build and Test
             script:
-              - ./mvnw verify --file pom.xml
-            caches:
-              - maven
+              - pipe: JfrogDev/artifactory-maven:0.3.3
+                variables:
+                  ARTIFACTORY_URL: 'https://thaprobit.jfrog.io/artifactory'
+                  ARTIFACTORY_USER: 'tharinda'
+                  ARTIFACTORY_PASSWORD: 'tharinda321'
+                  MAVEN_SNAPSHOT_REPO: 'hangouts-snapshot-repo'
+                  MAVEN_RELEASE_REPO: 'hangouts-repo'
+                  MAVEN_COMMAND: 'clean test install'
+                  FOLDER: 'app'
