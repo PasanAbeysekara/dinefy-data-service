@@ -10,16 +10,15 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-#image: atlassian/default-image:2
+image: atlassian/default-image:2
+
 
 pipelines:
   default:
-    - step:
-        caches:
-          - maven
-        script: # Modify the commands below to build your repository.
-          - echo $MAVEN_HOME
-          - echo $MAVEN_CONFIG
-          - echo $PATH
-          - echo $BUILD_DIR
-          - mvn verify # -B batch mode makes Maven less verbose
+    - parallel:
+        - step:
+            name: Build and Test
+            script:
+              - ./mvnw verify --file pom.xml
+            caches:
+              - maven
