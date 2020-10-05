@@ -3,9 +3,12 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: '3.6.3-jdk-11'
+image: maven:3.6.3-jdk-11
+
 pipelines:
   default:
     - step:
-        script:
-          - mvn -version
+        caches:
+          - maven
+        script: # Modify the commands below to build your repository.
+          - mvn -B verify # -B batch mode makes Maven less verbose
