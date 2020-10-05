@@ -1,6 +1,13 @@
 package com.solution.x.data.controller.service;
 
-import com.solution.x.dao.*;
+import com.solution.x.dao.Menu;
+import com.solution.x.dao.OperationHours;
+import com.solution.x.dao.PropAvailabilityUnit;
+import com.solution.x.dao.PropChoices;
+import com.solution.x.dao.PropFacilities;
+import com.solution.x.dao.PropTags;
+import com.solution.x.dao.Property;
+import com.solution.x.dao.sys.PropertySpeciality;
 import com.solution.x.data.controller.OrganizationController;
 import com.solution.x.data.controller.assembler.MenuModelAssembler;
 import com.solution.x.data.controller.validator.PropertyValidator;
@@ -13,6 +20,9 @@ import com.solution.x.repo.PropertyRepository;
 import com.solution.x.service.AbstractService;
 import com.solution.x.util.ResponseWrapper;
 import com.solution.x.util.SystemMessages;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -84,19 +94,19 @@ public class PropertyService extends AbstractService<Property>
 	/**
 	 * Get all property menus
 	 *
-	 * @param id Property ID
+	 * @param id       Property ID
 	 * @param pageable Pageable
 	 * @return return All property menus
 	 */
 	public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getPropertyMenus( long id, Pageable pageable )
 	{
-		Page<Menu> menuPage = propertyRepository.findPropertyMenus( id, pageable);
+		Page<Menu> menuPage = propertyRepository.findPropertyMenus( id, pageable );
 
-		PagedModel<MenuModel> menuPagedModel = pagedResourcesAssembler.toModel(menuPage, menuAssembler);
+		PagedModel<MenuModel> menuPagedModel = pagedResourcesAssembler.toModel( menuPage, menuAssembler );
 
 		return ResponseEntity.ok()
-				.headers(addCommonHeaders(new HttpHeaders()))
-				.body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, menuPagedModel));
+				.headers( addCommonHeaders( new HttpHeaders() ) )
+				.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, menuPagedModel ) );
 
 	}
 
@@ -120,6 +130,9 @@ public class PropertyService extends AbstractService<Property>
 
 			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) )
 					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, property ) );
+
+			//sms( property );
+
 		}
 		else
 		{
@@ -128,6 +141,34 @@ public class PropertyService extends AbstractService<Property>
 
 		return response;
 	}
+
+
+	public static final String ACCOUNT_SID = "AC8616f53c8c89dd86620f67d9404e2384";
+	public static final String AUTH_TOKEN = "b29e2bd32b44b0aaf9017a5741ddd1c1";
+
+	/**
+	 * REMOVE
+	 *
+	 * @param property
+	 */
+	public void sms( Property property )
+	{
+		Twilio.init( ACCOUNT_SID, AUTH_TOKEN );
+
+		Message message = Message.creator( new PhoneNumber( "+94718847252" ),//+94718847252
+				new PhoneNumber( "+447412403311" ),
+				"From Hangouts SMS gateway : " + property.getName() ).create();
+		Message message2 = Message.creator( new PhoneNumber( "+94718847252" ),
+				new PhoneNumber( "+447412403311" ),
+				"From Hangouts SMS gateway : " + property.getDescription() ).create();
+
+		Message message3 = Message.creator( new PhoneNumber( "+94718847252" ),
+				new PhoneNumber( "+447412403311" ),
+				"From Hangouts SMS gateway : Our cuisines : " + property.getPropertySpecialities().stream().map( PropertySpeciality::getName ).collect( Collectors.joining( "|" ) ) ).create();
+
+		System.out.println( message.getSid() );
+	}
+
 
 	/**
 	 * Add HATEOAS links for entities which are related to the property
@@ -194,12 +235,12 @@ public class PropertyService extends AbstractService<Property>
 
 		if( property.getLivePromotions() != null )
 		{
-			property.getLivePromotions().forEach( promotion -> promotion.add( HATEOASProvider.promotionSelfLinkProvider( promotion.getPromoId() )) );
+			property.getLivePromotions().forEach( promotion -> promotion.add( HATEOASProvider.promotionSelfLinkProvider( promotion.getPromoId() ) ) );
 		}
 
 		if( property.getMenus() != null )
 		{
-			property.getMenus().forEach( menu -> menu.add( HATEOASProvider.menuSelfLinkProvider( menu.getMenuId() )));
+			property.getMenus().forEach( menu -> menu.add( HATEOASProvider.menuSelfLinkProvider( menu.getMenuId() ) ) );
 		}
 
 		if( property.getChoices() != null )
@@ -283,7 +324,7 @@ public class PropertyService extends AbstractService<Property>
 			}
 		}
 
-		if( property.getChoices() != null)
+		if( property.getChoices() != null )
 		{
 			for( PropChoices propChoice : property.getChoices() )
 			{
