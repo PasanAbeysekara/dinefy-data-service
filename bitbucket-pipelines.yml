@@ -10,7 +10,7 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: https://hub.docker.com/r/atlassian/default-image:2
+image: atlassian/default-image:2
 pipelines:
   default:
     - parallel:
