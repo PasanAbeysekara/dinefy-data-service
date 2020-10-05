@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.solution.x</groupId>
+    <groupId>com.thaprobit.res-engine</groupId>
     <artifactId>data-service</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>data-service</name>
