@@ -18,20 +18,36 @@
     <properties>
         <java.version>11</java.version>
         <skipTests>true</skipTests>
+        <lib-version>1.0-SNAPSHOT</lib-version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Release Repo</name>
+            <url>https://thaprobit.jfrog.io/artifactory/hangouts-repo</url>
+        </repository>
+        <repository>
+            <id>snapshots</id>
+            <name>Snapshot Repo</name>
+            <url>https://thaprobit.jfrog.io/artifactory/hangouts-snapshot-repo</url>
+        </repository>
+    </repositories>
+
     <dependencies>
+
         <dependency>
-            <groupId>org.solution.x</groupId>
-            <artifactId>persistence-engine</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>com.thaprobit.res-engine</groupId>
+            <artifactId>persistence-library</artifactId>
+            <version>${lib-version}</version>
         </dependency>
         <dependency>
-            <groupId>com.solution.x</groupId>
+            <groupId>com.thaprobit</groupId>
             <artifactId>common-utility-library</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${lib-version}</version>
         </dependency>
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
