@@ -18,4 +18,6 @@ pipelines:
         caches:
           - maven
         script: # Modify the commands below to build your repository.
+          - echo $BUILD_DIR
+          - echo $PATH
           - mvn -B verify # -B batch mode makes Maven less verbose
