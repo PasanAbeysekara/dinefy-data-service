@@ -22,4 +22,4 @@ pipelines:
           - echo $MAVEN_CONFIG
           - echo $PATH
           - echo $BUILD_DIR
-          - mvn -B verify # -B batch mode makes Maven less verbose
+          - mvn verify # -B batch mode makes Maven less verbose
