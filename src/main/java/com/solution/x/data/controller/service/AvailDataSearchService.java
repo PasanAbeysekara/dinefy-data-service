@@ -41,7 +41,7 @@ public class AvailDataSearchService extends AbstractService<AvailDataWrapper> {
     /**
      * Get all property availabilities for a given time period
      *
-     *  @param propertyId               Property ID
+     *  @param propertyId               PropertyModel ID
      * 	@param dateFrom				    Search start date
      * 	@param dateTo				    Search end date
      * 	@param timeFrom				    Search start time

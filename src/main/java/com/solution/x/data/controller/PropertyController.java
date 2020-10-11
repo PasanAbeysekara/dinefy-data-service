@@ -6,6 +6,7 @@ import com.solution.x.data.controller.service.PropertyService;
 import com.solution.x.data.controller.service.AvailDataSearchService;
 import com.solution.x.data.facade.dto.AvailDataWrapper;
 import com.solution.x.data.facade.dto.MenuModel;
+import com.solution.x.data.facade.dto.PropertyModel;
 import com.solution.x.util.ResponseWrapper;
 import com.solution.x.util.URLProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,7 @@ public class PropertyController
 	/**
 	 * Get all property menus
 	 *
-	 * @param id Property ID
+	 * @param id PropertyModel ID
 	 * @param pageable Pageable
 	 * @return return All property menus
 	 */
@@ -70,7 +71,7 @@ public class PropertyController
 	/**
 	 * Get all property availabilities for a given time period
 	 *
-	 * @param propId				Property ID
+	 * @param propId				PropertyModel ID
 	 * @param dateFrom				Search start date
 	 * @param dateTo				Search end date
 	 * @param timeFrom				Search start time
@@ -102,10 +103,10 @@ public class PropertyController
 	 * Get Single property
 	 *
 	 * @param id property ID
-	 * @return The Property
+	 * @return The PropertyModel
 	 */
 	@GetMapping("/properties/{id}")
-	public ResponseEntity<ResponseWrapper<Property>> getProperty( @PathVariable("id") long id )
+	public ResponseEntity<ResponseWrapper<PropertyModel>> getProperty(@PathVariable("id") long id )
 	{
 		return propertyService.getProperty( id );
 	}
@@ -135,7 +136,7 @@ public class PropertyController
 	}
 
 	/**
-	 * Get Property Names
+	 * Get PropertyModel Names
 	 *
 	 * @return all property names
 	 */

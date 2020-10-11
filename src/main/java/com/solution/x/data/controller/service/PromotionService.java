@@ -65,7 +65,7 @@ public class PromotionService extends AbstractService<Promotion>
 	/**
 	 * Get Single Promotion
 	 *
-	 * @param propId  Property ID
+	 * @param propId  PropertyModel ID
 	 * @param promoId Promotion ID
 	 * @return The Promotion
 	 */
@@ -133,7 +133,7 @@ public class PromotionService extends AbstractService<Promotion>
 	/**
 	 * Create a new Promotion
 	 *
-	 * @param propId    Property ID
+	 * @param propId    PropertyModel ID
 	 * @param promoId   Promotion ID
 	 * @param promotion Promotion
 	 * @return Saved Promotion Response wrapper
@@ -174,7 +174,7 @@ public class PromotionService extends AbstractService<Promotion>
 	/**
 	 * Delete Promotion
 	 *
-	 * @param propId  Property ID
+	 * @param propId  PropertyModel ID
 	 * @param promoId Promotion ID
 	 * @return Delete response
 	 */
