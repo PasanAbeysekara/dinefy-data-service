@@ -1,23 +1,28 @@
+#  Template maven-build
+
+#  This template allows you to test and build your Java project with Maven.
+#  The workflow allows running tests, code checkstyle and security scans on the default branch.
+
+# Prerequisites: pom.xml and appropriate project structure should exist in the repository.
+
 # This is a sample build configuration for Java (Maven).
 # Check our guides at https://confluence.atlassian.com/x/zd-5Mw for more examples.
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: maven:3.6.3
-
+image: atlassian/default-image:2
 pipelines:
   default:
-    - step:
-        caches:
-          - maven
-        script: # Modify the commands below to build your repository.
-          - echo $PATH
-#          - apt-get update -y
-#          - apt-get install -y git
-#          - git clone git@bitbucket.org:project-x-lk/back-office-api.git
-#          - cd back-office-api
-#          - mvn clean install
-#          - cd ..
-#          - mvn clean package
-#          - # Whatever else you need.
-#          - mvn -B verify -DskipTests=false # -B batch mode makes Maven less verbose
+    - parallel:
+        - step:
+            name: Build and Test
+            script:
+              - pipe: JfrogDev/artifactory-maven:0.3.3
+                variables:
+                  ARTIFACTORY_URL: 'https://thaprobit.jfrog.io/artifactory'
+                  ARTIFACTORY_USER: 'tharinda'
+                  ARTIFACTORY_PASSWORD: 'tharinda321'
+                  MAVEN_SNAPSHOT_REPO: 'hangouts-snapshot-repo'
+                  MAVEN_RELEASE_REPO: 'hangouts-repo'
+                  MAVEN_COMMAND: 'clean test install'
+                  FOLDER: 'app'

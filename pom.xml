@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.solution.x</groupId>
+    <groupId>com.thaprobit.res-engine</groupId>
     <artifactId>data-service</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>data-service</name>
@@ -18,20 +18,36 @@
     <properties>
         <java.version>11</java.version>
         <skipTests>true</skipTests>
+        <lib-version>1.0-SNAPSHOT</lib-version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Release Repo</name>
+            <url>https://thaprobit.jfrog.io/artifactory/hangouts-repo</url>
+        </repository>
+        <repository>
+            <id>snapshots</id>
+            <name>Snapshot Repo</name>
+            <url>https://thaprobit.jfrog.io/artifactory/hangouts-snapshot-repo</url>
+        </repository>
+    </repositories>
+
     <dependencies>
+
         <dependency>
-            <groupId>org.solution.x</groupId>
-            <artifactId>persistence-engine</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>com.thaprobit.res-engine</groupId>
+            <artifactId>persistence-library</artifactId>
+            <version>${lib-version}</version>
         </dependency>
         <dependency>
-            <groupId>com.solution.x</groupId>
+            <groupId>com.thaprobit</groupId>
             <artifactId>common-utility-library</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${lib-version}</version>
         </dependency>
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -78,6 +94,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio</artifactId>
+            <version>7.55.0</version>
         </dependency>
 
         <!-- API Documentation : Swagger -->
@@ -133,6 +155,33 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <skipTests>${skipTests}</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>2.5.2</version>
+                <configuration>
+                    <from>
+                        <image>openjdk:11</image>
+                    </from>
+                    <to>
+                        <image>hangouts/data-service</image>
+                    </to>
+                    <container>
+                        <jvmFlags>
+                            <jvmFlag>-Xms256m</jvmFlag>
+                            <jvmFlag>-Xdebug</jvmFlag>
+                        </jvmFlags>
+                        <ports>
+                            <port>8081</port>
+                            <port>8082-8083/udp</port>
+                        </ports>
+                        <labels>
+                            <name>data-service-jib</name>
+                        </labels>
+                        <format>OCI</format>
+                    </container>
                 </configuration>
             </plugin>
         </plugins>
