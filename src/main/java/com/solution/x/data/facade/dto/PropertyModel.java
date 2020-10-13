@@ -26,119 +26,120 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @NoArgsConstructor
 public class PropertyModel extends RepresentationModel<PropertyModel>
 {
-        private long propId;
-        private String code;
-        private String name;
-        private String description;
-        private Point geoLocation;
-        private Integer currentContId;
-        private LocalTime startTime;
-        private LocalTime endTime;
-        private Set<OperationHours> operationHours;
-        private Set<PropAvailabilityUnit> availabilityUnits;
-        private LocationBased basedLocation;
-        private Contract currentContract;
-        private Set<PropFacilities> facilities;
-        private Set<PropTags> tags;
-        private ContactDetails contactDetails;
-        private Set<PropertySpeciality> propertySpecialities;
-        private Set<PaymentOptions> paymentOptions;
-        private Set<Promotion> livePromotions;
-        private Organization organizations;
-        private List<LocalTime> timeSlots;
-        private Set<Menu> menus;
-        private Set<PropChoices> choices;
-        private PropertyMedia propertyMedia;
+	private long propId;
+	private String code;
+	private String name;
+	private String description;
+	private Point geoLocation;
+	private Integer currentContId;
+	private LocalTime startTime;
+	private LocalTime endTime;
+	private Set<OperationHours> operationHours;
+	private Set<PropAvailabilityUnit> availabilityUnits;
+	private LocationBased basedLocation;
+	private Contract currentContract;
+	private Set<PropFacilities> facilities;
+	private Set<PropTags> tags;
+	private ContactDetails contactDetails;
+	private Set<PropertySpeciality> propertySpecialities;
+	private Set<PaymentOptions> paymentOptions;
+	private Set<Promotion> livePromotions;
+	private Organization organizations;
+	private List<LocalTime> timeSlots;
+	private Set<Menu> menus;
+	private Set<PropChoices> choices;
+	private PropertyMedia propertyMedia;
 
-        public void setPropertyMedia( Set<PropMedia> propMedia ){
-                PropertyMedia propertyMedia = new PropertyMedia();
-                propertyMedia.processPropertyMedia( propMedia );
-                this.propertyMedia = propertyMedia;
-        }
+	public void setPropertyMedia( Set<PropMedia> propMedia )
+	{
+		PropertyMedia propertyMedia = new PropertyMedia();
+		propertyMedia.processPropertyMedia( propMedia );
+		this.propertyMedia = propertyMedia;
+	}
 
-        /**
-         * Add HATEOAS links for entities which are related to the property
-         */
-        public void linkPropertyEntities()
-        {
-                Link selfRel = HATEOASProvider.propertySelfLinkProvider( this.getPropId() );
-                this.add( selfRel );
+	/**
+	 * Add HATEOAS links for entities which are related to the property
+	 */
+	public void linkPropertyEntities()
+	{
+		Link selfRel = HATEOASProvider.propertySelfLinkProvider( this.getPropId() );
+		this.add( selfRel );
 
-                if( this.getOrganizations() != null )
-                {
-                        Link orgSelfLink = linkTo( methodOn( OrganizationController.class ).getOrganization( this.getOrganizations().getOrgId() ) ).withRel( "org" );
-                        this.add( orgSelfLink );
-                }
+		if( this.getOrganizations() != null )
+		{
+			Link orgSelfLink = linkTo( methodOn( OrganizationController.class ).getOrganization( this.getOrganizations().getOrgId() ) ).withRel( "org" );
+			this.add( orgSelfLink );
+		}
 
-                if( this.getFacilities() != null )
-                {
-                        for( PropFacilities facility : this.getFacilities() )
-                        {
-                                if( facility.getSysFacility() != null )
-                                {
-                                        int sysFacilityID = facility.getSysFacility().getFacilityId();
+		if( this.getFacilities() != null )
+		{
+			for( PropFacilities facility : this.getFacilities() )
+			{
+				if( facility.getSysFacility() != null )
+				{
+					int sysFacilityID = facility.getSysFacility().getFacilityId();
 
-                                        Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider( sysFacilityID );
-                                        Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityId().getPropId() );
+					Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider( sysFacilityID );
+					Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityId().getPropId() );
 
-                                        facility.getSysFacility().add( selfRelSysFacility );
-                                        facility.add( selfRelPropFacility );
-                                }
-                        }
-                }
+					facility.getSysFacility().add( selfRelSysFacility );
+					facility.add( selfRelPropFacility );
+				}
+			}
+		}
 
-                if( this.getTags() != null )
-                {
-                        for( PropTags tags : this.getTags() )
-                        {
-                                if( tags.getSysTags() != null )
-                                {
-                                        Link selfRelSysTags = HATEOASProvider.sysTagsSelfLinkProvider( tags.getSysTags().getTagId() );
-                                        //Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( tags.getPropTagID().getPropId() );
+		if( this.getTags() != null )
+		{
+			for( PropTags tags : this.getTags() )
+			{
+				if( tags.getSysTags() != null )
+				{
+					Link selfRelSysTags = HATEOASProvider.sysTagsSelfLinkProvider( tags.getSysTags().getTagId() );
+					//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( tags.getPropTagID().getPropId() );
 
-                                        tags.getSysTags().add( selfRelSysTags );
-                                        //tags.add( selfRelPropFacility );
-                                }
-                        }
-                }
+					tags.getSysTags().add( selfRelSysTags );
+					//tags.add( selfRelPropFacility );
+				}
+			}
+		}
 
-                if( this.getAvailabilityUnits() != null )
-                {
-                        for( PropAvailabilityUnit availabilityUnit : this.getAvailabilityUnits() )
-                        {
-                                if( availabilityUnit.getSysAvailabilityUnit() != null )
-                                {
-                                        Link selfRelSysAvailabilityUnit = HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnit.getSysAvailabilityUnit().getUnitId() );
-                                        //Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );
+		if( this.getAvailabilityUnits() != null )
+		{
+			for( PropAvailabilityUnit availabilityUnit : this.getAvailabilityUnits() )
+			{
+				if( availabilityUnit.getSysAvailabilityUnit() != null )
+				{
+					Link selfRelSysAvailabilityUnit = HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnit.getSysAvailabilityUnit().getUnitId() );
+					//Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityID().getPropId() );
 
-                                        availabilityUnit.getSysAvailabilityUnit().add( selfRelSysAvailabilityUnit );
-                                        //facility.add( selfRelPropFacility );
-                                }
-                        }
-                }
+					availabilityUnit.getSysAvailabilityUnit().add( selfRelSysAvailabilityUnit );
+					//facility.add( selfRelPropFacility );
+				}
+			}
+		}
 
-                if( this.getLivePromotions() != null )
-                {
-                        this.getLivePromotions().forEach( promotion -> promotion.add( HATEOASProvider.promotionSelfLinkProvider( promotion.getPromoId() )) );
-                }
+		if( this.getLivePromotions() != null )
+		{
+			this.getLivePromotions().forEach( promotion -> promotion.add( HATEOASProvider.promotionSelfLinkProvider( promotion.getPromoId() ) ) );
+		}
 
-                if( this.getMenus() != null )
-                {
-                        this.getMenus().forEach( menu -> menu.add( HATEOASProvider.menuSelfLinkProvider( menu.getMenuId() )));
-                }
+		if( this.getMenus() != null )
+		{
+			this.getMenus().forEach( menu -> menu.add( HATEOASProvider.menuSelfLinkProvider( menu.getMenuId() ) ) );
+		}
 
-                if( this.getChoices() != null )
-                {
-                        for( PropChoices choices : this.getChoices() )
-                        {
-                                if( choices.getSysChoice() != null )
-                                {
-                                        Link selfRelSysChoices = HATEOASProvider.sysChoicesSelfLinkProvider( choices.getSysChoice().getChoiceId() );
+		if( this.getChoices() != null )
+		{
+			for( PropChoices choices : this.getChoices() )
+			{
+				if( choices.getSysChoice() != null )
+				{
+					Link selfRelSysChoices = HATEOASProvider.sysChoicesSelfLinkProvider( choices.getSysChoice().getChoiceId() );
 
-                                        choices.getSysChoice().add( selfRelSysChoices );
-                                }
-                        }
-                }
-        }
+					choices.getSysChoice().add( selfRelSysChoices );
+				}
+			}
+		}
+	}
 
 }

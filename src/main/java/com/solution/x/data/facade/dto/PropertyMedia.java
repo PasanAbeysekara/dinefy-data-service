@@ -12,38 +12,42 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PropertyMedia {
+public class PropertyMedia
+{
 
-    private List<String> bannerImages;
-    private List<String> coverImages;
-    private List<String> otherImages;
+	private List<String> bannerImages;
+	private List<String> coverImages;
+	private List<String> otherImages;
 
-    public void processPropertyMedia( Set<PropMedia> propMedia ){
+	public void processPropertyMedia( Set<PropMedia> propMedia )
+	{
 
-        bannerImages = new ArrayList<>();
-        coverImages = new ArrayList<>();
-        otherImages = new ArrayList<>();
+		bannerImages = new ArrayList<>();
+		coverImages = new ArrayList<>();
+		otherImages = new ArrayList<>();
 
-        propMedia.forEach( i -> addUrl(i.getCategory(), i.getURL()));
-    }
+		propMedia.forEach( i -> addUrl( i.getCategory(), i.getURL() ) );
+	}
 
-    private void addUrl(String category, String url){
+	private void addUrl( String category, String url )
+	{
 
-        switch (category){
-            case "banner" :
-                bannerImages.add(url);
-                break;
+		switch( category )
+		{
+			case "banner":
+				bannerImages.add( url );
+				break;
 
-            case "cover" :
-                coverImages.add(url);
-                break;
+			case "cover":
+				coverImages.add( url );
+				break;
 
-            case "other" :
-                otherImages.add(url);
-                break;
+			case "other":
+				otherImages.add( url );
+				break;
 
-            default:
-                break;
-        }
-    }
+			default:
+				break;
+		}
+	}
 }

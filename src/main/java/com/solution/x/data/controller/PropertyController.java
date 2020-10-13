@@ -58,12 +58,12 @@ public class PropertyController
 	/**
 	 * Get all property menus
 	 *
-	 * @param id PropertyModel ID
+	 * @param id       PropertyModel ID
 	 * @param pageable Pageable
 	 * @return return All property menus
 	 */
 	@GetMapping("/properties/{id}/menus")
-	public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getPropMenus(@PathVariable("id") long id, Pageable pageable )
+	public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getPropMenus( @PathVariable("id") long id, Pageable pageable )
 	{
 		return propertyService.getPropertyMenus( id, pageable );
 	}
@@ -71,30 +71,29 @@ public class PropertyController
 	/**
 	 * Get all property availabilities for a given time period
 	 *
-	 * @param propId				PropertyModel ID
-	 * @param dateFrom				Search start date
-	 * @param dateTo				Search end date
-	 * @param timeFrom				Search start time
-	 * @param timeTo				Search end time
-	 * @param availabilityUnitType 	Availability Unit Type
-	 * @param availabilityUnit		Availability Unit Name
-	 * @param pageable              Pageable
-	 *
+	 * @param propId               PropertyModel ID
+	 * @param dateFrom             Search start date
+	 * @param dateTo               Search end date
+	 * @param timeFrom             Search start time
+	 * @param timeTo               Search end time
+	 * @param availabilityUnitType Availability Unit Type
+	 * @param availabilityUnit     Availability Unit Name
+	 * @param pageable             Pageable
 	 * @return return all availabilities in requested time period
 	 */
 	@GetMapping("/search")
-	public ResponseEntity<ResponseWrapper<AvailDataWrapper>> getPropertyAvailableDataInAGivenTime(@RequestParam( name = "prop_id", required = true ) Long propId,
-																								  @RequestParam( name = "date_from", required = true )
-																								      @DateTimeFormat( iso = DateTimeFormat.ISO.DATE ) LocalDate dateFrom,
-																								  @RequestParam( name = "date_to", required = true )
-																									  @DateTimeFormat( iso = DateTimeFormat.ISO.DATE ) LocalDate dateTo,
-																								  @RequestParam( name = "time_from", required = true )
-																									  @DateTimeFormat( iso = DateTimeFormat.ISO.TIME ) LocalTime timeFrom,
-																								  @RequestParam( name = "time_to", required = true )
-																									  @DateTimeFormat( iso = DateTimeFormat.ISO.TIME ) LocalTime timeTo,
-																								  @RequestParam( name = "avail_unit_type" ) String availabilityUnitType,
-																								  @RequestParam( name = "avail_unit") String availabilityUnit,
-																								  Pageable pageable)
+	public ResponseEntity<ResponseWrapper<AvailDataWrapper>> getPropertyAvailableDataInAGivenTime( @RequestParam(name = "prop_id", required = true) Long propId,
+																								   @RequestParam(name = "date_from", required = true)
+																								   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+																								   @RequestParam(name = "date_to", required = true)
+																								   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+																								   @RequestParam(name = "time_from", required = true)
+																								   @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime timeFrom,
+																								   @RequestParam(name = "time_to", required = true)
+																								   @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime timeTo,
+																								   @RequestParam(name = "avail_unit_type") String availabilityUnitType,
+																								   @RequestParam(name = "avail_unit") String availabilityUnit,
+																								   Pageable pageable )
 	{
 		return availDataSearchService.getPropertyAvailabilities( propId, dateFrom, dateTo, timeFrom, timeTo, availabilityUnitType, availabilityUnit, pageable );
 	}
@@ -106,7 +105,7 @@ public class PropertyController
 	 * @return The PropertyModel
 	 */
 	@GetMapping("/properties/{id}")
-	public ResponseEntity<ResponseWrapper<PropertyModel>> getProperty(@PathVariable("id") long id )
+	public ResponseEntity<ResponseWrapper<PropertyModel>> getProperty( @PathVariable("id") long id )
 	{
 		return propertyService.getProperty( id );
 	}

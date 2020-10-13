@@ -17,63 +17,69 @@ import java.util.List;
 @RestController
 @RequestMapping(URLProvider.SERVICE_DATA)
 @Slf4j
-public class PaymentOptionController {
+public class PaymentOptionController
+{
 
-    @Autowired
-    private PaymentOptionService paymentOptionService;
+	@Autowired
+	private PaymentOptionService paymentOptionService;
 
-    /**
-     * Get All Payment Options
-     *
-     * @return all Payment Options
-     */
-    @GetMapping("/payment-options")
-    public ResponseEntity<ResponseWrapper<List<PaymentOptions>>> getPaymentOptions() {
-        return paymentOptionService.getPaymentOptions();
-    }
+	/**
+	 * Get All Payment Options
+	 *
+	 * @return all Payment Options
+	 */
+	@GetMapping("/payment-options")
+	public ResponseEntity<ResponseWrapper<List<PaymentOptions>>> getPaymentOptions()
+	{
+		return paymentOptionService.getPaymentOptions();
+	}
 
-    /**
-     * Get Single Payment Option
-     *
-     * @param id Payment Option ID
-     * @return The Payment Option
-     */
-    @GetMapping("/payment-options/{id}")
-    public ResponseEntity<ResponseWrapper<PaymentOptions>> getPaymentOption(@PathVariable("id") short id ) {
-        return paymentOptionService.getPaymentOption( id );
-    }
+	/**
+	 * Get Single Payment Option
+	 *
+	 * @param id Payment Option ID
+	 * @return The Payment Option
+	 */
+	@GetMapping("/payment-options/{id}")
+	public ResponseEntity<ResponseWrapper<PaymentOptions>> getPaymentOption( @PathVariable("id") short id )
+	{
+		return paymentOptionService.getPaymentOption( id );
+	}
 
-    /**
-     * Create a Payment Option
-     *
-     * @param paymentOption The Payment Option
-     * @return Saved paymentOption response
-     */
-    @PostMapping("/payment-options")
-    public ResponseEntity<ResponseWrapper<PaymentOptions>> createPaymentOption( @RequestBody PaymentOptions paymentOption ) {
-        return paymentOptionService.createPaymentOptions( paymentOption );
-    }
+	/**
+	 * Create a Payment Option
+	 *
+	 * @param paymentOption The Payment Option
+	 * @return Saved paymentOption response
+	 */
+	@PostMapping("/payment-options")
+	public ResponseEntity<ResponseWrapper<PaymentOptions>> createPaymentOption( @RequestBody PaymentOptions paymentOption )
+	{
+		return paymentOptionService.createPaymentOptions( paymentOption );
+	}
 
-    /**
-     * Update a Payment Option
-     *
-     * @param id   The Payment Option ID
-     * @param paymentOption The Payment Option
-     * @return Updated Payment Option response
-     */
-    @PutMapping("/payment-options/{id}")
-    public ResponseEntity<ResponseWrapper<PaymentOptions>> updatePaymentOption( @PathVariable("id") short id, @RequestBody PaymentOptions paymentOption ) {
-        return paymentOptionService.updatePaymentOption( id, paymentOption );
-    }
+	/**
+	 * Update a Payment Option
+	 *
+	 * @param id            The Payment Option ID
+	 * @param paymentOption The Payment Option
+	 * @return Updated Payment Option response
+	 */
+	@PutMapping("/payment-options/{id}")
+	public ResponseEntity<ResponseWrapper<PaymentOptions>> updatePaymentOption( @PathVariable("id") short id, @RequestBody PaymentOptions paymentOption )
+	{
+		return paymentOptionService.updatePaymentOption( id, paymentOption );
+	}
 
-    /**
-     * Delete a Payment Option
-     *
-     * @param id The Payment Option ID
-     * @return Delete Payment Option response
-     */
-    @DeleteMapping("/payment-options/{id}")
-    public ResponseEntity<ResponseWrapper<PaymentOptions>> deletePaymentOption( @PathVariable("id") short id ) {
-        return paymentOptionService.deletePaymentOption( id );
-    }
+	/**
+	 * Delete a Payment Option
+	 *
+	 * @param id The Payment Option ID
+	 * @return Delete Payment Option response
+	 */
+	@DeleteMapping("/payment-options/{id}")
+	public ResponseEntity<ResponseWrapper<PaymentOptions>> deletePaymentOption( @PathVariable("id") short id )
+	{
+		return paymentOptionService.deletePaymentOption( id );
+	}
 }

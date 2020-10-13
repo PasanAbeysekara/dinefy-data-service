@@ -13,7 +13,8 @@ import org.springframework.stereotype.Component;
  * @since 5/4/2020 1:27 AM
  */
 @Component
-public class AvailUnitModelAssembler extends RepresentationModelAssemblerSupport<AvailabilityUnit, AvailabilityUnitModel>
+public class
+AvailUnitModelAssembler extends RepresentationModelAssemblerSupport<AvailabilityUnit, AvailabilityUnitModel>
 {
 
 	public AvailUnitModelAssembler()

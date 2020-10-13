@@ -16,21 +16,23 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(URLProvider.SERVICE_DATA)
 @Slf4j
-public class AvailDataController {
+public class AvailDataController
+{
 
-    @Autowired
-    private AvailDataService availDataService;
+	@Autowired
+	private AvailDataService availDataService;
 
-    /**
-     * Update Avail Data
-     *
-     * @param widenPropData The WidenPropData
-     * @return Updated Availability Data
-     */
-    @PutMapping("/avail-data")
-    public ResponseEntity<ResponseWrapper<WidenPropData>> updateAvailData( @RequestBody WidenPropData widenPropData ) {
+	/**
+	 * Update Avail Data
+	 *
+	 * @param widenPropData The WidenPropData
+	 * @return Updated Availability Data
+	 */
+	@PutMapping("/avail-data")
+	public ResponseEntity<ResponseWrapper<WidenPropData>> updateAvailData( @RequestBody WidenPropData widenPropData )
+	{
 
-        return availDataService.updateAvailData( widenPropData );
+		return availDataService.updateAvailData( widenPropData );
 
-    }
+	}
 }

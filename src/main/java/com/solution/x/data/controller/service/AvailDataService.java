@@ -19,39 +19,44 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
-public class AvailDataService extends AbstractService<WidenPropData> {
+public class AvailDataService extends AbstractService<WidenPropData>
+{
 
-    @Autowired
-    private AvailDataRepository availDataRepository;
+	@Autowired
+	private AvailDataRepository availDataRepository;
 
-    /**
-     * Update Avail Data
-     *
-     * @param widenPropData The WidenPropData
-     * @return Updated Availability Data
-     */
-    public ResponseEntity<ResponseWrapper<WidenPropData>> updateAvailData( WidenPropData widenPropData ) {
+	/**
+	 * Update Avail Data
+	 *
+	 * @param widenPropData The WidenPropData
+	 * @return Updated Availability Data
+	 */
+	public ResponseEntity<ResponseWrapper<WidenPropData>> updateAvailData( WidenPropData widenPropData )
+	{
 
-        ResponseEntity<ResponseWrapper<WidenPropData>> response = null;
+		ResponseEntity<ResponseWrapper<WidenPropData>> response = null;
 
-        try {
+		try
+		{
 
-            widenPropData.calculateBookable();
-            WidenPropData updatedWidenPropData = availDataRepository.save( widenPropData );
+			widenPropData.calculateBookable();
+			WidenPropData updatedWidenPropData = availDataRepository.save( widenPropData );
 
-            response = ResponseEntity.ok()
-                    .headers( addCommonHeaders( new HttpHeaders() ) )
-                    .body( new ResponseWrapper<>( SystemOperation.MODIFY.withSuccess(), SystemMessages.AVAILABILITY_DATA_UPDATE_SUCCESS, updatedWidenPropData ) );
+			response = ResponseEntity.ok()
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.MODIFY.withSuccess(), SystemMessages.AVAILABILITY_DATA_UPDATE_SUCCESS, updatedWidenPropData ) );
 
-        } catch (Exception e) {
+		}
+		catch( Exception e )
+		{
 
-            e.printStackTrace();
-            response = buildExceptionErrorResponse( SystemOperation.MODIFY, SystemMessages.AVAILABILITY_DATA_UPDATE_FAILED, e );
+			e.printStackTrace();
+			response = buildExceptionErrorResponse( SystemOperation.MODIFY, SystemMessages.AVAILABILITY_DATA_UPDATE_FAILED, e );
 
-        }
+		}
 
-        return  response;
+		return response;
 
-    }
+	}
 
 }

@@ -61,12 +61,12 @@ public class HATEOASProvider
 		return linkTo( methodOn( PromotionController.class ).getPromotion( promoId.getPropId(), promoId.getPromoId() ) ).withSelfRel();
 	}
 
-	public static  Link menuSelfLinkProvider( long id )
+	public static Link menuSelfLinkProvider( long id )
 	{
 		return linkTo( methodOn( MenuController.class ).getMenu( id ) ).withSelfRel();
 	}
 
-	public static  Link sysChoicesSelfLinkProvider( long id )
+	public static Link sysChoicesSelfLinkProvider( long id )
 	{
 		return linkTo( methodOn( SysChoiceController.class ).getChoice( id ) ).withSelfRel();
 	}

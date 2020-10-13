@@ -21,137 +21,138 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
-public class PropSpecialityService extends AbstractService<PropertySpeciality> {
+public class PropSpecialityService extends AbstractService<PropertySpeciality>
+{
 
-    @Autowired
-    private PropertySpecialityRepository propertySpecialityRepository;
+	@Autowired
+	private PropertySpecialityRepository propertySpecialityRepository;
 
-    /**
-     * Get All Specialities
-     *
-     * @return all Specialities
-     */
-    public ResponseEntity<ResponseWrapper<List<PropertySpeciality>>> getSpecialities()
-    {
-        List<PropertySpeciality> specialities = propertySpecialityRepository.findAll();
+	/**
+	 * Get All Specialities
+	 *
+	 * @return all Specialities
+	 */
+	public ResponseEntity<ResponseWrapper<List<PropertySpeciality>>> getSpecialities()
+	{
+		List<PropertySpeciality> specialities = propertySpecialityRepository.findAll();
 
-        return ResponseEntity.ok()
-                .headers( addCommonHeaders( new HttpHeaders() ) )
-                .body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, specialities ) );
-    }
+		return ResponseEntity.ok()
+				.headers( addCommonHeaders( new HttpHeaders() ) )
+				.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, specialities ) );
+	}
 
-    /**
-     * Get Single Speciality
-     *
-     * @param id Speciality ID
-     * @return The Speciality
-     */
-    public ResponseEntity<ResponseWrapper<PropertySpeciality>> getSpeciality( short id )
-    {
-        Optional<PropertySpeciality> optionalSpeciality = propertySpecialityRepository.findById( id );
+	/**
+	 * Get Single Speciality
+	 *
+	 * @param id Speciality ID
+	 * @return The Speciality
+	 */
+	public ResponseEntity<ResponseWrapper<PropertySpeciality>> getSpeciality( short id )
+	{
+		Optional<PropertySpeciality> optionalSpeciality = propertySpecialityRepository.findById( id );
 
-        ResponseEntity<ResponseWrapper<PropertySpeciality>> response;
+		ResponseEntity<ResponseWrapper<PropertySpeciality>> response;
 
-        if( optionalSpeciality.isPresent() )
-        {
-            PropertySpeciality speciality = optionalSpeciality.get();
+		if( optionalSpeciality.isPresent() )
+		{
+			PropertySpeciality speciality = optionalSpeciality.get();
 
-            response = ResponseEntity.ok()
-                    .headers( addCommonHeaders( new HttpHeaders() ) )
-                    .body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, speciality ) );
-        }
-        else
-        {
-            response = buildNotFoundResponseWrapped();
-        }
+			response = ResponseEntity.ok()
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, speciality ) );
+		}
+		else
+		{
+			response = buildNotFoundResponseWrapped();
+		}
 
-        return response;
+		return response;
 
-    }
+	}
 
-    /**
-     * Create a Speciality
-     *
-     * @param propertySpeciality The Speciality
-     * @return Saved Speciality response
-     */
-    public ResponseEntity<ResponseWrapper<PropertySpeciality>> createSpeciality( PropertySpeciality propertySpeciality )
-    {
-        ResponseEntity<ResponseWrapper<PropertySpeciality>> response;
+	/**
+	 * Create a Speciality
+	 *
+	 * @param propertySpeciality The Speciality
+	 * @return Saved Speciality response
+	 */
+	public ResponseEntity<ResponseWrapper<PropertySpeciality>> createSpeciality( PropertySpeciality propertySpeciality )
+	{
+		ResponseEntity<ResponseWrapper<PropertySpeciality>> response;
 
-        try
-        {
-            Short nextSpecialityId = propertySpecialityRepository.nextSpecialityId();
-            propertySpeciality.setSpecialityId( nextSpecialityId );
-            PropertySpeciality savedSpeciality = propertySpecialityRepository.save( propertySpeciality );
+		try
+		{
+			Short nextSpecialityId = propertySpecialityRepository.nextSpecialityId();
+			propertySpeciality.setSpecialityId( nextSpecialityId );
+			PropertySpeciality savedSpeciality = propertySpecialityRepository.save( propertySpeciality );
 
-            response = ResponseEntity.status( HttpStatus.CREATED )
-                    .headers( addCommonHeaders( new HttpHeaders() ) )
-                    .body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.SPECIALITY_CREATE_SUCCESS, savedSpeciality ) );
-        }
-        catch( Exception e )
-        {
-            e.printStackTrace();
-            response = buildExceptionErrorResponse( SystemOperation.CREATE, SystemMessages.SPECIALITY_CREATE_FAILED, e );
-        }
+			response = ResponseEntity.status( HttpStatus.CREATED )
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.SPECIALITY_CREATE_SUCCESS, savedSpeciality ) );
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+			response = buildExceptionErrorResponse( SystemOperation.CREATE, SystemMessages.SPECIALITY_CREATE_FAILED, e );
+		}
 
-        return response;
-    }
+		return response;
+	}
 
 
-    /**
-     * Update a Speciality
-     *
-     * @param id   The Speciality ID
-     * @param propertySpeciality The Speciality
-     * @return Updated Speciality response
-     */
-    public ResponseEntity<ResponseWrapper<PropertySpeciality>> updateSpeciality( short id, PropertySpeciality propertySpeciality )
-    {
-        ResponseEntity<ResponseWrapper<PropertySpeciality>> response;
+	/**
+	 * Update a Speciality
+	 *
+	 * @param id                 The Speciality ID
+	 * @param propertySpeciality The Speciality
+	 * @return Updated Speciality response
+	 */
+	public ResponseEntity<ResponseWrapper<PropertySpeciality>> updateSpeciality( short id, PropertySpeciality propertySpeciality )
+	{
+		ResponseEntity<ResponseWrapper<PropertySpeciality>> response;
 
-        try
-        {
-            propertySpeciality.setSpecialityId( id );
-            PropertySpeciality savedSpeciality = propertySpecialityRepository.save( propertySpeciality );
+		try
+		{
+			propertySpeciality.setSpecialityId( id );
+			PropertySpeciality savedSpeciality = propertySpecialityRepository.save( propertySpeciality );
 
-            response = ResponseEntity.ok()
-                    .headers( addCommonHeaders( new HttpHeaders() ) )
-                    .body( new ResponseWrapper<>( SystemOperation.MODIFY.withSuccess(), SystemMessages.SPECIALITY_UPDATE_SUCCESS, savedSpeciality ) );
-        }
-        catch( Exception e )
-        {
-            e.printStackTrace();
-            response = buildExceptionErrorResponse( SystemOperation.MODIFY, SystemMessages.SPECIALITY_UPDATE_FAILED, e );
-        }
+			response = ResponseEntity.ok()
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.MODIFY.withSuccess(), SystemMessages.SPECIALITY_UPDATE_SUCCESS, savedSpeciality ) );
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+			response = buildExceptionErrorResponse( SystemOperation.MODIFY, SystemMessages.SPECIALITY_UPDATE_FAILED, e );
+		}
 
-        return response;
-    }
+		return response;
+	}
 
-    /**
-     * Delete a Speciality
-     *
-     * @param id The Speciality ID
-     * @return Delete Speciality response
-     */
-    public ResponseEntity<ResponseWrapper<PropertySpeciality>> deleteSpeciality( short id )
-    {
-        ResponseEntity<ResponseWrapper<PropertySpeciality>> response;
+	/**
+	 * Delete a Speciality
+	 *
+	 * @param id The Speciality ID
+	 * @return Delete Speciality response
+	 */
+	public ResponseEntity<ResponseWrapper<PropertySpeciality>> deleteSpeciality( short id )
+	{
+		ResponseEntity<ResponseWrapper<PropertySpeciality>> response;
 
-        try
-        {
-            propertySpecialityRepository.deleteById( id );
+		try
+		{
+			propertySpecialityRepository.deleteById( id );
 
-            response = ResponseEntity.ok()
-                    .headers( addCommonHeaders( new HttpHeaders() ) )
-                    .body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.SPECIALITY_DELETE_SUCCESS, "" ) );
-        }
-        catch( Exception e )
-        {
-            e.printStackTrace();
-            response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.SPECIALITY_DELETE_FAILED, e );
-        }
+			response = ResponseEntity.ok()
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.SPECIALITY_DELETE_SUCCESS, "" ) );
+		}
+		catch( Exception e )
+		{
+			e.printStackTrace();
+			response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.SPECIALITY_DELETE_FAILED, e );
+		}
 
-        return response;
-    }
+		return response;
+	}
 }

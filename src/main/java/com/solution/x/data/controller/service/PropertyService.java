@@ -97,19 +97,19 @@ public class PropertyService extends AbstractService<Property>
 	/**
 	 * Get all property menus
 	 *
-	 * @param id PropertyModel ID
+	 * @param id       PropertyModel ID
 	 * @param pageable Pageable
 	 * @return return All property menus
 	 */
 	public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getPropertyMenus( long id, Pageable pageable )
 	{
-		Page<Menu> menuPage = propertyRepository.findPropertyMenus( id, pageable);
+		Page<Menu> menuPage = propertyRepository.findPropertyMenus( id, pageable );
 
-		PagedModel<MenuModel> menuPagedModel = pagedResourcesAssembler.toModel(menuPage, menuAssembler);
+		PagedModel<MenuModel> menuPagedModel = pagedResourcesAssembler.toModel( menuPage, menuAssembler );
 
 		return ResponseEntity.ok()
-				.headers(addCommonHeaders(new HttpHeaders()))
-				.body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, menuPagedModel));
+				.headers( addCommonHeaders( new HttpHeaders() ) )
+				.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, menuPagedModel ) );
 
 	}
 
@@ -119,7 +119,7 @@ public class PropertyService extends AbstractService<Property>
 	 * @param id property ID
 	 * @return The PropertyModel
 	 */
-	public ResponseEntity<ResponseWrapper<PropertyModel>> getProperty(long id )
+	public ResponseEntity<ResponseWrapper<PropertyModel>> getProperty( long id )
 	{
 		Optional<Property> optionalProperty = propertyRepository.findById( id );
 
@@ -207,12 +207,12 @@ public class PropertyService extends AbstractService<Property>
 
 		if( property.getLivePromotions() != null )
 		{
-			property.getLivePromotions().forEach( promotion -> promotion.add( HATEOASProvider.promotionSelfLinkProvider( promotion.getPromoId() )) );
+			property.getLivePromotions().forEach( promotion -> promotion.add( HATEOASProvider.promotionSelfLinkProvider( promotion.getPromoId() ) ) );
 		}
 
 		if( property.getMenus() != null )
 		{
-			property.getMenus().forEach( menu -> menu.add( HATEOASProvider.menuSelfLinkProvider( menu.getMenuId() )));
+			property.getMenus().forEach( menu -> menu.add( HATEOASProvider.menuSelfLinkProvider( menu.getMenuId() ) ) );
 		}
 
 		if( property.getChoices() != null )
@@ -296,7 +296,7 @@ public class PropertyService extends AbstractService<Property>
 			}
 		}
 
-		if( property.getChoices() != null)
+		if( property.getChoices() != null )
 		{
 			int currentChoiceId = propChoicesRepository.currentPropChoiceId();
 			for( PropChoices propChoice : property.getChoices() )
