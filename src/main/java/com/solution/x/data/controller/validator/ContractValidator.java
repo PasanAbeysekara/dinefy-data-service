@@ -31,7 +31,7 @@ public class ContractValidator
 		//		{
 		//			String messageAppender = "Contact ID = " + property.getCurrentContId() + " Version : " + property.getCurrentContVersion();
 		//
-		//			ResponseEntity<ResponseWrapper<Property>> responseEntity = ResponseEntity.status( HttpStatus.CONFLICT )
+		//			ResponseEntity<ResponseWrapper<PropertyModel>> responseEntity = ResponseEntity.status( HttpStatus.CONFLICT )
 		//					.body( new ResponseWrapper<>( SystemOperation.VALIDATE, SystemMessages.PROPERTY_VALIDATION_CONTRACT, messageAppender ) );
 		//
 		//			dataCarrier.setData( responseEntity );

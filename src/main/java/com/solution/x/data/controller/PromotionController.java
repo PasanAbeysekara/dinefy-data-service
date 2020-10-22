@@ -32,7 +32,7 @@ public class PromotionController
 	/**
 	 * Get multiple Promotions
 	 *
-	 * @param propId Property ID
+	 * @param propId PropertyModel ID
 	 * @param live   Promotion live or not
 	 * @return Matching Promotion
 	 */
@@ -45,7 +45,7 @@ public class PromotionController
 	/**
 	 * Get Single Promotion
 	 *
-	 * @param propId  Property ID
+	 * @param propId  PropertyModel ID
 	 * @param promoId Promotion ID
 	 * @return The Promotion
 	 */
@@ -71,7 +71,7 @@ public class PromotionController
 	/**
 	 * Update a Promotion
 	 *
-	 * @param propId    Property ID
+	 * @param propId    PropertyModel ID
 	 * @param promoId   Promotion ID
 	 * @param Promotion Promotion
 	 * @return The Updated Promotion
@@ -85,7 +85,7 @@ public class PromotionController
 	/**
 	 * Delete a Promotion
 	 *
-	 * @param propId  Property ID
+	 * @param propId  PropertyModel ID
 	 * @param promoId Promotion ID
 	 * @return Delete status
 	 */

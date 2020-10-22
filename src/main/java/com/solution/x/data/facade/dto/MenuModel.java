@@ -16,9 +16,10 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class MenuModel extends RepresentationModel<MenuModel> {
-    private Long menuId;
-    private String name;
-    private String description;
-    private Set<MenuCategory> menuCategories;
+public class MenuModel extends RepresentationModel<MenuModel>
+{
+	private Long menuId;
+	private String name;
+	private String description;
+	private Set<MenuCategory> menuCategories;
 }

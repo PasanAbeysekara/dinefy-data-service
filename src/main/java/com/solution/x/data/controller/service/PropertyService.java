@@ -10,8 +10,10 @@ import com.solution.x.dao.Property;
 import com.solution.x.dao.sys.PropertySpeciality;
 import com.solution.x.data.controller.OrganizationController;
 import com.solution.x.data.controller.assembler.MenuModelAssembler;
+import com.solution.x.data.controller.assembler.PropertyModelAssembler;
 import com.solution.x.data.controller.validator.PropertyValidator;
 import com.solution.x.data.facade.dto.MenuModel;
+import com.solution.x.data.facade.dto.PropertyModel;
 import com.solution.x.data.messaging.producer.PropertyQueueProducer;
 import com.solution.x.global.DataCarrier;
 import com.solution.x.global.SystemOperation;
@@ -67,6 +69,9 @@ public class PropertyService extends AbstractService<Property>
 	@Autowired
 	private MenuModelAssembler menuAssembler;
 
+	@Autowired
+	private PropertyModelAssembler propertyModelAssembler;
+
 	/**
 	 * Get all properties
 	 *
@@ -117,26 +122,24 @@ public class PropertyService extends AbstractService<Property>
 	 * @param id property ID
 	 * @return The Property
 	 */
-	public ResponseEntity<ResponseWrapper<Property>> getProperty( long id )
+	public ResponseEntity<ResponseWrapper<PropertyModel>> getProperty( long id )
 	{
 		Optional<Property> optionalProperty = propertyRepository.findById( id );
 
-		ResponseEntity<ResponseWrapper<Property>> response;
+		ResponseEntity<ResponseWrapper<PropertyModel>> response;
 
 		if( optionalProperty.isPresent() )
 		{
 			Property property = optionalProperty.get();
-			linkPropertyEntities( property );
+			PropertyModel propertyModel = propertyModelAssembler.toModel( property );
+			propertyModel.linkPropertyEntities();
 
 			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, property ) );
-
-			//sms( property );
-
+					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, propertyModel ) );
 		}
 		else
 		{
-			response = buildNotFoundResponseWrapped();
+			response = ResponseEntity.notFound().headers( new HttpHeaders() ).build();
 		}
 
 		return response;

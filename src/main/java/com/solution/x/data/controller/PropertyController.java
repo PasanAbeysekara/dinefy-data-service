@@ -3,22 +3,21 @@ package com.solution.x.data.controller;
 import com.solution.x.dao.PropFacilities;
 import com.solution.x.dao.Property;
 import com.solution.x.data.controller.service.PropertyService;
+import com.solution.x.data.controller.service.AvailDataSearchService;
+import com.solution.x.data.facade.dto.AvailDataWrapper;
 import com.solution.x.data.facade.dto.MenuModel;
+import com.solution.x.data.facade.dto.PropertyModel;
 import com.solution.x.util.ResponseWrapper;
 import com.solution.x.util.URLProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -30,6 +29,9 @@ public class PropertyController
 {
 	@Autowired
 	private PropertyService propertyService;
+
+	@Autowired
+	private AvailDataSearchService availDataSearchService;
 
 	/**
 	 * Get all properties
@@ -56,24 +58,54 @@ public class PropertyController
 	/**
 	 * Get all property menus
 	 *
-	 * @param id Property ID
+	 * @param id       PropertyModel ID
 	 * @param pageable Pageable
 	 * @return return All property menus
 	 */
 	@GetMapping("/properties/{id}/menus")
-	public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getPropMenus(@PathVariable("id") long id, Pageable pageable )
+	public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getPropMenus( @PathVariable("id") long id, Pageable pageable )
 	{
 		return propertyService.getPropertyMenus( id, pageable );
+	}
+
+	/**
+	 * Get all property availabilities for a given time period
+	 *
+	 * @param propId               PropertyModel ID
+	 * @param dateFrom             Search start date
+	 * @param dateTo               Search end date
+	 * @param timeFrom             Search start time
+	 * @param timeTo               Search end time
+	 * @param availabilityUnitType Availability Unit Type
+	 * @param availabilityUnit     Availability Unit Name
+	 * @param pageable             Pageable
+	 * @return return all availabilities in requested time period
+	 */
+	@GetMapping("/search")
+	public ResponseEntity<ResponseWrapper<AvailDataWrapper>> getPropertyAvailableDataInAGivenTime( @RequestParam(name = "prop_id", required = true) Long propId,
+																								   @RequestParam(name = "date_from", required = true)
+																								   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+																								   @RequestParam(name = "date_to", required = true)
+																								   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+																								   @RequestParam(name = "time_from", required = true)
+																								   @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime timeFrom,
+																								   @RequestParam(name = "time_to", required = true)
+																								   @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime timeTo,
+																								   @RequestParam(name = "avail_unit_type") String availabilityUnitType,
+																								   @RequestParam(name = "avail_unit") String availabilityUnit,
+																								   Pageable pageable )
+	{
+		return availDataSearchService.getPropertyAvailabilities( propId, dateFrom, dateTo, timeFrom, timeTo, availabilityUnitType, availabilityUnit, pageable );
 	}
 
 	/**
 	 * Get Single property
 	 *
 	 * @param id property ID
-	 * @return The Property
+	 * @return The PropertyModel
 	 */
 	@GetMapping("/properties/{id}")
-	public ResponseEntity<ResponseWrapper<Property>> getProperty( @PathVariable("id") long id )
+	public ResponseEntity<ResponseWrapper<PropertyModel>> getProperty( @PathVariable("id") long id )
 	{
 		return propertyService.getProperty( id );
 	}
@@ -103,7 +135,7 @@ public class PropertyController
 	}
 
 	/**
-	 * Get Property Names
+	 * Get PropertyModel Names
 	 *
 	 * @return all property names
 	 */
