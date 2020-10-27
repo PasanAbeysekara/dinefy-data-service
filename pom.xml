@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.thaprobit.res-engine</groupId>
+    <groupId>com.thaprobit.resengine</groupId>
     <artifactId>data-service</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>data-service</name>
@@ -37,7 +37,7 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.thaprobit.res-engine</groupId>
+            <groupId>com.thaprobit.resengine</groupId>
             <artifactId>persistence-library</artifactId>
             <version>${lib-version}</version>
         </dependency>
@@ -166,7 +166,7 @@
                         <image>openjdk:11</image>
                     </from>
                     <to>
-                        <image>hangouts/data-service</image>
+                        <image>tharitb/data-service</image>
                     </to>
                     <container>
                         <jvmFlags>
