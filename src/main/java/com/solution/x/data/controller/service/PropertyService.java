@@ -131,7 +131,6 @@ public class PropertyService extends AbstractService<Property>
 		if( optionalProperty.isPresent() )
 		{
 			Property property = optionalProperty.get();
-			System.out.println(property.getMenus());
 			PropertyModel propertyModel = propertyModelAssembler.toModel( property );
 			propertyModel.linkPropertyEntities();
 
@@ -145,31 +144,6 @@ public class PropertyService extends AbstractService<Property>
 
 		return response;
 	}
-
-	public ResponseEntity<ResponseWrapper<Property>> getPropertyOld( long id )
-	{
-		Optional<Property> optionalProperty = propertyRepository.findById( id );
-
-		ResponseEntity<ResponseWrapper<Property>> response;
-
-		if( optionalProperty.isPresent() )
-		{
-			Property property = optionalProperty.get();
-			//System.out.println(property.getMenus());
-			//PropertyModel propertyModel = propertyModelAssembler.toModel( property );
-			linkPropertyEntities( property );
-
-			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, property ) );
-		}
-		else
-		{
-			response = ResponseEntity.notFound().headers( new HttpHeaders() ).build();
-		}
-
-		return response;
-	}
-
 
 	public static final String ACCOUNT_SID = "AC8616f53c8c89dd86620f67d9404e2384";
 	public static final String AUTH_TOKEN = "b29e2bd32b44b0aaf9017a5741ddd1c1";

@@ -47,8 +47,6 @@ public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<
 		propertyModel.setChoices( entity.getChoices() );
 		propertyModel.setPropertyMedia( entity.getPropertyMedia() );
 
-		System.out.println(propertyModel.getMenus());
-
 		return propertyModel;
 
 	}

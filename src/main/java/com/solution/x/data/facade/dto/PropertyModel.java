@@ -2,13 +2,15 @@ package com.solution.x.data.facade.dto;
 
 import com.solution.x.dao.*;
 import com.solution.x.dao.global.Point;
-import com.solution.x.dao.sys.Facilities;
 import com.solution.x.dao.sys.PaymentOptions;
 import com.solution.x.dao.sys.PropertySpeciality;
 import com.solution.x.data.controller.OrganizationController;
 import com.solution.x.data.controller.service.HATEOASProvider;
-import lombok.*;
-import org.aspectj.weaver.ast.Or;
+import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
