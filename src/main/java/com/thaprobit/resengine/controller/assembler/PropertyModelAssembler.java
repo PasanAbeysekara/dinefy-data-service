@@ -51,3 +51,4 @@ public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<
 
 	}
 }
+

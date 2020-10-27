@@ -145,7 +145,6 @@ public class PropertyService extends AbstractService<Property>
 		return response;
 	}
 
-
 	public static final String ACCOUNT_SID = "AC8616f53c8c89dd86620f67d9404e2384";
 	public static final String AUTH_TOKEN = "b29e2bd32b44b0aaf9017a5741ddd1c1";
 
