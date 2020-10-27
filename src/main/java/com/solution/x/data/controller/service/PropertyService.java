@@ -131,11 +131,36 @@ public class PropertyService extends AbstractService<Property>
 		if( optionalProperty.isPresent() )
 		{
 			Property property = optionalProperty.get();
+			System.out.println(property.getMenus());
 			PropertyModel propertyModel = propertyModelAssembler.toModel( property );
 			propertyModel.linkPropertyEntities();
 
 			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) )
 					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, propertyModel ) );
+		}
+		else
+		{
+			response = ResponseEntity.notFound().headers( new HttpHeaders() ).build();
+		}
+
+		return response;
+	}
+
+	public ResponseEntity<ResponseWrapper<Property>> getPropertyOld( long id )
+	{
+		Optional<Property> optionalProperty = propertyRepository.findById( id );
+
+		ResponseEntity<ResponseWrapper<Property>> response;
+
+		if( optionalProperty.isPresent() )
+		{
+			Property property = optionalProperty.get();
+			//System.out.println(property.getMenus());
+			//PropertyModel propertyModel = propertyModelAssembler.toModel( property );
+			linkPropertyEntities( property );
+
+			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, property ) );
 		}
 		else
 		{
