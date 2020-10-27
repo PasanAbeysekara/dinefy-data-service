@@ -33,7 +33,7 @@
         <logger name="log4j.logger.org.hibernate.transaction" level="debug" additivity="true">
             <AppenderRef ref="Console-Tx" level="debug"/>
         </logger>
-        <!--        <logger name="com.solution.x" level="debug" additivity="true">-->
+        <!--        <logger name="com.thaprobit.resengine" level="debug" additivity="true">-->
         <!--            <AppenderRef ref="Console-Tx" level="debug"/>-->
         <!--        </logger>-->
 
