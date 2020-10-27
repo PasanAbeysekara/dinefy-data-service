@@ -1,6 +1,6 @@
-package com.solution.x.data.facade.dto;
+package com.thaprobit.resengine.facade.dto;
 
-import com.solution.x.dao.sys.Choices;
+import com.thaprobit.resengine.dao.sys.Choices;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

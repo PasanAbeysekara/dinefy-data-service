@@ -1,7 +1,7 @@
-package com.solution.x.data.facade.dto;
+package com.thaprobit.resengine.facade.dto;
 
-import com.solution.x.dao.key.PropFacilityID;
-import com.solution.x.dao.sys.Facilities;
+import com.thaprobit.resengine.dao.key.PropFacilityID;
+import com.thaprobit.resengine.dao.sys.Facilities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,6 @@
-package com.solution.x.data.facade.dto;
+package com.thaprobit.resengine.facade.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.solution.x.dao.LocationState;
+import com.thaprobit.resengine.dao.LocationState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
