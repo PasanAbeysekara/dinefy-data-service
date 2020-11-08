@@ -15,6 +15,7 @@ import com.thaprobit.resengine.dao.PropFacilities;
 import com.thaprobit.resengine.dao.PropMedia;
 import com.thaprobit.resengine.dao.PropTags;
 import com.thaprobit.resengine.dao.global.Point;
+import com.thaprobit.resengine.dao.sys.Choices;
 import com.thaprobit.resengine.dao.sys.PaymentOptions;
 import com.thaprobit.resengine.dao.sys.PropertySpeciality;
 import lombok.AllArgsConstructor;
@@ -63,8 +64,9 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 	private Set<Promotion> livePromotions;
 	private OrganizationModel organizations;
 	private List<LocalTime> timeSlots;
-	private Set<MenuModel> menus;
-	private Set<PropChoicesModel> choices;
+	//private Set<MenuModel> menus;
+	//private Set<PropChoicesModel> choices;
+	private PropMenusModel propMenus;
 	private PropertyMedia propertyMedia;
 
 	public void setPropertyMedia( Set<PropMedia> propMedia )
@@ -74,7 +76,7 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 		this.propertyMedia = propertyMedia;
 	}
 
-	public void setMenus( Set<Menu> menus ){
+	/*public void setMenus( Set<Menu> menus ){
 		Set<MenuModel> menuModels = new HashSet<>();
 
 		for(Menu menu: menus)
@@ -87,7 +89,7 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 		}
 
 		this.menus = menuModels;
-	}
+	}*/
 
 	public void setBasedLocation( LocationBased locationBased )
 	{
@@ -144,7 +146,7 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 		this.organizations = organizationModel;
 	}
 
-	public void setChoices( Set<PropChoices> propChoices)
+	/*public void setChoices( Set<PropChoices> propChoices)
 	{
 		Set<PropChoicesModel> propChoicesModels = new HashSet<>();
 
@@ -162,6 +164,16 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 		}
 
 		this.choices = propChoicesModels;
+	}*/
+
+	public void setPropMenus( Set<Menu> menus, Set<PropChoices> propChoices )
+	{
+		PropMenusModel propMenusModel = new PropMenusModel();
+
+		propMenusModel.setMenus( menus );
+		propMenusModel.setChoices( propChoices );
+
+		this.propMenus = propMenusModel;
 	}
 
 	/**
@@ -230,14 +242,11 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 			this.getLivePromotions().forEach( promotion -> promotion.add( HATEOASProvider.promotionSelfLinkProvider( promotion.getPromoId() ) ) );
 		}
 
-		if( this.getMenus() != null )
+		if( this.propMenus.getMenus() != null )
 		{
-			this.getMenus().forEach( menu -> menu.add( HATEOASProvider.menuSelfLinkProvider( menu.getMenuId() ) ) );
-		}
+			this.propMenus.getMenus().forEach( menu -> menu.add( HATEOASProvider.menuSelfLinkProvider( menu.getMenuId() ) ) );
 
-		if( this.getChoices() != null )
-		{
-			for( PropChoicesModel choices : this.getChoices() )
+			for( PropChoicesModel choices : this.propMenus.getChoices() )
 			{
 				if( choices.getSysChoice() != null )
 				{

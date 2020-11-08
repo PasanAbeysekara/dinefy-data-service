@@ -43,8 +43,9 @@ public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<
 		propertyModel.setLivePromotions( entity.getLivePromotions() );
 		propertyModel.setOrganizations( entity.getOrganizations() );
 		propertyModel.setTimeSlots( entity.getTimeSlots() );
-		propertyModel.setMenus( entity.getMenus() );
-		propertyModel.setChoices( entity.getChoices() );
+		//propertyModel.setMenus( entity.getMenus() );
+		//propertyModel.setChoices( entity.getChoices() );
+		propertyModel.setPropMenus( entity.getMenus(), entity.getChoices() );
 		propertyModel.setPropertyMedia( entity.getPropertyMedia() );
 
 		return propertyModel;
