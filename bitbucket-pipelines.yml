@@ -16,6 +16,8 @@ pipelines:
     - parallel:
         - step:
             name: Build and Test
+            services:
+              - docker            
             script:
               - pipe: JfrogDev/artifactory-maven:0.3.3
                 variables:
