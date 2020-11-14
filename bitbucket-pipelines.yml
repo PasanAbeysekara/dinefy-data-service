@@ -25,4 +25,3 @@ pipelines:
                   MAVEN_SNAPSHOT_REPO: 'hangouts-snapshot-repo'
                   MAVEN_RELEASE_REPO: 'hangouts-repo'
                   MAVEN_COMMAND: 'clean test install'
-                  FOLDER: 'app'
