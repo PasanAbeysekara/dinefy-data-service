@@ -31,6 +31,7 @@ AvailUnitModelAssembler extends RepresentationModelAssemblerSupport<Availability
 		availabilityUnitModel.setName( entity.getName() );
 		availabilityUnitModel.setMinCapacity( entity.getMinCapacity() );
 		availabilityUnitModel.setMaxCapacity( entity.getMaxCapacity() );
+		availabilityUnitModel.setType( entity.getType() );
 
 		availabilityUnitModel.add( HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnitModel.getUnitId() ) );
 

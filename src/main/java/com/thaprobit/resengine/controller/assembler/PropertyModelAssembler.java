@@ -31,6 +31,11 @@ public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<
 		propertyModel.setCurrentContId( entity.getCurrentContId() );
 		propertyModel.setStartTime( entity.getStartTime() );
 		propertyModel.setEndTime( entity.getEndTime() );
+		propertyModel.setAvgRating( entity.getAvgRating() );
+		propertyModel.setTotalRating( entity.getTotalRating() );
+		propertyModel.setAmount( entity.getAmount() );
+		propertyModel.setAmountCurrency( entity.getAmountCurrency() );
+		propertyModel.setAmountCondition( entity.getAmountCondition() );
 		propertyModel.setOperationHours( entity.getOperationHours() );
 		propertyModel.setAvailabilityUnits( entity.getAvailabilityUnits() );
 		propertyModel.setBasedLocation( entity.getBasedLocation() );

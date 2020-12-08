@@ -29,6 +29,7 @@ public class FacilitiesModelAssembler extends RepresentationModelAssemblerSuppor
 		facilitiesModel.setCode( entity.getCode() );
 		facilitiesModel.setName( entity.getName() );
 		facilitiesModel.setDescription( entity.getDescription() );
+		facilitiesModel.setIcon( entity.getIcon() );
 
 		facilitiesModel.add( HATEOASProvider.sysFacilitySelfLinkProvider( facilitiesModel.getFacilityId() ) );
 

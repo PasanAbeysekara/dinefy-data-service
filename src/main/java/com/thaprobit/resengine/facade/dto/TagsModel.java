@@ -14,5 +14,6 @@ public class TagsModel extends RepresentationModel<TagsModel>
 	private int tagId;
 	private String code;
 	private String name;
+	private String icon;
 	private String description;
 }

@@ -42,9 +42,9 @@ public class SysFacilityRepoTest
 	public void before()
 	{
 
-		facilities1 = new Facilities( null, "ABC1", "Name ABC1", "Description ABC1", null );
-		facilities2 = new Facilities( null, "ABC2", "Name ABC2", "Description ABC2", null );
-		facilities3 = new Facilities( null, "ABC2", "Name ABC2", "Description ABC2", null );
+		facilities1 = new Facilities( null, "ABC1", "Name ABC1", "Description ABC1", "http://images/1.jpg", null );
+		facilities2 = new Facilities( null, "ABC2", "Name ABC2", "Description ABC2","http://images/1.jpg" ,null );
+		facilities3 = new Facilities( null, "ABC2", "Name ABC2", "Description ABC2", "http://images/1.jpg",null );
 	}
 
 	@Test

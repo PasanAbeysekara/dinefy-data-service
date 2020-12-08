@@ -19,4 +19,5 @@ public class FacilitiesModel extends RepresentationModel<FacilitiesModel>
 	private String code;
 	private String name;
 	private String description;
+	private String icon;
 }

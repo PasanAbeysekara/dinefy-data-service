@@ -20,5 +20,6 @@ public class PropFacilityModel
 	private PropFacilityID propFacilityId;
 	private String name;
 	private String description;
+	private int order;
 	private Facilities sysFacility;
 }

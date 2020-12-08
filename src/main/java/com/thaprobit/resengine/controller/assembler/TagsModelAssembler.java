@@ -28,6 +28,7 @@ public class TagsModelAssembler extends RepresentationModelAssemblerSupport<Tags
 		tagModel.setTagId( entity.getTagId() );
 		tagModel.setCode( entity.getCode() );
 		tagModel.setName( entity.getName() );
+		tagModel.setIcon( entity.getIcon() );
 		tagModel.setDescription( entity.getDescription() );
 
 		tagModel.add( HATEOASProvider.sysFacilitySelfLinkProvider( tagModel.getTagId() ) );

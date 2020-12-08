@@ -26,6 +26,7 @@ import lombok.ToString;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
@@ -52,6 +53,11 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 	private Integer currentContId;
 	private LocalTime startTime;
 	private LocalTime endTime;
+	private BigDecimal avgRating;
+	private Integer totalRating;
+	private BigDecimal amount;
+	private String amountCurrency;
+	private String amountCondition;
 	private Set<OperationHours> operationHours;
 	private Set<PropAvailabilityUnit> availabilityUnits;
 	private LocationBased basedLocation;
@@ -109,6 +115,7 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 			propFacilityModel.setPropFacilityId( facility.getPropFacilityId() );
 			propFacilityModel.setName( facility.getName() );
 			propFacilityModel.setDescription( facility.getDescription() );
+			propFacilityModel.setOrder( facility.getOrder() );
 			propFacilityModel.setSysFacility( facility.getSysFacility() );
 
 			facilitiesModels.add( propFacilityModel );
@@ -127,6 +134,7 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 			propTagsModel.setPropTagID( tag.getPropTagID() );
 			propTagsModel.setName( tag.getName() );
 			propTagsModel.setDescription( tag.getDescription() );
+			propTagsModel.setOrder( tag.getOrder() );
 			propTagsModel.setSysTags( tag.getSysTags() );
 
 			propTagsModels.add( propTagsModel );
