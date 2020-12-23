@@ -50,6 +50,8 @@ public class PropMenusModel
 			propChoicesModel.setChoiceId( propChoice.getChoiceId() );
 			propChoicesModel.setName( propChoice.getName() );
 			propChoicesModel.setDescription( propChoice.getDescription() );
+			propChoicesModel.setAmount( propChoice.getAmount() );
+			propChoicesModel.setAmountCurrency( propChoice.getAmountCurrency() );
 			propChoicesModel.setSysChoice( propChoice.getSysChoice() );
 
 			propChoicesModels.add( propChoicesModel );

@@ -14,8 +14,6 @@ import com.thaprobit.resengine.dao.PropChoices;
 import com.thaprobit.resengine.dao.PropFacilities;
 import com.thaprobit.resengine.dao.PropMedia;
 import com.thaprobit.resengine.dao.PropTags;
-import com.thaprobit.resengine.dao.global.Point;
-import com.thaprobit.resengine.dao.sys.Choices;
 import com.thaprobit.resengine.dao.sys.PaymentOptions;
 import com.thaprobit.resengine.dao.sys.PropertySpeciality;
 import lombok.AllArgsConstructor;
@@ -23,6 +21,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.geo.Point;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -50,6 +49,8 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 	private String name;
 	private String description;
 	private Point geoLocation;
+	private Double latitude;
+	private Double longitude;
 	private Integer currentContId;
 	private LocalTime startTime;
 	private LocalTime endTime;
@@ -73,13 +74,13 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 	//private Set<MenuModel> menus;
 	//private Set<PropChoicesModel> choices;
 	private PropMenusModel propMenus;
-	private PropertyMedia propertyMedia;
+	private PropertyMediaWrapper propertyMediaWrapper;
 
-	public void setPropertyMedia( Set<PropMedia> propMedia )
+	public void setPropertyMediaWrapper( Set<PropMedia> propMedia )
 	{
-		PropertyMedia propertyMedia = new PropertyMedia();
-		propertyMedia.processPropertyMedia( propMedia );
-		this.propertyMedia = propertyMedia;
+		PropertyMediaWrapper propertyMediaWrapper = new PropertyMediaWrapper();
+		propertyMediaWrapper.processPropertyMedia( propMedia );
+		this.propertyMediaWrapper = propertyMediaWrapper;
 	}
 
 	/*public void setMenus( Set<Menu> menus ){

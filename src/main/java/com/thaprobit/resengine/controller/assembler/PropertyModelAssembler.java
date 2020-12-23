@@ -28,6 +28,8 @@ public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<
 		propertyModel.setName( entity.getName() );
 		propertyModel.setDescription( entity.getDescription() );
 		propertyModel.setGeoLocation( null );
+		propertyModel.setLatitude( entity.getLatitude() );
+		propertyModel.setLongitude( entity.getLongitude() );
 		propertyModel.setCurrentContId( entity.getCurrentContId() );
 		propertyModel.setStartTime( entity.getStartTime() );
 		propertyModel.setEndTime( entity.getEndTime() );
@@ -51,7 +53,7 @@ public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<
 		//propertyModel.setMenus( entity.getMenus() );
 		//propertyModel.setChoices( entity.getChoices() );
 		propertyModel.setPropMenus( entity.getMenus(), entity.getChoices() );
-		propertyModel.setPropertyMedia( entity.getPropertyMedia() );
+		propertyModel.setPropertyMediaWrapper( entity.getPropertyMedia() );
 
 		return propertyModel;
 
