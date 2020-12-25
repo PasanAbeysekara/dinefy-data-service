@@ -6,6 +6,7 @@ import com.thaprobit.resengine.dao.PropFacilities;
 import com.thaprobit.resengine.dao.Property;
 import com.thaprobit.resengine.facade.dto.AvailDataWrapper;
 import com.thaprobit.resengine.facade.dto.MenuModel;
+import com.thaprobit.resengine.facade.dto.PropMenuWrapper;
 import com.thaprobit.resengine.facade.dto.PropertyModel;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.URLProvider;
@@ -66,15 +67,27 @@ public class PropertyController
 	/**
 	 * Get all property menus
 	 *
+	 * @param code     PropertyModel Code
+	 * @return return All property menus
+	 */
+	@GetMapping("/properties/{code}/menus")
+	public ResponseEntity<ResponseWrapper<PropMenuWrapper>> getPropMenus( @PathVariable("code") String code)
+	{
+		return propertyService.getPropertyMenus( code );
+	}
+
+	/**
+	 * Get all property menus
+	 *
 	 * @param id       PropertyModel ID
 	 * @param pageable Pageable
 	 * @return return All property menus
 	 */
-	@GetMapping("/properties/{id}/menus")
+	/*@GetMapping("/properties/{id}/menus")
 	public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getPropMenus( @PathVariable("id") long id, Pageable pageable )
 	{
 		return propertyService.getPropertyMenus( id, pageable );
-	}
+	}*/
 
 	/**
 	 * Get all property availabilities for a given time period
@@ -89,7 +102,7 @@ public class PropertyController
 	 * @param pageable             Pageable
 	 * @return return all availabilities in requested time period
 	 */
-	@GetMapping("/search")
+	@GetMapping("/properties/avail-units")
 	public ResponseEntity<ResponseWrapper<AvailDataWrapper>> getPropertyAvailableDataInAGivenTime( @RequestParam(name = "prop_id", required = true) Long propId,
 																								   @RequestParam(name = "date_from", required = true)
 																								   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,

@@ -43,13 +43,13 @@ public class SysFacilityControllerTest
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	private Facilities facility = new Facilities( null, "ABC1", "Name ABC1", "Description ABC1", null );
+	private Facilities facility = new Facilities( null, "ABC1", "Name ABC1", "Description ABC1", "http://images/1.jpg" , null );
 
 	@Before
 	public void before()
 	{
 
-		Facilities facilities2 = new Facilities( 2, "ABC2", "Name ABC2", "Description ABC2", null );
+		Facilities facilities2 = new Facilities( 2, "ABC2", "Name ABC2", "Description ABC2", "http://images/1.jpg", null );
 
 		ResponseEntity<ResponseWrapper<Facilities>> responseEntity = ResponseEntity.ok().body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, facility ) );
 

@@ -14,7 +14,6 @@ import com.thaprobit.resengine.dao.PropChoices;
 import com.thaprobit.resengine.dao.PropFacilities;
 import com.thaprobit.resengine.dao.PropMedia;
 import com.thaprobit.resengine.dao.PropTags;
-import com.thaprobit.resengine.dao.global.Point;
 import com.thaprobit.resengine.dao.sys.PaymentOptions;
 import com.thaprobit.resengine.dao.sys.PropertySpeciality;
 import lombok.AllArgsConstructor;
@@ -22,9 +21,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.geo.Point;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
@@ -48,9 +49,16 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 	private String name;
 	private String description;
 	private Point geoLocation;
+	private Double latitude;
+	private Double longitude;
 	private Integer currentContId;
 	private LocalTime startTime;
 	private LocalTime endTime;
+	private BigDecimal avgRating;
+	private Integer totalRating;
+	private BigDecimal amount;
+	private String amountCurrency;
+	private String amountCondition;
 	private Set<OperationHours> operationHours;
 	private Set<PropAvailabilityUnit> availabilityUnits;
 	private LocationBased basedLocation;
@@ -63,18 +71,19 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 	private Set<Promotion> livePromotions;
 	private OrganizationModel organizations;
 	private List<LocalTime> timeSlots;
-	private Set<MenuModel> menus;
-	private Set<PropChoicesModel> choices;
-	private PropertyMedia propertyMedia;
+	//private Set<MenuModel> menus;
+	//private Set<PropChoicesModel> choices;
+	private PropMenusModel propMenus;
+	private PropertyMediaWrapper propertyMediaWrapper;
 
-	public void setPropertyMedia( Set<PropMedia> propMedia )
+	public void setPropertyMediaWrapper( Set<PropMedia> propMedia )
 	{
-		PropertyMedia propertyMedia = new PropertyMedia();
-		propertyMedia.processPropertyMedia( propMedia );
-		this.propertyMedia = propertyMedia;
+		PropertyMediaWrapper propertyMediaWrapper = new PropertyMediaWrapper();
+		propertyMediaWrapper.processPropertyMedia( propMedia );
+		this.propertyMediaWrapper = propertyMediaWrapper;
 	}
 
-	public void setMenus( Set<Menu> menus ){
+	/*public void setMenus( Set<Menu> menus ){
 		Set<MenuModel> menuModels = new HashSet<>();
 
 		for(Menu menu: menus)
@@ -87,7 +96,7 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 		}
 
 		this.menus = menuModels;
-	}
+	}*/
 
 	public void setBasedLocation( LocationBased locationBased )
 	{
@@ -107,6 +116,7 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 			propFacilityModel.setPropFacilityId( facility.getPropFacilityId() );
 			propFacilityModel.setName( facility.getName() );
 			propFacilityModel.setDescription( facility.getDescription() );
+			propFacilityModel.setOrder( facility.getOrder() );
 			propFacilityModel.setSysFacility( facility.getSysFacility() );
 
 			facilitiesModels.add( propFacilityModel );
@@ -125,6 +135,7 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 			propTagsModel.setPropTagID( tag.getPropTagID() );
 			propTagsModel.setName( tag.getName() );
 			propTagsModel.setDescription( tag.getDescription() );
+			propTagsModel.setOrder( tag.getOrder() );
 			propTagsModel.setSysTags( tag.getSysTags() );
 
 			propTagsModels.add( propTagsModel );
@@ -144,7 +155,7 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 		this.organizations = organizationModel;
 	}
 
-	public void setChoices( Set<PropChoices> propChoices)
+	/*public void setChoices( Set<PropChoices> propChoices)
 	{
 		Set<PropChoicesModel> propChoicesModels = new HashSet<>();
 
@@ -162,6 +173,16 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 		}
 
 		this.choices = propChoicesModels;
+	}*/
+
+	public void setPropMenus( Set<Menu> menus, Set<PropChoices> propChoices )
+	{
+		PropMenusModel propMenusModel = new PropMenusModel();
+
+		propMenusModel.setMenus( menus );
+		propMenusModel.setChoices( propChoices );
+
+		this.propMenus = propMenusModel;
 	}
 
 	/**
@@ -230,14 +251,11 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 			this.getLivePromotions().forEach( promotion -> promotion.add( HATEOASProvider.promotionSelfLinkProvider( promotion.getPromoId() ) ) );
 		}
 
-		if( this.getMenus() != null )
+		if( this.propMenus.getMenus() != null )
 		{
-			this.getMenus().forEach( menu -> menu.add( HATEOASProvider.menuSelfLinkProvider( menu.getMenuId() ) ) );
-		}
+			this.propMenus.getMenus().forEach( menu -> menu.add( HATEOASProvider.menuSelfLinkProvider( menu.getMenuId() ) ) );
 
-		if( this.getChoices() != null )
-		{
-			for( PropChoicesModel choices : this.getChoices() )
+			for( PropChoicesModel choices : this.propMenus.getChoices() )
 			{
 				if( choices.getSysChoice() != null )
 				{

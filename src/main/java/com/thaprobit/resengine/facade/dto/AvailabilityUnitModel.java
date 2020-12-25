@@ -21,5 +21,6 @@ public class AvailabilityUnitModel extends RepresentationModel<AvailabilityUnitM
 	private String name;
 	private Short minCapacity;
 	private Short maxCapacity;
+	private String type;
 
 }

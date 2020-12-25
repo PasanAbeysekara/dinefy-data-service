@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 /**
  * @author Tharindu Aththanayake
  */
@@ -21,5 +23,7 @@ public class PropChoicesModel
 	private Long choiceId;
 	private String name;
 	private String description;
+	private BigDecimal amount;
+	private String amountCurrency;
 	private Choices sysChoice;
 }

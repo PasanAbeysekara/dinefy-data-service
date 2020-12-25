@@ -15,6 +15,8 @@ import com.thaprobit.resengine.dao.PropTags;
 import com.thaprobit.resengine.dao.Property;
 import com.thaprobit.resengine.dao.sys.PropertySpeciality;
 import com.thaprobit.resengine.facade.dto.MenuModel;
+import com.thaprobit.resengine.facade.dto.PropMenuWrapper;
+import com.thaprobit.resengine.facade.dto.PropMenusModel;
 import com.thaprobit.resengine.facade.dto.PropertyModel;
 import com.thaprobit.resengine.messaging.producer.PropertyQueueProducer;
 import com.thaprobit.resengine.repo.PropFacilitiesRepository;
@@ -94,6 +96,25 @@ public class PropertyService extends AbstractService<Property>
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
 				.body( propFacilitiesRepository.findByPropFacilityIdPropId( (int) id ) );
+	}
+
+	/**
+	 * Get all property menus in prop menu model
+	 *
+	 * @param code       Property code
+	 * @return return Prop menu model
+	 */
+	public ResponseEntity<ResponseWrapper<PropMenuWrapper>> getPropertyMenus( String code )
+	{
+		PropMenusModel propMenusModel = new PropMenusModel();
+		propMenusModel.setMenus( propertyRepository.findPropertyMenus( code ) );
+		propMenusModel.setChoices( propertyRepository.findPropertyChoicesByCode( code ) );
+		PropMenuWrapper propMenuWrapper = new PropMenuWrapper( propMenusModel);
+
+		return ResponseEntity.ok()
+				.headers( addCommonHeaders( new HttpHeaders() ) )
+				.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, propMenuWrapper ) );
+
 	}
 
 	/**

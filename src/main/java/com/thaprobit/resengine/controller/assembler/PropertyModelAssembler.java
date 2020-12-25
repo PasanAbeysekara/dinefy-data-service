@@ -28,9 +28,16 @@ public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<
 		propertyModel.setName( entity.getName() );
 		propertyModel.setDescription( entity.getDescription() );
 		propertyModel.setGeoLocation( null );
+		propertyModel.setLatitude( entity.getLatitude() );
+		propertyModel.setLongitude( entity.getLongitude() );
 		propertyModel.setCurrentContId( entity.getCurrentContId() );
 		propertyModel.setStartTime( entity.getStartTime() );
 		propertyModel.setEndTime( entity.getEndTime() );
+		propertyModel.setAvgRating( entity.getAvgRating() );
+		propertyModel.setTotalRating( entity.getTotalRating() );
+		propertyModel.setAmount( entity.getAmount() );
+		propertyModel.setAmountCurrency( entity.getAmountCurrency() );
+		propertyModel.setAmountCondition( entity.getAmountCondition() );
 		propertyModel.setOperationHours( entity.getOperationHours() );
 		propertyModel.setAvailabilityUnits( entity.getAvailabilityUnits() );
 		propertyModel.setBasedLocation( entity.getBasedLocation() );
@@ -43,9 +50,10 @@ public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<
 		propertyModel.setLivePromotions( entity.getLivePromotions() );
 		propertyModel.setOrganizations( entity.getOrganizations() );
 		propertyModel.setTimeSlots( entity.getTimeSlots() );
-		propertyModel.setMenus( entity.getMenus() );
-		propertyModel.setChoices( entity.getChoices() );
-		propertyModel.setPropertyMedia( entity.getPropertyMedia() );
+		//propertyModel.setMenus( entity.getMenus() );
+		//propertyModel.setChoices( entity.getChoices() );
+		propertyModel.setPropMenus( entity.getMenus(), entity.getChoices() );
+		propertyModel.setPropertyMediaWrapper( entity.getPropertyMedia() );
 
 		return propertyModel;
 
