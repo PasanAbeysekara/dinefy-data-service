@@ -21,5 +21,5 @@ public class PropTagsModel
 	private String name;
 	private String description;
 	private int order;
-	private Tags sysTags;
+	private TagsModel sysTags;
 }

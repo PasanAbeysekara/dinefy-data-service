@@ -25,5 +25,5 @@ public class PropChoicesModel
 	private String description;
 	private BigDecimal amount;
 	private String amountCurrency;
-	private Choices sysChoice;
+	private ChoiceModel sysChoice;
 }

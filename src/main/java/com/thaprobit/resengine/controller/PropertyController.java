@@ -10,6 +10,7 @@ import com.thaprobit.resengine.facade.dto.PropMenuWrapper;
 import com.thaprobit.resengine.facade.dto.PropertyModel;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.URLProvider;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -65,13 +66,13 @@ public class PropertyController
 	}
 
 	/**
-	 * Get all property menus
+	 * Get all property menus by prop code
 	 *
 	 * @param code     PropertyModel Code
 	 * @return return All property menus
 	 */
 	@GetMapping("/properties/{code}/menus")
-	public ResponseEntity<ResponseWrapper<PropMenuWrapper>> getPropMenus( @PathVariable("code") String code)
+	public ResponseEntity<ResponseWrapper<PropMenuWrapper>> getPropMenusByPropCode( @PathVariable("code") String code)
 	{
 		return propertyService.getPropertyMenus( code );
 	}
@@ -83,11 +84,11 @@ public class PropertyController
 	 * @param pageable Pageable
 	 * @return return All property menus
 	 */
-	/*@GetMapping("/properties/{id}/menus")
-	public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getPropMenus( @PathVariable("id") long id, Pageable pageable )
+	@GetMapping("/properties/id/{id}/menus")
+	public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getPropMenusByPropId( @PathVariable("id") long id, Pageable pageable )
 	{
 		return propertyService.getPropertyMenus( id, pageable );
-	}*/
+	}
 
 	/**
 	 * Get all property availabilities for a given time period

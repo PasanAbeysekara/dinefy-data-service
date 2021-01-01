@@ -8,6 +8,8 @@ import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +34,25 @@ public class PropSpecialityService extends AbstractService<PropertySpeciality>
 	 *
 	 * @return all Specialities
 	 */
-	public ResponseEntity<ResponseWrapper<List<PropertySpeciality>>> getSpecialities()
+	public ResponseEntity<ResponseWrapper<Page<PropertySpeciality>>> getSpecialities( Pageable pageable )
 	{
-		List<PropertySpeciality> specialities = propertySpecialityRepository.findAll();
+		ResponseEntity<ResponseWrapper<Page<PropertySpeciality>>> response = null;
 
-		return ResponseEntity.ok()
-				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, specialities ) );
+		try{
+			Page<PropertySpeciality> propertySpecialityPage = propertySpecialityRepository.findAll( pageable );
+
+			response =  ResponseEntity.ok()
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, propertySpecialityPage ) );
+		}
+		catch( Exception e )
+		{
+			response = ResponseEntity.status( HttpStatus.NOT_FOUND )
+					.headers( new HttpHeaders() )
+					.body( new ResponseWrapper<>( SystemOperation.READ.withError(), SystemMessages.NOT_FOUND, e.getMessage() ) );
+		}
+
+		return response;
 	}
 
 	/**

@@ -5,18 +5,20 @@ import com.thaprobit.global.SystemOperation;
 import com.thaprobit.resengine.controller.OrganizationController;
 import com.thaprobit.resengine.controller.assembler.MenuModelAssembler;
 import com.thaprobit.resengine.controller.assembler.PropertyModelAssembler;
+import com.thaprobit.resengine.controller.converters.MenuAndChoicesWrapperModelConverter;
 import com.thaprobit.resengine.controller.validator.PropertyValidator;
 import com.thaprobit.resengine.dao.Menu;
 import com.thaprobit.resengine.dao.OperationHours;
 import com.thaprobit.resengine.dao.PropAvailabilityUnit;
 import com.thaprobit.resengine.dao.PropChoices;
+import com.thaprobit.resengine.dao.PropEvent;
 import com.thaprobit.resengine.dao.PropFacilities;
 import com.thaprobit.resengine.dao.PropTags;
 import com.thaprobit.resengine.dao.Property;
 import com.thaprobit.resengine.dao.sys.PropertySpeciality;
+import com.thaprobit.resengine.facade.dto.MenuAndChoicesWrapper;
 import com.thaprobit.resengine.facade.dto.MenuModel;
 import com.thaprobit.resengine.facade.dto.PropMenuWrapper;
-import com.thaprobit.resengine.facade.dto.PropMenusModel;
 import com.thaprobit.resengine.facade.dto.PropertyModel;
 import com.thaprobit.resengine.messaging.producer.PropertyQueueProducer;
 import com.thaprobit.resengine.repo.PropFacilitiesRepository;
@@ -74,6 +76,9 @@ public class PropertyService extends AbstractService<Property>
 	@Autowired
 	private PropertyModelAssembler propertyModelAssembler;
 
+	@Autowired
+	private MenuAndChoicesWrapperModelConverter menuAndChoicesWrapperModelConverter;
+
 	/**
 	 * Get all properties
 	 *
@@ -106,10 +111,8 @@ public class PropertyService extends AbstractService<Property>
 	 */
 	public ResponseEntity<ResponseWrapper<PropMenuWrapper>> getPropertyMenus( String code )
 	{
-		PropMenusModel propMenusModel = new PropMenusModel();
-		propMenusModel.setMenus( propertyRepository.findPropertyMenus( code ) );
-		propMenusModel.setChoices( propertyRepository.findPropertyChoicesByCode( code ) );
-		PropMenuWrapper propMenuWrapper = new PropMenuWrapper( propMenusModel);
+		MenuAndChoicesWrapper menuAndChoicesWrapper = new MenuAndChoicesWrapper( propertyRepository.findPropertyMenus( code ), propertyRepository.findPropertyChoicesByCode( code ) );
+		PropMenuWrapper propMenuWrapper = new PropMenuWrapper( menuAndChoicesWrapperModelConverter.convert( menuAndChoicesWrapper ) );
 
 		return ResponseEntity.ok()
 				.headers( addCommonHeaders( new HttpHeaders() ) )
@@ -151,7 +154,12 @@ public class PropertyService extends AbstractService<Property>
 
 		if( optionalProperty.isPresent() )
 		{
+
 			Property property = optionalProperty.get();
+			for( PropEvent p : property.getEvents() )
+			{
+				System.out.println(p.getSysEvent().getName());
+			}
 			PropertyModel propertyModel = propertyModelAssembler.toModel( property );
 			propertyModel.linkPropertyEntities();
 

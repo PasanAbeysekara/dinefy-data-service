@@ -4,6 +4,7 @@ import com.thaprobit.resengine.dao.sys.WeekDefinition;
 import com.thaprobit.resengine.repo.sys.WeekDefinitionRepository;
 import com.thaprobit.service.AbstractService;
 import com.thaprobit.util.URLProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping(URLProvider.SERVICE_DATA)
+@Slf4j
 public class WeekDefinitionController extends AbstractService<WeekDefinition>
 {
 	@Autowired

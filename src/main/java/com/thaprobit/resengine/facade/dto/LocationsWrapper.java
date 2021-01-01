@@ -5,20 +5,22 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.hateoas.RepresentationModel;
+import org.springframework.data.domain.Page;
+
+import java.util.Set;
 
 /**
  * @author Tharindu Aththanayake
+ * @since 01/01/2021 11:25 PM
  */
-
 @Data
-@ToString
-@EqualsAndHashCode( callSuper = false )
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrganizationModel extends RepresentationModel<OrganizationModel>
+@EqualsAndHashCode
+@ToString
+public class LocationsWrapper
 {
-	private long orgId;
-	private String code;
-	private String name;
+	private Long countryId;
+	private Set<LocationStateWrapper> states;
+	private Page<LocationBasedWrapper> cities;
 }

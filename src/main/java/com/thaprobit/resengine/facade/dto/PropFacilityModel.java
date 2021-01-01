@@ -21,5 +21,5 @@ public class PropFacilityModel
 	private String name;
 	private String description;
 	private int order;
-	private Facilities sysFacility;
+	private FacilitiesModel sysFacility;
 }

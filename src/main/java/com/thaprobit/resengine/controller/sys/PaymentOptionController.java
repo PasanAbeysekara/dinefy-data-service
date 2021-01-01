@@ -6,6 +6,8 @@ import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.URLProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @author Tharindu Aththanayake
@@ -33,12 +33,13 @@ public class PaymentOptionController
 	/**
 	 * Get All Payment Options
 	 *
+	 * @param pageable Pageable
 	 * @return all Payment Options
 	 */
 	@GetMapping("/payment-options")
-	public ResponseEntity<ResponseWrapper<List<PaymentOptions>>> getPaymentOptions()
+	public ResponseEntity<ResponseWrapper<Page<PaymentOptions>>> getPaymentOptions( Pageable pageable )
 	{
-		return paymentOptionService.getPaymentOptions();
+		return paymentOptionService.getPaymentOptions( pageable );
 	}
 
 	/**

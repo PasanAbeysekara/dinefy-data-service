@@ -1,18 +1,55 @@
 package com.thaprobit.resengine.controller.assembler;
 
 import com.thaprobit.resengine.controller.PropertyController;
+import com.thaprobit.resengine.controller.converters.ContactDetailsModelConverter;
+import com.thaprobit.resengine.controller.converters.LocationBasedModelConverter;
+import com.thaprobit.resengine.controller.converters.MenuAndChoicesWrapperModelConverter;
+import com.thaprobit.resengine.controller.converters.OrganizationModelConverter;
+import com.thaprobit.resengine.controller.converters.PropEventModelConverter;
+import com.thaprobit.resengine.controller.converters.PropFacilityModelConverter;
+import com.thaprobit.resengine.controller.converters.PropTagsModelConverter;
+import com.thaprobit.resengine.controller.service.HATEOASProvider;
+import com.thaprobit.resengine.dao.PropEvent;
 import com.thaprobit.resengine.dao.Property;
+import com.thaprobit.resengine.facade.dto.MenuAndChoicesWrapper;
 import com.thaprobit.resengine.facade.dto.PropertyModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 /**
- * @author Tharindu Aththanayaka
- * @Since 14/09/2020 17:30 p.m.
+ * @author Tharindu Aththanayake
+ * @since 09/14/2020 05:30 PM
  */
 @Component
 public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<Property, PropertyModel>
 {
+
+	@Autowired
+	private ContractModelAssembler contractModelAssembler;
+
+	@Autowired
+	private LocationBasedModelConverter locationBasedModelConverter;
+
+	@Autowired
+	private PropFacilityModelConverter propFacilityModelConverter;
+
+	@Autowired
+	private PropTagsModelConverter propTagsModelConverter;
+
+	@Autowired
+	private ContactDetailsModelConverter contactDetailsModelConverter;
+
+	@Autowired
+	private OrganizationModelConverter organizationModelConverter;
+
+	@Autowired
+	private MenuAndChoicesWrapperModelConverter menuAndChoicesWrapperModelConverter;
+
+	@Autowired
+	private PropEventModelConverter propEventModelConverter;
 
 	public PropertyModelAssembler()
 	{
@@ -40,20 +77,21 @@ public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<
 		propertyModel.setAmountCondition( entity.getAmountCondition() );
 		propertyModel.setOperationHours( entity.getOperationHours() );
 		propertyModel.setAvailabilityUnits( entity.getAvailabilityUnits() );
-		propertyModel.setBasedLocation( entity.getBasedLocation() );
-		propertyModel.setCurrentContract( entity.getCurrentContract() );
-		propertyModel.setFacilities( entity.getFacilities() );
-		propertyModel.setTags( entity.getTags() );
-		propertyModel.setContactDetails( entity.getContactDetails() );
+		propertyModel.setBasedLocation( locationBasedModelConverter.convert( entity.getBasedLocation() ) );
+		propertyModel.setCurrentContract( contractModelAssembler.toModel( entity.getCurrentContract() ) );
+		propertyModel.setFacilities( entity.getFacilities().stream().map( propFacilityModelConverter :: convert ).collect( Collectors.toSet() ) );
+		propertyModel.setTags( entity.getTags().stream().map( propTagsModelConverter :: convert ).collect( Collectors.toSet() ) );
+		propertyModel.setContactDetails( contactDetailsModelConverter.convert( entity.getContactDetails() ) );
 		propertyModel.setPropertySpecialities( entity.getPropertySpecialities() );
 		propertyModel.setPaymentOptions( entity.getPaymentOptions() );
 		propertyModel.setLivePromotions( entity.getLivePromotions() );
-		propertyModel.setOrganizations( entity.getOrganizations() );
+		propertyModel.setOrganizations( organizationModelConverter.convert( entity.getOrganizations() ) );
 		propertyModel.setTimeSlots( entity.getTimeSlots() );
-		//propertyModel.setMenus( entity.getMenus() );
-		//propertyModel.setChoices( entity.getChoices() );
-		propertyModel.setPropMenus( entity.getMenus(), entity.getChoices() );
+		propertyModel.setPropMenus( menuAndChoicesWrapperModelConverter.convert( new MenuAndChoicesWrapper( entity.getMenus() , entity.getChoices() ) ) );
 		propertyModel.setPropertyMediaWrapper( entity.getPropertyMedia() );
+		propertyModel.setEvents( entity.getEvents().stream().map( propEventModelConverter :: convert ).collect( Collectors.toSet() ) );
+
+		propertyModel.add( HATEOASProvider.propertySelfLinkProvider( entity.getPropId() ) );
 
 		return propertyModel;
 

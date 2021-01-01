@@ -8,6 +8,7 @@ import lombok.ToString;
 
 /**
  * @author Tharindu Aththanayake
+ * @since 12/31/2020 05:05 PM
  */
 
 @Data
@@ -18,5 +19,5 @@ public class LocationBasedModel
 {
 	private Long locationId;
 	private String name;
-	private LocationState state;
+	private LocationStateModel state;
 }

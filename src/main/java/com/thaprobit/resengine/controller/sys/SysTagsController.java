@@ -5,6 +5,7 @@ import com.thaprobit.resengine.dao.sys.Tags;
 import com.thaprobit.resengine.facade.dto.TagsModel;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.URLProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(URLProvider.SERVICE_DATA)
+@Slf4j
 public class SysTagsController
 {
 	@Autowired
@@ -31,13 +33,11 @@ public class SysTagsController
 	/**
 	 * Get All Tags
 	 *
+	 * @param pageable Pageable
 	 * @return all sys Tags
 	 */
 	@GetMapping("/tags")
-	public ResponseEntity<ResponseWrapper<PagedModel<TagsModel>>> getTags( Pageable pageable )
-	{
-		return sysTagsService.getTags( pageable );
-	}
+	public ResponseEntity<ResponseWrapper<PagedModel<TagsModel>>> getTags( Pageable pageable ) { return sysTagsService.getTags( pageable ); }
 
 	/**
 	 * Get Single Tag
