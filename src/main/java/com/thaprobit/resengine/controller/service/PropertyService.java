@@ -156,10 +156,6 @@ public class PropertyService extends AbstractService<Property>
 		{
 
 			Property property = optionalProperty.get();
-			for( PropEvent p : property.getEvents() )
-			{
-				System.out.println(p.getSysEvent().getName());
-			}
 			PropertyModel propertyModel = propertyModelAssembler.toModel( property );
 			propertyModel.linkPropertyEntities();
 

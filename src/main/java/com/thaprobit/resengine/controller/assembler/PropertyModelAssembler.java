@@ -9,7 +9,6 @@ import com.thaprobit.resengine.controller.converters.PropEventModelConverter;
 import com.thaprobit.resengine.controller.converters.PropFacilityModelConverter;
 import com.thaprobit.resengine.controller.converters.PropTagsModelConverter;
 import com.thaprobit.resengine.controller.service.HATEOASProvider;
-import com.thaprobit.resengine.dao.PropEvent;
 import com.thaprobit.resengine.dao.Property;
 import com.thaprobit.resengine.facade.dto.MenuAndChoicesWrapper;
 import com.thaprobit.resengine.facade.dto.PropertyModel;
@@ -75,6 +74,9 @@ public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<
 		propertyModel.setAmount( entity.getAmount() );
 		propertyModel.setAmountCurrency( entity.getAmountCurrency() );
 		propertyModel.setAmountCondition( entity.getAmountCondition() );
+		propertyModel.setReservationSlotMinutes( entity.getReservationSlotMinutes() );
+		propertyModel.setReservationSlotLength( entity.getReservationSlotLength() );
+		propertyModel.setBookingNote( entity.getBookingNote() );
 		propertyModel.setOperationHours( entity.getOperationHours() );
 		propertyModel.setAvailabilityUnits( entity.getAvailabilityUnits() );
 		propertyModel.setBasedLocation( locationBasedModelConverter.convert( entity.getBasedLocation() ) );

@@ -1,20 +1,10 @@
 package com.thaprobit.resengine.facade.dto;
 
-import com.thaprobit.resengine.controller.OrganizationController;
 import com.thaprobit.resengine.controller.service.HATEOASProvider;
-import com.thaprobit.resengine.dao.ContactDetails;
-import com.thaprobit.resengine.dao.Contract;
-import com.thaprobit.resengine.dao.LocationBased;
-import com.thaprobit.resengine.dao.Menu;
 import com.thaprobit.resengine.dao.OperationHours;
-import com.thaprobit.resengine.dao.Organization;
 import com.thaprobit.resengine.dao.Promotion;
 import com.thaprobit.resengine.dao.PropAvailabilityUnit;
-import com.thaprobit.resengine.dao.PropChoices;
-import com.thaprobit.resengine.dao.PropEvent;
-import com.thaprobit.resengine.dao.PropFacilities;
-import com.thaprobit.resengine.dao.PropMedia;
-import com.thaprobit.resengine.dao.PropTags;
+import com.thaprobit.resengine.dao.PropMedia;;
 import com.thaprobit.resengine.dao.sys.PaymentOptions;
 import com.thaprobit.resengine.dao.sys.PropertySpeciality;
 import lombok.AllArgsConstructor;
@@ -28,12 +18,9 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 /**
  * @author Tharinda Wickramaarachchi
@@ -60,6 +47,9 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 	private BigDecimal amount;
 	private String amountCurrency;
 	private String amountCondition;
+	private Short reservationSlotMinutes;
+	private Short reservationSlotLength;
+	private String bookingNote;
 	private Set<OperationHours> operationHours;
 	private Set<PropAvailabilityUnit> availabilityUnits;
 	private LocationBasedModel basedLocation;
