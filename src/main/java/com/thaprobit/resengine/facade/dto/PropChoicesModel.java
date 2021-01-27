@@ -1,5 +1,6 @@
 package com.thaprobit.resengine.facade.dto;
 
+import com.thaprobit.resengine.dao.key.PropChoiceID;
 import com.thaprobit.resengine.dao.sys.Choices;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,8 +19,7 @@ import java.math.BigDecimal;
 @ToString
 public class PropChoicesModel
 {
-	private Integer propChoiceId;
-	private Long propId;
+	private PropChoiceID propChoiceId;
 	private Long choiceId;
 	private String name;
 	private String description;

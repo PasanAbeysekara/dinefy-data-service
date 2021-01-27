@@ -355,7 +355,7 @@ public class PropertyService extends AbstractService<Property>
 		{
 			for( PropChoices propChoice : property.getChoices() )
 			{
-				propChoice.setPropId( propId );
+				propChoice.getPropChoiceId().setPropId( propId );
 			}
 		}
 
@@ -364,6 +364,14 @@ public class PropertyService extends AbstractService<Property>
 			for( OperationHours operationHour : property.getOperationHours() )
 			{
 				operationHour.getOperationHourKey().setPropId( propId );
+			}
+		}
+
+		if( property.getEvents() != null )
+		{
+			for(PropEvent propEvent : property.getEvents() )
+			{
+				propEvent.getPropEventID().setPropId( propId );
 			}
 		}
 	}

@@ -21,7 +21,6 @@ public class PropChoicesModelConverter implements Converter<PropChoices, PropCho
 	{
 		PropChoicesModel propChoicesModel = new PropChoicesModel();
 		propChoicesModel.setPropChoiceId( propChoices.getPropChoiceId() );
-		propChoicesModel.setPropId( propChoices.getPropId() );
 		propChoicesModel.setChoiceId( propChoices.getChoiceId() );
 		propChoicesModel.setName( propChoices.getName() );
 		propChoicesModel.setDescription( propChoices.getDescription() );
