@@ -7,6 +7,7 @@ import com.thaprobit.resengine.controller.PromotionController;
 import com.thaprobit.resengine.controller.PropertyController;
 import com.thaprobit.resengine.controller.sys.SysAvailabilityUnitController;
 import com.thaprobit.resengine.controller.sys.SysChoiceController;
+import com.thaprobit.resengine.controller.sys.SysEventController;
 import com.thaprobit.resengine.controller.sys.SysFacilityController;
 import com.thaprobit.resengine.controller.sys.SysTagsController;
 import com.thaprobit.resengine.dao.key.PromoID;
@@ -74,5 +75,7 @@ public class HATEOASProvider
 	{
 		return linkTo( methodOn( SysChoiceController.class ).getChoice( id ) ).withSelfRel();
 	}
+
+	public static Link sysEventSelfLinkProvider( int id ) { return linkTo( methodOn( SysEventController.class ).getEvent( id ) ).withSelfRel(); }
 
 }

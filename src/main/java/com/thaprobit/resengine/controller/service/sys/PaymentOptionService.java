@@ -6,8 +6,11 @@ import com.thaprobit.resengine.repo.sys.PaymentOptionsRepository;
 import com.thaprobit.service.AbstractService;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.SystemMessages;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,15 +33,29 @@ public class PaymentOptionService extends AbstractService<PaymentOptions>
 	/**
 	 * Get All Payment Options
 	 *
+	 * @param pageable Pageable
 	 * @return all Payment Options
 	 */
-	public ResponseEntity<ResponseWrapper<List<PaymentOptions>>> getPaymentOptions()
+	public ResponseEntity<ResponseWrapper<Page<PaymentOptions>>> getPaymentOptions( Pageable pageable )
 	{
-		List<PaymentOptions> paymentOptions = paymentOptionsRepository.findAll();
+		ResponseEntity<ResponseWrapper<Page<PaymentOptions>>> response = null;
 
-		return ResponseEntity.ok()
-				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, paymentOptions ) );
+		try
+		{
+			Page<PaymentOptions> paymentOptionsPage = paymentOptionsRepository.findAll( pageable );
+
+			response = ResponseEntity.ok()
+					.headers( addCommonHeaders( new HttpHeaders() ) )
+					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, paymentOptionsPage ) );
+		}
+		catch( Exception e )
+		{
+			response = ResponseEntity.status( HttpStatus.NOT_FOUND )
+					.headers( new HttpHeaders() )
+					.body( new ResponseWrapper<>( SystemOperation.READ.withError(), SystemMessages.NOT_FOUND, e.getMessage() ) );
+		}
+
+		return response;
 	}
 
 	/**

@@ -5,6 +5,7 @@ import com.thaprobit.resengine.dao.sys.AvailabilityUnit;
 import com.thaprobit.resengine.facade.dto.AvailabilityUnitModel;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.URLProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(URLProvider.SERVICE_DATA)
+@Slf4j
 public class SysAvailabilityUnitController
 {
 	@Autowired

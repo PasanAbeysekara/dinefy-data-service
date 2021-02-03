@@ -42,6 +42,7 @@ public class SysTagsService extends AbstractService<Tags>
 	/**
 	 * Get All Tags
 	 *
+	 * @param pageable Pageable
 	 * @return all sys Tags
 	 */
 	public ResponseEntity<ResponseWrapper<PagedModel<TagsModel>>> getTags( Pageable pageable )

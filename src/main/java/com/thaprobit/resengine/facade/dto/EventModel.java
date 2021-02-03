@@ -1,25 +1,23 @@
 package com.thaprobit.resengine.facade.dto;
 
-import com.thaprobit.resengine.dao.MenuCategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
-import java.util.Set;
-
 /**
  * @author Tharindu Aththanayake
+ * @since 12/29/2020 08:51 PM
  */
 @Data
-@AllArgsConstructor
+@EqualsAndHashCode( callSuper = false )
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class MenuModel extends RepresentationModel<MenuModel>
+@AllArgsConstructor
+public class EventModel extends RepresentationModel<EventModel>
 {
-	private Long menuId;
+	private Integer eventId;
 	private String name;
 	private String description;
-	private Set<MenuCategory> menuCategories;
+	private int order;
 }

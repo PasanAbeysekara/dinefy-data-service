@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author Tharindu Aththanayake
+ */
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class PropertyMediaWrapper
 {
 
@@ -19,13 +21,15 @@ public class PropertyMediaWrapper
 	private List<PropMediaModel> coverImages;
 	private List<PropMediaModel> otherMedia;
 
-	public void processPropertyMedia( Set<PropMedia> propMedia )
+	public PropertyMediaWrapper()
 	{
-
 		bannerImages = new ArrayList<>();
 		coverImages = new ArrayList<>();
 		otherMedia = new ArrayList<>();
+	}
 
+	public void processPropertyMedia( Set<PropMedia> propMedia )
+	{
 		propMedia.forEach( i -> setPropMediaModel( i ) );
 	}
 

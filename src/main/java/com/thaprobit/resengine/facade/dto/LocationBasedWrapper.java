@@ -4,18 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.hateoas.RepresentationModel;
+import lombok.ToString;
 
 /**
  * @author Tharindu Aththanayake
+ * @since 01/01/2021 11:30 PM
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class ChoiceModel extends RepresentationModel<ChoiceModel>
+@EqualsAndHashCode
+@ToString
+public class LocationBasedWrapper
 {
-	private Long choiceId;
+	private Long locationId;
 	private String name;
-	private String description;
+	private Short stateId;
 }
