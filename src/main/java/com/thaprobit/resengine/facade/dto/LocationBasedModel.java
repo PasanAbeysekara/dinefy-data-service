@@ -1,6 +1,5 @@
 package com.thaprobit.resengine.facade.dto;
 
-import com.thaprobit.resengine.dao.LocationState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,5 @@
 package com.thaprobit.resengine.facade.dto;
 
-import com.thaprobit.resengine.dao.PropEvent;
 import com.thaprobit.resengine.dao.key.PropEventID;
 import lombok.AllArgsConstructor;
 import lombok.Data;

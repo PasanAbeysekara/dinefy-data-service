@@ -4,7 +4,7 @@ import com.thaprobit.resengine.controller.service.HATEOASProvider;
 import com.thaprobit.resengine.dao.OperationHours;
 import com.thaprobit.resengine.dao.Promotion;
 import com.thaprobit.resengine.dao.PropAvailabilityUnit;
-import com.thaprobit.resengine.dao.PropMedia;;
+import com.thaprobit.resengine.dao.PropMedia;
 import com.thaprobit.resengine.dao.sys.PaymentOptions;
 import com.thaprobit.resengine.dao.sys.PropertySpeciality;
 import lombok.AllArgsConstructor;
@@ -20,6 +20,8 @@ import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
+
+;
 
 
 /**
@@ -65,6 +67,7 @@ public class PropertyModel extends RepresentationModel<PropertyModel>
 	private MenuAndChoicesWrapperModel propMenus;
 	private PropertyMediaWrapper propertyMediaWrapper;
 	private Set<PropEventModel> events;
+	private Set< ReservationModel > reservations;
 
 	public void setPropertyMediaWrapper( Set<PropMedia> propMedia )
 	{

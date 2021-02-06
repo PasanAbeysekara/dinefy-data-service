@@ -8,6 +8,7 @@ import com.thaprobit.resengine.controller.converters.OrganizationModelConverter;
 import com.thaprobit.resengine.controller.converters.PropEventModelConverter;
 import com.thaprobit.resengine.controller.converters.PropFacilityModelConverter;
 import com.thaprobit.resengine.controller.converters.PropTagsModelConverter;
+import com.thaprobit.resengine.controller.converters.ReservationModelConverter;
 import com.thaprobit.resengine.controller.service.HATEOASProvider;
 import com.thaprobit.resengine.dao.Property;
 import com.thaprobit.resengine.facade.dto.MenuAndChoicesWrapper;
@@ -49,6 +50,9 @@ public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<
 
 	@Autowired
 	private PropEventModelConverter propEventModelConverter;
+
+	@Autowired
+	private ReservationModelConverter reservationModelConverter;
 
 	public PropertyModelAssembler()
 	{
@@ -92,6 +96,7 @@ public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<
 		propertyModel.setPropMenus( menuAndChoicesWrapperModelConverter.convert( new MenuAndChoicesWrapper( entity.getMenus() , entity.getChoices() ) ) );
 		propertyModel.setPropertyMediaWrapper( entity.getPropertyMedia() );
 		propertyModel.setEvents( entity.getEvents().stream().map( propEventModelConverter :: convert ).collect( Collectors.toSet() ) );
+		propertyModel.setReservations( entity.getReservations().stream().map( reservationModelConverter:: convert ).collect( Collectors.toSet()) );
 
 		propertyModel.add( HATEOASProvider.propertySelfLinkProvider( entity.getPropId() ) );
 

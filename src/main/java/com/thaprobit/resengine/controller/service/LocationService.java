@@ -1,14 +1,8 @@
 package com.thaprobit.resengine.controller.service;
 
 import com.thaprobit.global.SystemOperation;
-import com.thaprobit.resengine.controller.converters.LocationBasedModelConverter;
 import com.thaprobit.resengine.controller.converters.LocationsWrapperConverter;
 import com.thaprobit.resengine.dao.LocationBased;
-import com.thaprobit.resengine.dao.LocationState;
-import com.thaprobit.resengine.facade.dto.LocationBasedModel;
-import com.thaprobit.resengine.facade.dto.LocationBasedWrapper;
-import com.thaprobit.resengine.facade.dto.LocationStateModel;
-import com.thaprobit.resengine.facade.dto.LocationStateWrapper;
 import com.thaprobit.resengine.facade.dto.LocationsWrapper;
 import com.thaprobit.resengine.repo.LocationRepository;
 import com.thaprobit.service.AbstractService;
@@ -16,8 +10,6 @@ import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,8 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author Tharindu Aththanayake

@@ -15,7 +15,7 @@ import org.springframework.hateoas.RepresentationModel;
 @EqualsAndHashCode(callSuper = false)
 public class ChoiceModel extends RepresentationModel<ChoiceModel>
 {
-	private Long choiceId;
+	private int choiceId;
 	private String name;
 	private String description;
 }

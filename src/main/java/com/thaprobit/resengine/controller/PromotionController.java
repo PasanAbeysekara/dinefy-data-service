@@ -4,7 +4,6 @@ import com.thaprobit.resengine.controller.service.PromotionService;
 import com.thaprobit.resengine.dao.Promotion;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.URLProvider;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

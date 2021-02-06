@@ -60,7 +60,7 @@ public class SysChoiceService extends AbstractService<Choices>
 	 * @param id Choice ID
 	 * @return The Choice
 	 */
-	public ResponseEntity<ResponseWrapper<Choices>> getChoice( long id )
+	public ResponseEntity<ResponseWrapper<Choices>> getChoice( int id )
 	{
 		Optional<Choices> optionalChoice = choicesRepository.findById( id );
 
@@ -123,7 +123,7 @@ public class SysChoiceService extends AbstractService<Choices>
 	 * @param choice The Choice
 	 * @return Updated Choice response
 	 */
-	public ResponseEntity<ResponseWrapper<Choices>> updateChoice( long id, Choices choice )
+	public ResponseEntity<ResponseWrapper<Choices>> updateChoice( int id, Choices choice )
 	{
 		ResponseEntity<ResponseWrapper<Choices>> response;
 
@@ -154,7 +154,7 @@ public class SysChoiceService extends AbstractService<Choices>
 	 * @param id The Choice ID
 	 * @return Delete Choice response
 	 */
-	public ResponseEntity<ResponseWrapper<Choices>> deleteChoice( long id )
+	public ResponseEntity<ResponseWrapper<Choices>> deleteChoice( int id )
 	{
 		ResponseEntity<ResponseWrapper<Choices>> response;
 

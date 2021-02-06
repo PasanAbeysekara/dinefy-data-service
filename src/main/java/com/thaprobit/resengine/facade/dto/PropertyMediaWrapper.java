@@ -3,7 +3,6 @@ package com.thaprobit.resengine.facade.dto;
 import com.thaprobit.resengine.dao.PropMedia;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
