@@ -28,7 +28,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReservationService extends AbstractService<Reservation>
 {
-	final ReservationRepository reservationRepository;
+	private final ReservationRepository reservationRepository;
 
 	/**
 	 * Get all reservations

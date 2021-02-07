@@ -48,7 +48,7 @@ public class SysChoiceController
 	 * @return The Choice
 	 */
 	@GetMapping("/choices/{id}")
-	public ResponseEntity<ResponseWrapper<Choices>> getChoice( @PathVariable("id") long id )
+	public ResponseEntity<ResponseWrapper<Choices>> getChoice( @PathVariable("id") int id )
 	{
 		return choiceService.getChoice( id );
 	}
@@ -73,7 +73,7 @@ public class SysChoiceController
 	 * @return Updated Choice response
 	 */
 	@PutMapping("/choices/{id}")
-	public ResponseEntity<ResponseWrapper<Choices>> updateChoice( @PathVariable("id") long id, @RequestBody Choices choice )
+	public ResponseEntity<ResponseWrapper<Choices>> updateChoice( @PathVariable("id") int id, @RequestBody Choices choice )
 	{
 		return choiceService.updateChoice( id, choice );
 	}
@@ -85,7 +85,7 @@ public class SysChoiceController
 	 * @return Delete Choice Response
 	 */
 	@DeleteMapping("/choices/{id}")
-	public ResponseEntity<ResponseWrapper<Choices>> deleteChoice( @PathVariable("id") long id )
+	public ResponseEntity<ResponseWrapper<Choices>> deleteChoice( @PathVariable("id") int id )
 	{
 		return choiceService.deleteChoice( id );
 	}

@@ -71,7 +71,7 @@ public class HATEOASProvider
 		return linkTo( methodOn( MenuController.class ).getMenu( id ) ).withSelfRel();
 	}
 
-	public static Link sysChoicesSelfLinkProvider( long id )
+	public static Link sysChoicesSelfLinkProvider( int id )
 	{
 		return linkTo( methodOn( SysChoiceController.class ).getChoice( id ) ).withSelfRel();
 	}

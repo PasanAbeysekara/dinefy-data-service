@@ -1,6 +1,5 @@
 package com.thaprobit.resengine.controller.converters;
 
-import com.thaprobit.resengine.controller.assembler.ChoiceModelAssembler;
 import com.thaprobit.resengine.controller.assembler.MenuModelAssembler;
 import com.thaprobit.resengine.facade.dto.MenuAndChoicesWrapper;
 import com.thaprobit.resengine.facade.dto.MenuAndChoicesWrapperModel;
