@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.1.RELEASE</version>
+        <version>3.1.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -16,23 +16,11 @@
     <description>x for Everyone</description>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <skipTests>true</skipTests>
         <lib-version>1.0-SNAPSHOT</lib-version>
+        <maven.compiler.release>17</maven.compiler.release>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>central</id>
-            <name>Release Repo</name>
-            <url>https://zeylonbrains.jfrog.io/artifactory/zb-repo</url>
-        </repository>
-        <repository>
-            <id>snapshots</id>
-            <name>Snapshot Repo</name>
-            <url>https://zeylonbrains.jfrog.io/artifactory/zb-repo</url>
-        </repository>
-    </repositories>
 
     <dependencies>
 
@@ -106,7 +94,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.2.32</version>
+            <version>1.7.0</version>
         </dependency>
 
         <!-- db dependencies -->
@@ -120,6 +108,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-spatial</artifactId>
+            <version>${hibernate.version}</version>
         </dependency>
 
         <dependency>

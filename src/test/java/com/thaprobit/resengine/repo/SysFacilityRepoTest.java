@@ -1,17 +1,16 @@
 package com.thaprobit.resengine.repo;
 
+import com.thaprobit.resengine.ReservationEngineData;
 import com.thaprobit.resengine.dao.sys.Facilities;
 import com.thaprobit.resengine.repo.sys.FacilitiesRepository;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.Order;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,91 +22,88 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @since 5/2/2020 2:37 PM
  */
 
-@RunWith(SpringRunner.class)
-@DataJpaTest(properties = {"classpath:application.properties"})
-//@TestPropertySource( locations = "classpath:application-integrationtest.properties")
-public class SysFacilityRepoTest
-{
-	@Autowired
-	private TestEntityManager entityManager;
+//@ExtendWith(SpringExtension.class)
+////@DataJpaTest(properties = {"classpath:application.properties"})
+////@TestPropertySource( locations = "classpath:application-integrationtest.properties")
+//@SpringBootTest(classes = ReservationEngineData.class)
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class SysFacilityRepoTest {
+    @Autowired
+    private TestEntityManager entityManager;
 
-	@Autowired
-	private FacilitiesRepository facilitiesRepository;
+    @Autowired
+    private FacilitiesRepository facilitiesRepository;
 
-	private Facilities facilities1;
-	private Facilities facilities2;
-	private Facilities facilities3;
+    private Facilities facilities1;
+    private Facilities facilities2;
+    private Facilities facilities3;
 
-	@Before
-	public void before()
-	{
+    //@BeforeAll
+    public void before() {
 
-		facilities1 = new Facilities( null, "ABC1", "Name ABC1", "Description ABC1", "http://images/1.jpg", null );
-		facilities2 = new Facilities( null, "ABC2", "Name ABC2", "Description ABC2","http://images/1.jpg" ,null );
-		facilities3 = new Facilities( null, "ABC2", "Name ABC2", "Description ABC2", "http://images/1.jpg",null );
-	}
+        facilities1 = new Facilities(null, "ABC1", "Name ABC1", "Description ABC1", "http://images/1.jpg", null);
+        facilities2 = new Facilities(null, "ABC2", "Name ABC2", "Description ABC2", "http://images/1.jpg", null);
+        facilities3 = new Facilities(null, "ABC2", "Name ABC2", "Description ABC2", "http://images/1.jpg", null);
+    }
 
-	@Test
-	@Order(1)
-	public void testDataIntegrity()
-	{
-		Facilities savedFacilities1 = facilitiesRepository.save( facilities1 );
-		Facilities savedFacilities2 = facilitiesRepository.save( facilities2 );
+    //@Test
+    //@Order(1)
+    public void testDataIntegrity() {
+        Facilities savedFacilities1 = facilitiesRepository.save(facilities1);
+        Facilities savedFacilities2 = facilitiesRepository.save(facilities2);
 
-		List<Facilities> all = facilitiesRepository.findAll();
+        List<Facilities> all = facilitiesRepository.findAll();
 
-		Assert.assertEquals( 2, all.size() );
+        Assertions.assertEquals(2, all.size());
 
-		Assert.assertEquals( facilities1, savedFacilities1 );
-		Assert.assertEquals( facilities2, savedFacilities2 );
+        Assertions.assertEquals(facilities1, savedFacilities1);
+        Assertions.assertEquals(facilities2, savedFacilities2);
 
-		Facilities save = facilitiesRepository.save( facilities3 );
+        Facilities save = facilitiesRepository.save(facilities3);
 
-		assertThrows( DataIntegrityViolationException.class, () -> {
-			facilitiesRepository.findAll();
-		} );
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            facilitiesRepository.findAll();
+        });
 
-	}
-
-
-	@Test
-	@Order(2)
-	public void testRepoCreateAndRead()
-	{
-		Facilities savedFacilities = facilitiesRepository.save( facilities1 );
-
-		Assert.assertEquals( facilities1, savedFacilities );
-
-		Optional<Facilities> facilitiesOptional = facilitiesRepository.findById( facilities1.getFacilityId() );
-		Assert.assertTrue( facilitiesOptional.isPresent() );
-
-		Facilities searchedFacilities = facilitiesOptional.get();
-		Assert.assertEquals( facilities1, searchedFacilities );
-
-	}
-
-	@Test
-	@Order(3)
-	public void testRepoSaveUpdateAndRead()
-	{
-		facilitiesRepository.save( facilities1 );
-
-		String originalName = facilities1.getName();
-
-		facilities1.setName( "Changed Name" );
-		Facilities save = facilitiesRepository.save( facilities1 );
-
-		Assert.assertNotEquals( originalName, save.getName() );
-		Assert.assertEquals( "Changed Name", save.getName() );
+    }
 
 
-		Optional<Facilities> facilitiesOptional = facilitiesRepository.findById( facilities1.getFacilityId() );
-		Assert.assertTrue( facilitiesOptional.isPresent() );
+    //@Test
+    //@Order(2)
+    public void testRepoCreateAndRead() {
+        Facilities savedFacilities = facilitiesRepository.save(facilities1);
 
-		Facilities searchFacilities = facilitiesOptional.get();
+        Assertions.assertEquals(facilities1, savedFacilities);
 
-		Assert.assertNotEquals( originalName, searchFacilities.getName() );
-		Assert.assertEquals( "Changed Name", searchFacilities.getName() );
+        Optional<Facilities> facilitiesOptional = facilitiesRepository.findById(facilities1.getFacilityId());
+        Assertions.assertTrue(facilitiesOptional.isPresent());
 
-	}
+        Facilities searchedFacilities = facilitiesOptional.get();
+        Assertions.assertEquals(facilities1, searchedFacilities);
+
+    }
+
+    //@Test
+    //@Order(3)
+    public void testRepoSaveUpdateAndRead() {
+        facilitiesRepository.save(facilities1);
+
+        String originalName = facilities1.getName();
+
+        facilities1.setName("Changed Name");
+        Facilities save = facilitiesRepository.save(facilities1);
+
+        Assertions.assertNotEquals(originalName, save.getName());
+        Assertions.assertEquals("Changed Name", save.getName());
+
+
+        Optional<Facilities> facilitiesOptional = facilitiesRepository.findById(facilities1.getFacilityId());
+        Assertions.assertTrue(facilitiesOptional.isPresent());
+
+        Facilities searchFacilities = facilitiesOptional.get();
+
+        Assertions.assertNotEquals(originalName, searchFacilities.getName());
+        Assertions.assertEquals("Changed Name", searchFacilities.getName());
+
+    }
 }

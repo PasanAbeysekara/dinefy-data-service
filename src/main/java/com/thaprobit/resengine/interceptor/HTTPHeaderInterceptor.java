@@ -1,16 +1,15 @@
 package com.thaprobit.resengine.interceptor;
 
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * @author Tharinda Wickramaarachchi
  */
-public class HTTPHeaderInterceptor extends HandlerInterceptorAdapter
-{
+public class HTTPHeaderInterceptor implements HandlerInterceptor {
 	@Override
 	public void afterCompletion( HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception ) throws Exception
 	{

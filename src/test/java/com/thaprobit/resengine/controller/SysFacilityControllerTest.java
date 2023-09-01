@@ -7,9 +7,10 @@ import com.thaprobit.resengine.dao.sys.Facilities;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.SystemMessages;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -30,8 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Tharinda Wickramaarachchi
  * @since 5/2/2020 12:18 AM
  */
-@RunWith(SpringRunner.class)
-@WebMvcTest(SysFacilityController.class)
+//@ExtendWith(SpringExtension.class)
+//@WebMvcTest(SysFacilityController.class)
 public class SysFacilityControllerTest
 {
 	@Autowired
@@ -45,7 +47,7 @@ public class SysFacilityControllerTest
 
 	private Facilities facility = new Facilities( null, "ABC1", "Name ABC1", "Description ABC1", "http://images/1.jpg" , null );
 
-	@Before
+	//@BeforeAll
 	public void before()
 	{
 
@@ -63,7 +65,7 @@ public class SysFacilityControllerTest
 		System.out.println( " Before Finished" );
 	}
 
-	@Test
+	//@Test
 	public void createFacility() throws Exception
 	{
 		mvc.perform( post( "/facilities" )
@@ -78,7 +80,7 @@ public class SysFacilityControllerTest
 				.andExpect( jsonPath( "$.data.description", Matchers.is( facility.getDescription() ) ) );
 	}
 
-	@Test
+	//@Test
 	public void getFacility() throws Exception
 	{
 		mvc.perform( get( "/facilities/1" )

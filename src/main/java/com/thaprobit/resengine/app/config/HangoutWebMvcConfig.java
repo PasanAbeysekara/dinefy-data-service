@@ -10,16 +10,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author Tharinda Wickramaarachchi
  */
 @Configuration
-public class HangoutWebMvcConfig implements WebMvcConfigurer
-{
-	@Override
-	public void addInterceptors( InterceptorRegistry registry )
-	{
-		registry.addInterceptor( new HTTPHeaderInterceptor() );
-	}
+public class HangoutWebMvcConfig implements WebMvcConfigurer {
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new HTTPHeaderInterceptor());
+    }
 
-	@Override public void addCorsMappings( CorsRegistry registry )
-	{
-		registry.addMapping( "/**" ).allowedOrigins( "http://localhost:4200" ).allowedMethods( "GET", "POST","PUT","DELETE", "PATCH" );
-	}
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("http://localhost:4200").allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH");
+    }
 }
