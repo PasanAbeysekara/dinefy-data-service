@@ -12,24 +12,22 @@ import org.springframework.stereotype.Component;
  * @since 12/29/2020 08:57 PM
  */
 @Component
-public class EventsModelAssembler extends RepresentationModelAssemblerSupport<Event, EventModel>
-{
+public class EventsModelAssembler extends RepresentationModelAssemblerSupport<Event, EventModel> {
 
-	public EventsModelAssembler()
-	{
-		super( SysEventController.class, EventModel.class );
-	}
+    public EventsModelAssembler() {
+        super(SysEventController.class, EventModel.class);
+    }
 
-	@Override public EventModel toModel( Event entity )
-	{
-		EventModel eventModel = new EventModel();
-		eventModel.setEventId( entity.getEventId() );
-		eventModel.setName( entity.getName() );
-		eventModel.setDescription( entity.getDescription() );
-		eventModel.setOrder( entity.getOrder() );
+    @Override
+    public EventModel toModel(Event entity) {
+        EventModel eventModel = new EventModel();
+        eventModel.setEventId(entity.getEventId());
+        eventModel.setName(entity.getName());
+        eventModel.setDescription(entity.getDescription());
+        eventModel.setOrder(entity.getOrder());
 
-		eventModel.add( HATEOASProvider.sysEventSelfLinkProvider( entity.getEventId() ) );
+        eventModel.add(HATEOASProvider.sysEventSelfLinkProvider(entity.getEventId()));
 
-		return eventModel;
-	}
+        return eventModel;
+    }
 }

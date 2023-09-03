@@ -17,12 +17,11 @@ import java.time.LocalTime;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReservationModel
-{
-	private Long reservationId;
-	private LocalDate date;
-	private LocalTime time;
-	private int headCount;
-	private BigDecimal totalAmount;
-	private String amountCurrency;
+public class ReservationModel {
+    private Long reservationId;
+    private LocalDate date;
+    private LocalTime time;
+    private int headCount;
+    private BigDecimal totalAmount;
+    private String amountCurrency;
 }

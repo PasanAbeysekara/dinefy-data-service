@@ -12,25 +12,23 @@ import org.springframework.stereotype.Component;
  * @since 01/01/2021 12:32 PM
  */
 @Component
-public class PropChoicesModelConverter implements Converter<PropChoices, PropChoicesModel>
-{
-	@Autowired
-	private ChoiceModelAssembler choiceModelAssembler;
+public class PropChoicesModelConverter implements Converter<PropChoices, PropChoicesModel> {
+    @Autowired
+    private ChoiceModelAssembler choiceModelAssembler;
 
-	@Override public PropChoicesModel convert( PropChoices propChoices )
-	{
-		PropChoicesModel propChoicesModel = new PropChoicesModel();
-		propChoicesModel.setPropChoiceId( propChoices.getPropChoiceId() );
-		propChoicesModel.setName( propChoices.getName() );
-		propChoicesModel.setDescription( propChoices.getDescription() );
-		propChoicesModel.setAmount( propChoices.getAmount() );
-		propChoicesModel.setAmountCurrency( propChoices.getAmountCurrency() );
+    @Override
+    public PropChoicesModel convert(PropChoices propChoices) {
+        PropChoicesModel propChoicesModel = new PropChoicesModel();
+        propChoicesModel.setPropChoiceId(propChoices.getPropChoiceId());
+        propChoicesModel.setName(propChoices.getName());
+        propChoicesModel.setDescription(propChoices.getDescription());
+        propChoicesModel.setAmount(propChoices.getAmount());
+        propChoicesModel.setAmountCurrency(propChoices.getAmountCurrency());
 
-		if( propChoices.getSysChoice() != null )
-		{
-			propChoicesModel.setSysChoice( choiceModelAssembler.toModel( propChoices.getSysChoice() ) );
-		}
+        if (propChoices.getSysChoice() != null) {
+            propChoicesModel.setSysChoice(choiceModelAssembler.toModel(propChoices.getSysChoice()));
+        }
 
-		return propChoicesModel;
-	}
+        return propChoicesModel;
+    }
 }

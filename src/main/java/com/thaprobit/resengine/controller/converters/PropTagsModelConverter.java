@@ -12,25 +12,22 @@ import org.springframework.stereotype.Component;
  * @since 01/01/2021 11:48 AM
  */
 @Component
-public class PropTagsModelConverter implements Converter< PropTags, PropTagsModel >
-{
-	@Autowired
-	private TagsModelAssembler tagsModelAssembler;
+public class PropTagsModelConverter implements Converter<PropTags, PropTagsModel> {
+    @Autowired
+    private TagsModelAssembler tagsModelAssembler;
 
-	@Override
-	public PropTagsModel convert( PropTags propTags )
-	{
-		PropTagsModel propTagsModel = new PropTagsModel();
-		propTagsModel.setPropTagID( propTags.getPropTagID() );
-		propTagsModel.setName( propTags.getName() );
-		propTagsModel.setOrder( propTags.getOrder() );
-		propTagsModel.setDescription( propTags.getDescription() );
+    @Override
+    public PropTagsModel convert(PropTags propTags) {
+        PropTagsModel propTagsModel = new PropTagsModel();
+        propTagsModel.setPropTagID(propTags.getPropTagID());
+        propTagsModel.setName(propTags.getName());
+        propTagsModel.setOrder(propTags.getOrder());
+        propTagsModel.setDescription(propTags.getDescription());
 
-		if ( propTags.getSysTags() != null )
-		{
-			propTagsModel.setSysTags( tagsModelAssembler.toModel( propTags.getSysTags() ) );
-		}
+        if (propTags.getSysTags() != null) {
+            propTagsModel.setSysTags(tagsModelAssembler.toModel(propTags.getSysTags()));
+        }
 
-		return propTagsModel;
-	}
+        return propTagsModel;
+    }
 }

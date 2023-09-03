@@ -16,8 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class DateWiseAvailData
-{
-	private LocalDate date;
-	private List<TimeWiseAvailData> timeWiseAvailData;
+public class DateWiseAvailData {
+    private LocalDate date;
+    private List<TimeWiseAvailData> timeWiseAvailData;
 }

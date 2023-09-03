@@ -1,10 +1,6 @@
 package com.thaprobit.resengine.facade.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 /**
@@ -13,12 +9,11 @@ import org.springframework.hateoas.RepresentationModel;
 
 @Data
 @ToString
-@EqualsAndHashCode( callSuper = false )
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrganizationModel extends RepresentationModel<OrganizationModel>
-{
-	private long orgId;
-	private String code;
-	private String name;
+public class OrganizationModel extends RepresentationModel<OrganizationModel> {
+    private long orgId;
+    private String code;
+    private String name;
 }

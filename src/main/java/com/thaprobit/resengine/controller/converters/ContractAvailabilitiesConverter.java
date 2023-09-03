@@ -10,15 +10,13 @@ import org.springframework.stereotype.Component;
  * @since 01/01/2021 11:25 AM
  */
 @Component
-public class ContractAvailabilitiesConverter implements Converter< ContractAvailability, ContractAvailabilityModel >
-{
-	@Override
-	public ContractAvailabilityModel convert( ContractAvailability contractAvailability )
-	{
-		ContractAvailabilityModel contractAvailabilityModel = new ContractAvailabilityModel();
-		contractAvailabilityModel.setAvailabilityID( contractAvailability.getAvailabilityID() );
-		contractAvailabilityModel.setCount( contractAvailability.getCount() );
+public class ContractAvailabilitiesConverter implements Converter<ContractAvailability, ContractAvailabilityModel> {
+    @Override
+    public ContractAvailabilityModel convert(ContractAvailability contractAvailability) {
+        ContractAvailabilityModel contractAvailabilityModel = new ContractAvailabilityModel();
+        contractAvailabilityModel.setAvailabilityID(contractAvailability.getAvailabilityID());
+        contractAvailabilityModel.setCount(contractAvailability.getCount());
 
-		return contractAvailabilityModel;
-	}
+        return contractAvailabilityModel;
+    }
 }

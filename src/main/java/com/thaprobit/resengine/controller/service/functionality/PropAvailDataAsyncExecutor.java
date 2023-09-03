@@ -16,45 +16,39 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Component
 @Slf4j
-public class PropAvailDataAsyncExecutor
-{
-	@Autowired
-	@Qualifier("async-avail-data")
-	private AsyncTaskExecutor asyncTaskExecutor;
+public class PropAvailDataAsyncExecutor {
+    @Autowired
+    @Qualifier("async-avail-data")
+    private AsyncTaskExecutor asyncTaskExecutor;
 
-	@Autowired
-	private ApplicationContext applicationContext;
+    @Autowired
+    private ApplicationContext applicationContext;
 
 
-	//TODO make it work : Its
-	public void executeAsynchronously( Contract contract )
-	{
+    //TODO make it work : Its
+    public void executeAsynchronously(Contract contract) {
 
-		PropAvailDataExploder dataFlattener = new PropAvailDataExploder();
-		dataFlattener.setContract( contract );
-		applicationContext.getAutowireCapableBeanFactory().autowireBean( dataFlattener );
+        PropAvailDataExploder dataFlattener = new PropAvailDataExploder();
+        dataFlattener.setContract(contract);
+        applicationContext.getAutowireCapableBeanFactory().autowireBean(dataFlattener);
 
-		asyncTaskExecutor.submit( dataFlattener );
+        asyncTaskExecutor.submit(dataFlattener);
 
-		log.info( "PropAvailDataFlattener - Submitted for contract " + contract.getContractId() );
-	}
+        log.info("PropAvailDataFlattener - Submitted for contract " + contract.getContractId());
+    }
 
-	@Async("async-avail-data")
-	@Transactional
-	public void executeAsynchronouslyTx( Contract contract )
-	{
-		PropAvailDataExploder dataFlattener = new PropAvailDataExploder();
-		dataFlattener.setContract( contract );
+    @Async("async-avail-data")
+    @Transactional
+    public void executeAsynchronouslyTx(Contract contract) {
+        PropAvailDataExploder dataFlattener = new PropAvailDataExploder();
+        dataFlattener.setContract(contract);
 
-		applicationContext.getAutowireCapableBeanFactory().autowireBean( dataFlattener );
+        applicationContext.getAutowireCapableBeanFactory().autowireBean(dataFlattener);
 
-		try
-		{
-			dataFlattener.call();//TODO remove : Transactional issue , Need to use above method
-		}
-		catch( Exception e )
-		{
-			e.printStackTrace();
-		}
-	}
+        try {
+            dataFlattener.call();//TODO remove : Transactional issue , Need to use above method
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

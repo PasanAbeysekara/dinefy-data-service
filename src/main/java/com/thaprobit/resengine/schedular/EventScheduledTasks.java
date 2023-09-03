@@ -15,19 +15,17 @@ import java.util.Date;
 
 @Component
 @Slf4j
-public class EventScheduledTasks
-{
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat( "HH:mm:ss" );
+public class EventScheduledTasks {
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-	@Autowired
-	private PropertyQueueProducer queueProducer;
+    @Autowired
+    private PropertyQueueProducer queueProducer;
 
-	@Scheduled(fixedRate = 60000)
-	public void reportCurrentTime()
-	{
-		//queueProducer.produceTextMessage( "The time is now " + dateFormat.format( new Date() ) );
-		log.info( "The time is now {}", dateFormat.format( new Date() ) );
-	}
+    @Scheduled(fixedRate = 60000)
+    public void reportCurrentTime() {
+        //queueProducer.produceTextMessage( "The time is now " + dateFormat.format( new Date() ) );
+        log.info("The time is now {}", dateFormat.format(new Date()));
+    }
 
 
 }

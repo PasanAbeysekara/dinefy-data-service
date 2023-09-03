@@ -1,10 +1,6 @@
 package com.thaprobit.resengine.facade.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * @author Tharindu Aththanayake
@@ -15,9 +11,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class LocationBasedWrapper
-{
-	private Long locationId;
-	private String name;
-	private Short stateId;
+public class LocationBasedWrapper {
+    private Long locationId;
+    private String name;
+    private Short stateId;
 }

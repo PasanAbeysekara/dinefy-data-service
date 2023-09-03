@@ -11,13 +11,12 @@ import org.springframework.hateoas.RepresentationModel;
  * @since 12/29/2020 08:51 PM
  */
 @Data
-@EqualsAndHashCode( callSuper = false )
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventModel extends RepresentationModel<EventModel>
-{
-	private Integer eventId;
-	private String name;
-	private String description;
-	private int order;
+public class EventModel extends RepresentationModel<EventModel> {
+    private Integer eventId;
+    private String name;
+    private String description;
+    private int order;
 }

@@ -25,88 +25,76 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping(URLProvider.SERVICE_DATA)
-public class OrganizationController extends AbstractService<Organization>
-{
-	@Autowired
-	private OrganizationRepository organizationRepository;
+public class OrganizationController extends AbstractService<Organization> {
+    @Autowired
+    private OrganizationRepository organizationRepository;
 
-	/**
-	 * Get All Organizations
-	 *
-	 * @return Organizations
-	 */
-	@GetMapping("/organizations")
-	public ResponseEntity<List<Organization>> getProperty()
-	{
-		List<Organization> orgList = organizationRepository.findAll();
+    /**
+     * Get All Organizations
+     *
+     * @return Organizations
+     */
+    @GetMapping("/organizations")
+    public ResponseEntity<List<Organization>> getProperty() {
+        List<Organization> orgList = organizationRepository.findAll();
 
-		ResponseEntity<List<Organization>> responseEntity = null;
-		if( orgList.isEmpty() )
-		{
-			responseEntity = ResponseEntity.notFound().headers( addCommonHeaders( new HttpHeaders() ) ).build();
-		}
-		else
-		{
-			responseEntity = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( orgList );
-		}
+        ResponseEntity<List<Organization>> responseEntity = null;
+        if (orgList.isEmpty()) {
+            responseEntity = ResponseEntity.notFound().headers(addCommonHeaders(new HttpHeaders())).build();
+        } else {
+            responseEntity = ResponseEntity.ok().headers(addCommonHeaders(new HttpHeaders())).body(orgList);
+        }
 
-		return responseEntity;
-	}
+        return responseEntity;
+    }
 
-	/**
-	 * Get Single Organization
-	 *
-	 * @param id Organization ID
-	 * @return The Organization
-	 */
-	@GetMapping("/organizations/{id}")
-	public ResponseEntity<Organization> getOrganization( @PathVariable("id") long id )
-	{
-		Optional<Organization> optionalOrg = organizationRepository.findById( id );
+    /**
+     * Get Single Organization
+     *
+     * @param id Organization ID
+     * @return The Organization
+     */
+    @GetMapping("/organizations/{id}")
+    public ResponseEntity<Organization> getOrganization(@PathVariable("id") long id) {
+        Optional<Organization> optionalOrg = organizationRepository.findById(id);
 
-		ResponseEntity<Organization> response;
+        ResponseEntity<Organization> response;
 
-		if( optionalOrg.isPresent() )
-		{
-			Link selfRel = HATEOASProvider.organizationSelfLinkProvider( id );
+        if (optionalOrg.isPresent()) {
+            Link selfRel = HATEOASProvider.organizationSelfLinkProvider(id);
 
-			Organization organization = optionalOrg.get();
-			organization.add( selfRel );
+            Organization organization = optionalOrg.get();
+            organization.add(selfRel);
 
-			for( Property property : organization.getProperties() )
-			{
-				Link propSelfLink = HATEOASProvider.propertySelfLinkProvider( id );
-				property.add( propSelfLink );
+            for (Property property : organization.getProperties()) {
+                Link propSelfLink = HATEOASProvider.propertySelfLinkProvider(id);
+                property.add(propSelfLink);
 
-				for( PropFacilities facility : property.getFacilities() )
-				{
-					int sysFacilityID = facility.getSysFacility().getFacilityId();
+                for (PropFacilities facility : property.getFacilities()) {
+                    int sysFacilityID = facility.getSysFacility().getFacilityId();
 
-					Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider( sysFacilityID );
-					Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider( facility.getPropFacilityId().getPropId() );
+                    Link selfRelSysFacility = HATEOASProvider.sysFacilitySelfLinkProvider(sysFacilityID);
+                    Link selfRelPropFacility = HATEOASProvider.propFacilitySelfLinkProvider(facility.getPropFacilityId().getPropId());
 
-					facility.getSysFacility().add( selfRelSysFacility );
-					facility.add( selfRelPropFacility );
-				}
-			}
+                    facility.getSysFacility().add(selfRelSysFacility);
+                    facility.add(selfRelPropFacility);
+                }
+            }
 
-			response = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( organization );
-		}
-		else
-		{
-			response = buildNotFoundResponse();
-		}
+            response = ResponseEntity.ok().headers(addCommonHeaders(new HttpHeaders())).body(organization);
+        } else {
+            response = buildNotFoundResponse();
+        }
 
-		return optionalOrg.map( org -> ResponseEntity.ok()
-				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( org ) ).orElseGet( this::buildNotFoundResponse );
-	}
+        return optionalOrg.map(org -> ResponseEntity.ok()
+                .headers(addCommonHeaders(new HttpHeaders()))
+                .body(org)).orElseGet(this::buildNotFoundResponse);
+    }
 
-	@GetMapping("/org-name")
-	public ResponseEntity<List<String>> getPropertyNames()
-	{
-		return ResponseEntity.ok()
-				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( organizationRepository.findAll().stream().map( Organization::getName ).collect( Collectors.toList() ) );
-	}
+    @GetMapping("/org-name")
+    public ResponseEntity<List<String>> getPropertyNames() {
+        return ResponseEntity.ok()
+                .headers(addCommonHeaders(new HttpHeaders()))
+                .body(organizationRepository.findAll().stream().map(Organization::getName).collect(Collectors.toList()));
+    }
 }

@@ -22,32 +22,29 @@ import java.util.Optional;
 @RestController
 @RequestMapping(URLProvider.SERVICE_DATA)
 @Slf4j
-public class WeekDefinitionController extends AbstractService<WeekDefinition>
-{
-	@Autowired
-	private WeekDefinitionRepository weekDefinitionRepository;
+public class WeekDefinitionController extends AbstractService<WeekDefinition> {
+    @Autowired
+    private WeekDefinitionRepository weekDefinitionRepository;
 
-	@GetMapping("/week-definitions")
-	public ResponseEntity<List<WeekDefinition>> getWeekDefinition()
-	{
-		return ResponseEntity.ok()
-				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( weekDefinitionRepository.findAll() );
-	}
+    @GetMapping("/week-definitions")
+    public ResponseEntity<List<WeekDefinition>> getWeekDefinition() {
+        return ResponseEntity.ok()
+                .headers(addCommonHeaders(new HttpHeaders()))
+                .body(weekDefinitionRepository.findAll());
+    }
 
-	/**
-	 * Get Single WeekDefinition
-	 *
-	 * @param id WeekDefinition ID
-	 * @return The WeekDefinition
-	 */
-	@GetMapping("/week-definitions/{id}")
-	public ResponseEntity<WeekDefinition> getTag( @PathVariable("id") Short id )
-	{
-		Optional<WeekDefinition> optionalTags = weekDefinitionRepository.findById( id );
+    /**
+     * Get Single WeekDefinition
+     *
+     * @param id WeekDefinition ID
+     * @return The WeekDefinition
+     */
+    @GetMapping("/week-definitions/{id}")
+    public ResponseEntity<WeekDefinition> getTag(@PathVariable("id") Short id) {
+        Optional<WeekDefinition> optionalTags = weekDefinitionRepository.findById(id);
 
-		return optionalTags.map( wd -> ResponseEntity.ok()
-				.headers( addCommonHeaders( new HttpHeaders() ) )
-				.body( wd ) ).orElseGet( this::buildNotFoundResponse );
-	}
+        return optionalTags.map(wd -> ResponseEntity.ok()
+                .headers(addCommonHeaders(new HttpHeaders()))
+                .body(wd)).orElseGet(this::buildNotFoundResponse);
+    }
 }

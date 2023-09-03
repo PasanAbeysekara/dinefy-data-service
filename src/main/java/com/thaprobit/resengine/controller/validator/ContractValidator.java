@@ -15,32 +15,30 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class ContractValidator
-{
-	@Autowired
-	private ContractsRepository contractsRepository;
+public class ContractValidator {
+    @Autowired
+    private ContractsRepository contractsRepository;
 
-	public DataCarrier<ResponseEntity<ResponseWrapper<Property>>> validateCreate( Property property )
-	{
-		DataCarrier<ResponseEntity<ResponseWrapper<Property>>> dataCarrier = DataCarrier.<ResponseEntity<ResponseWrapper<Property>>>init().withSuccess();
+    public DataCarrier<ResponseEntity<ResponseWrapper<Property>>> validateCreate(Property property) {
+        DataCarrier<ResponseEntity<ResponseWrapper<Property>>> dataCarrier = DataCarrier.<ResponseEntity<ResponseWrapper<Property>>>init().withSuccess();
 
 
-		//		Integer withSameContract = contractsRepository.findContractWithSameContract( property.getCurrentContId(), property.getCurrentContVersion() );
-		//
-		//		if( withSameContract > 0 )
-		//		{
-		//			String messageAppender = "Contact ID = " + property.getCurrentContId() + " Version : " + property.getCurrentContVersion();
-		//
-		//			ResponseEntity<ResponseWrapper<PropertyModel>> responseEntity = ResponseEntity.status( HttpStatus.CONFLICT )
-		//					.body( new ResponseWrapper<>( SystemOperation.VALIDATE, SystemMessages.PROPERTY_VALIDATION_CONTRACT, messageAppender ) );
-		//
-		//			dataCarrier.setData( responseEntity );
-		//			dataCarrier.setStatus( DataCarrier.CarrierStatus.ERROR );
-		//			dataCarrier.setMessage( Objects.requireNonNull( responseEntity.getBody() ).getPrettyMessage() );
-		//
-		//			log.error( SystemMessages.PROPERTY_VALIDATION_CONTRACT.getReasonPhrase() + " :" + messageAppender + " Found :" + withSameContract );
-		//		}
+        //		Integer withSameContract = contractsRepository.findContractWithSameContract( property.getCurrentContId(), property.getCurrentContVersion() );
+        //
+        //		if( withSameContract > 0 )
+        //		{
+        //			String messageAppender = "Contact ID = " + property.getCurrentContId() + " Version : " + property.getCurrentContVersion();
+        //
+        //			ResponseEntity<ResponseWrapper<PropertyModel>> responseEntity = ResponseEntity.status( HttpStatus.CONFLICT )
+        //					.body( new ResponseWrapper<>( SystemOperation.VALIDATE, SystemMessages.PROPERTY_VALIDATION_CONTRACT, messageAppender ) );
+        //
+        //			dataCarrier.setData( responseEntity );
+        //			dataCarrier.setStatus( DataCarrier.CarrierStatus.ERROR );
+        //			dataCarrier.setMessage( Objects.requireNonNull( responseEntity.getBody() ).getPrettyMessage() );
+        //
+        //			log.error( SystemMessages.PROPERTY_VALIDATION_CONTRACT.getReasonPhrase() + " :" + messageAppender + " Found :" + withSameContract );
+        //		}
 
-		return dataCarrier;
-	}
+        return dataCarrier;
+    }
 }

@@ -14,9 +14,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class LocationBasedModel
-{
-	private Long locationId;
-	private String name;
-	private LocationStateModel state;
+public class LocationBasedModel {
+    private Long locationId;
+    private String name;
+    private LocationStateModel state;
 }

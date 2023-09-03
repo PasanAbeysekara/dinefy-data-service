@@ -12,23 +12,20 @@ import org.springframework.stereotype.Component;
  * @since 01/01/2021 10:08 AM
  */
 @Component
-public class LocationBasedModelConverter implements Converter<LocationBased , LocationBasedModel>
-{
-	@Autowired
-	private LocationStateModelConverter locationStateModelConverter;
+public class LocationBasedModelConverter implements Converter<LocationBased, LocationBasedModel> {
+    @Autowired
+    private LocationStateModelConverter locationStateModelConverter;
 
-	@Override
-	public LocationBasedModel convert( LocationBased locationBased )
-	{
-		LocationBasedModel locationBasedModel = new LocationBasedModel();
-		locationBasedModel.setLocationId( locationBased.getLocationId() );
-		locationBasedModel.setName( locationBased.getName() );
+    @Override
+    public LocationBasedModel convert(LocationBased locationBased) {
+        LocationBasedModel locationBasedModel = new LocationBasedModel();
+        locationBasedModel.setLocationId(locationBased.getLocationId());
+        locationBasedModel.setName(locationBased.getName());
 
-		if( locationBased.getState() != null )
-		{
-			locationBasedModel.setState( locationStateModelConverter.convert( locationBased.getState() ) );
-		}
+        if (locationBased.getState() != null) {
+            locationBasedModel.setState(locationStateModelConverter.convert(locationBased.getState()));
+        }
 
-		return locationBasedModel;
-	}
+        return locationBasedModel;
+    }
 }

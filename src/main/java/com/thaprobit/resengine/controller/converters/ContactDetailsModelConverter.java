@@ -10,24 +10,22 @@ import org.springframework.stereotype.Component;
  * @since 01/01/2021 11:54 AM
  */
 @Component
-public class ContactDetailsModelConverter implements Converter<ContactDetails, ContactDetailsModel>
-{
-	@Override
-	public ContactDetailsModel convert( ContactDetails contactDetails )
-	{
-		ContactDetailsModel contactDetailsModel = new ContactDetailsModel();
-		contactDetailsModel.setContactId( contactDetails.getContactId() );
-		contactDetailsModel.setType( contactDetails.getType() );
-		contactDetailsModel.setName( contactDetails.getName() );
-		contactDetailsModel.setEmail( contactDetails.getEmail() );
-		contactDetailsModel.setWeb( contactDetails.getWeb() );
-		contactDetailsModel.setPhonePrimary( contactDetails.getPhonePrimary() );
-		contactDetailsModel.setPhoneSecondary( contactDetails.getPhoneSecondary() );
-		contactDetailsModel.setAddress1( contactDetails.getAddress1() );
-		contactDetailsModel.setAddress2( contactDetails.getAddress2() );
-		contactDetailsModel.setAddress3( contactDetails.getAddress3() );
-		contactDetailsModel.setZip( contactDetails.getZip() );
+public class ContactDetailsModelConverter implements Converter<ContactDetails, ContactDetailsModel> {
+    @Override
+    public ContactDetailsModel convert(ContactDetails contactDetails) {
+        ContactDetailsModel contactDetailsModel = new ContactDetailsModel();
+        contactDetailsModel.setContactId(contactDetails.getContactId());
+        contactDetailsModel.setType(contactDetails.getType());
+        contactDetailsModel.setName(contactDetails.getName());
+        contactDetailsModel.setEmail(contactDetails.getEmail());
+        contactDetailsModel.setWeb(contactDetails.getWeb());
+        contactDetailsModel.setPhonePrimary(contactDetails.getPhonePrimary());
+        contactDetailsModel.setPhoneSecondary(contactDetails.getPhoneSecondary());
+        contactDetailsModel.setAddress1(contactDetails.getAddress1());
+        contactDetailsModel.setAddress2(contactDetails.getAddress2());
+        contactDetailsModel.setAddress3(contactDetails.getAddress3());
+        contactDetailsModel.setZip(contactDetails.getZip());
 
-		return contactDetailsModel;
-	}
+        return contactDetailsModel;
+    }
 }

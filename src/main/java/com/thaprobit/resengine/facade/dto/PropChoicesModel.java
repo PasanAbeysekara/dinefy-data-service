@@ -16,12 +16,11 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PropChoicesModel
-{
-	private PropChoiceID propChoiceId;
-	private String name;
-	private String description;
-	private BigDecimal amount;
-	private String amountCurrency;
-	private ChoiceModel sysChoice;
+public class PropChoicesModel {
+    private PropChoiceID propChoiceId;
+    private String name;
+    private String description;
+    private BigDecimal amount;
+    private String amountCurrency;
+    private ChoiceModel sysChoice;
 }

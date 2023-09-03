@@ -14,11 +14,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PropFacilityModel
-{
-	private PropFacilityID propFacilityId;
-	private String name;
-	private String description;
-	private int order;
-	private FacilitiesModel sysFacility;
+public class PropFacilityModel {
+    private PropFacilityID propFacilityId;
+    private String name;
+    private String description;
+    private int order;
+    private FacilitiesModel sysFacility;
 }

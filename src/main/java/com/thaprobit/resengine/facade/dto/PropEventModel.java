@@ -14,8 +14,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class PropEventModel
-{
-	private PropEventID propEventID;
-	private EventModel sysEvent;
+public class PropEventModel {
+    private PropEventID propEventID;
+    private EventModel sysEvent;
 }

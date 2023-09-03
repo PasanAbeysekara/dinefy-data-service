@@ -12,8 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:application.properties")
 @PropertySource("classpath:thread.properties")
 @PropertySource("classpath:system.properties")
-public class ApplicationPropertyConfig
-{
-	@Value("${sys.contract.bookable_horizon}")
-	public Short BOOKABLE_HORIZON;
+public class ApplicationPropertyConfig {
+    @Value("${sys.contract.bookable_horizon}")
+    public Short BOOKABLE_HORIZON;
 }

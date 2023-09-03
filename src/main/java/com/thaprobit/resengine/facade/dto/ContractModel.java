@@ -1,10 +1,6 @@
 package com.thaprobit.resengine.facade.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.sql.Date;
@@ -17,17 +13,16 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode( callSuper = false )
+@EqualsAndHashCode(callSuper = false)
 @ToString
-public class ContractModel extends RepresentationModel<ContractModel>
-{
-	private Long contractId;
-	private Short version;
-	private Long propId;
-	private String name;
-	private Date validFrom;
-	private Date validTo;
-	private String versionTxt;
-	private Short bookableHorizon;
-	private Set<SeasonModel> seasons;
+public class ContractModel extends RepresentationModel<ContractModel> {
+    private Long contractId;
+    private Short version;
+    private Long propId;
+    private String name;
+    private Date validFrom;
+    private Date validTo;
+    private String versionTxt;
+    private Short bookableHorizon;
+    private Set<SeasonModel> seasons;
 }

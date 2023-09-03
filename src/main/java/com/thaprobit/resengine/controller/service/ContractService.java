@@ -26,192 +26,166 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
-public class ContractService extends AbstractService<Contract>
-{
-	@Autowired
-	private ContractsRepository contractsRepository;
+public class ContractService extends AbstractService<Contract> {
+    @Autowired
+    private ContractsRepository contractsRepository;
 
-	@Autowired
-	private PropAvailDataAsyncExecutor availDataAsyncExecutor;
-
-
-	public ResponseEntity<List<Contract>> getProperty()
-	{
-
-		List<Contract> orgList = contractsRepository.findAll();
-
-		ResponseEntity<List<Contract>> responseEntity = null;
-		if( orgList.isEmpty() )
-		{
-			responseEntity = ResponseEntity.notFound().headers( addCommonHeaders( new HttpHeaders() ) ).build();
-		}
-		else
-		{
-			responseEntity = ResponseEntity.ok().headers( addCommonHeaders( new HttpHeaders() ) ).body( orgList );
-		}
+    @Autowired
+    private PropAvailDataAsyncExecutor availDataAsyncExecutor;
 
 
-		return responseEntity;
-	}
+    public ResponseEntity<List<Contract>> getProperty() {
 
-	/**
-	 * Get Single Contract
-	 *
-	 * @param id contract ID
-	 * @return The Contract
-	 */
-	public ResponseEntity<ResponseWrapper<Contract>> getContract( long id )
-	{
-		Optional<Contract> contractOptional = contractsRepository.findById( id );
+        List<Contract> orgList = contractsRepository.findAll();
 
-		ResponseEntity<ResponseWrapper<Contract>> response;
-
-		if( contractOptional.isPresent() )
-		{
-			Contract contract = contractOptional.get();
-			Link selfRel = HATEOASProvider.contractSelfLinkProvider( contract.getContractId() );
-			contract.add( selfRel );
-
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, contract ) );
-
-		}
-		else
-		{
-			response = buildNotFoundResponseWrapped();
-		}
-
-		return response;
-	}
+        ResponseEntity<List<Contract>> responseEntity = null;
+        if (orgList.isEmpty()) {
+            responseEntity = ResponseEntity.notFound().headers(addCommonHeaders(new HttpHeaders())).build();
+        } else {
+            responseEntity = ResponseEntity.ok().headers(addCommonHeaders(new HttpHeaders())).body(orgList);
+        }
 
 
-	/**
-	 * Create a new Contract
-	 *
-	 * @param draft
-	 * @param contract Contract
-	 * @return Saved Contract Response wrapper
-	 */
-	@Transactional
-	public ResponseEntity<ResponseWrapper<Contract>> createContract( boolean draft, Contract contract )
-	{
-		ResponseEntity<ResponseWrapper<Contract>> response;
+        return responseEntity;
+    }
 
-		try
-		{
-			Long contractNextVal = contractsRepository.getNextVal();
-			contract.setContractId( contractNextVal );
+    /**
+     * Get Single Contract
+     *
+     * @param id contract ID
+     * @return The Contract
+     */
+    public ResponseEntity<ResponseWrapper<Contract>> getContract(long id) {
+        Optional<Contract> contractOptional = contractsRepository.findById(id);
 
-			preProcess( contract );
+        ResponseEntity<ResponseWrapper<Contract>> response;
 
-			Contract savedContract = contractsRepository.saveAndFlush( contract );
+        if (contractOptional.isPresent()) {
+            Contract contract = contractOptional.get();
+            Link selfRel = HATEOASProvider.contractSelfLinkProvider(contract.getContractId());
+            contract.add(selfRel);
 
-			Link selfRel = HATEOASProvider.contractSelfLinkProvider( contract.getContractId() );
-			savedContract.add( selfRel );
+            response = ResponseEntity.ok()
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, contract));
 
-			response = ResponseEntity.status( HttpStatus.CREATED )
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.CONTRACT_CREATE_SUCCESS, savedContract ) );
+        } else {
+            response = buildNotFoundResponseWrapped();
+        }
 
-			if( draft ) // TODO change this
-			{
-				availDataAsyncExecutor.executeAsynchronouslyTx( contract );
-			}
-
-		}
-		catch( Exception e )
-		{
-			log.error( "Error Occurred during contract saving : ", e );
-			response = buildExceptionErrorResponse( SystemOperation.CREATE, SystemMessages.CONTRACT_CREATE_FAILED, e );
-		}
-
-		return response;
-	}
-
-	/**
-	 * Create a new Contract
-	 *
-	 * @param contract Contract
-	 * @return Saved Contract Response wrapper
-	 */
-	public ResponseEntity<ResponseWrapper<Contract>> updateContract( long id, Contract contract )
-	{
-		ResponseEntity<ResponseWrapper<Contract>> response;
-
-		try
-		{
-			contract.setContractId( id );
-			preProcess( contract );
-
-			Contract savedContract = contractsRepository.save( contract );
-
-			Link selfRel = HATEOASProvider.contractSelfLinkProvider( contract.getContractId() );
-			savedContract.add( selfRel );
-
-			response = ResponseEntity.status( HttpStatus.CREATED )
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.MODIFY.withSuccess(), SystemMessages.CONTRACT_UPDATE_SUCCESS, savedContract ) );
-		}
-		catch( Exception e )
-		{
-			log.error( "Error Occurred during contract updating : ", e );
-			response = buildExceptionErrorResponse( SystemOperation.MODIFY, SystemMessages.CONTRACT_UPDATE_FAILED, e );
-		}
-
-		return response;
-	}
+        return response;
+    }
 
 
-	private void preProcess( Contract contract )
-	{
-		if( contract.getSeasons() != null )
-		{
-			long contractId = contract.getContractId();
+    /**
+     * Create a new Contract
+     *
+     * @param draft
+     * @param contract Contract
+     * @return Saved Contract Response wrapper
+     */
+    @Transactional
+    public ResponseEntity<ResponseWrapper<Contract>> createContract(boolean draft, Contract contract) {
+        ResponseEntity<ResponseWrapper<Contract>> response;
 
-			//contract.getSeasons().forEach( seasons -> seasons.setWeekDefinitions( null ) ); // TODO Do a proper fix  Issue : Hibernate generate unnecessary insert query  : insert into hngout.contract_availability (contract_id, season_id, contract_version, week_def_id) values (?, ?, ?, ?)
+        try {
+            Long contractNextVal = contractsRepository.getNextVal();
+            contract.setContractId(contractNextVal);
 
-			for( Seasons season : contract.getSeasons() )
-			{
-				season.getSeasonId().setContractId( contractId );
+            preProcess(contract);
 
-				if( season.getAvailabilities() != null )
-				{
-					for( ContractAvailability availability : season.getAvailabilities() )
-					{
-						availability.getAvailabilityID().setContractId( contractId );
-						availability.getAvailabilityID().setSeasonId( season.getSeasonId().getSeasonId() );
-					}
-				}
-			}
-		}
+            Contract savedContract = contractsRepository.saveAndFlush(contract);
 
-	}
+            Link selfRel = HATEOASProvider.contractSelfLinkProvider(contract.getContractId());
+            savedContract.add(selfRel);
 
-	/**
-	 * Delete contract
-	 *
-	 * @param id contract ID
-	 * @return
-	 */
-	public ResponseEntity<ResponseWrapper<Contract>> deleteContract( long id )
-	{
-		ResponseEntity<ResponseWrapper<Contract>> response;
+            response = ResponseEntity.status(HttpStatus.CREATED)
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.CREATE.withSuccess(), SystemMessages.CONTRACT_CREATE_SUCCESS, savedContract));
 
-		try
-		{
-			contractsRepository.deleteById( id );
+            if (draft) // TODO change this
+            {
+                availDataAsyncExecutor.executeAsynchronouslyTx(contract);
+            }
 
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.CONTRACT_DELETE_SUCCESS, "" ) );
-		}
-		catch( Exception e )
-		{
-			log.error( "Error Occurred during contract deleting : ", e );
-			response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.CONTRACT_DELETE_FAILED, e );
-		}
+        } catch (Exception e) {
+            log.error("Error Occurred during contract saving : ", e);
+            response = buildExceptionErrorResponse(SystemOperation.CREATE, SystemMessages.CONTRACT_CREATE_FAILED, e);
+        }
 
-		return response;
-	}
+        return response;
+    }
+
+    /**
+     * Create a new Contract
+     *
+     * @param contract Contract
+     * @return Saved Contract Response wrapper
+     */
+    public ResponseEntity<ResponseWrapper<Contract>> updateContract(long id, Contract contract) {
+        ResponseEntity<ResponseWrapper<Contract>> response;
+
+        try {
+            contract.setContractId(id);
+            preProcess(contract);
+
+            Contract savedContract = contractsRepository.save(contract);
+
+            Link selfRel = HATEOASProvider.contractSelfLinkProvider(contract.getContractId());
+            savedContract.add(selfRel);
+
+            response = ResponseEntity.status(HttpStatus.CREATED)
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.MODIFY.withSuccess(), SystemMessages.CONTRACT_UPDATE_SUCCESS, savedContract));
+        } catch (Exception e) {
+            log.error("Error Occurred during contract updating : ", e);
+            response = buildExceptionErrorResponse(SystemOperation.MODIFY, SystemMessages.CONTRACT_UPDATE_FAILED, e);
+        }
+
+        return response;
+    }
+
+
+    private void preProcess(Contract contract) {
+        if (contract.getSeasons() != null) {
+            long contractId = contract.getContractId();
+
+            //contract.getSeasons().forEach( seasons -> seasons.setWeekDefinitions( null ) ); // TODO Do a proper fix  Issue : Hibernate generate unnecessary insert query  : insert into hngout.contract_availability (contract_id, season_id, contract_version, week_def_id) values (?, ?, ?, ?)
+
+            for (Seasons season : contract.getSeasons()) {
+                season.getSeasonId().setContractId(contractId);
+
+                if (season.getAvailabilities() != null) {
+                    for (ContractAvailability availability : season.getAvailabilities()) {
+                        availability.getAvailabilityID().setContractId(contractId);
+                        availability.getAvailabilityID().setSeasonId(season.getSeasonId().getSeasonId());
+                    }
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Delete contract
+     *
+     * @param id contract ID
+     * @return
+     */
+    public ResponseEntity<ResponseWrapper<Contract>> deleteContract(long id) {
+        ResponseEntity<ResponseWrapper<Contract>> response;
+
+        try {
+            contractsRepository.deleteById(id);
+
+            response = ResponseEntity.ok()
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.DELETE.withSuccess(), SystemMessages.CONTRACT_DELETE_SUCCESS, ""));
+        } catch (Exception e) {
+            log.error("Error Occurred during contract deleting : ", e);
+            response = buildExceptionErrorResponse(SystemOperation.DELETE, SystemMessages.CONTRACT_DELETE_FAILED, e);
+        }
+
+        return response;
+    }
 }

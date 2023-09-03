@@ -13,50 +13,45 @@ import java.util.Set;
  */
 @Data
 @AllArgsConstructor
-public class PropertyMediaWrapper
-{
+public class PropertyMediaWrapper {
 
-	private List<PropMediaModel> bannerImages;
-	private List<PropMediaModel> coverImages;
-	private List<PropMediaModel> otherMedia;
+    private List<PropMediaModel> bannerImages;
+    private List<PropMediaModel> coverImages;
+    private List<PropMediaModel> otherMedia;
 
-	public PropertyMediaWrapper()
-	{
-		bannerImages = new ArrayList<>();
-		coverImages = new ArrayList<>();
-		otherMedia = new ArrayList<>();
-	}
+    public PropertyMediaWrapper() {
+        bannerImages = new ArrayList<>();
+        coverImages = new ArrayList<>();
+        otherMedia = new ArrayList<>();
+    }
 
-	public void processPropertyMedia( Set<PropMedia> propMedia )
-	{
-		propMedia.forEach( i -> setPropMediaModel( i ) );
-	}
+    public void processPropertyMedia(Set<PropMedia> propMedia) {
+        propMedia.forEach(i -> setPropMediaModel(i));
+    }
 
-	private void setPropMediaModel( PropMedia propMedia )
-	{
-		PropMediaModel propMediaModel = new PropMediaModel();
+    private void setPropMediaModel(PropMedia propMedia) {
+        PropMediaModel propMediaModel = new PropMediaModel();
 
-		propMediaModel.setMediaUrl( propMedia.getMediaUrl() );
-		propMediaModel.setMediaType( propMedia.getType() );
-		propMediaModel.setTitle( propMedia.getTitle() );
-		propMediaModel.setThumbnail( propMedia.getThumbnail() );
+        propMediaModel.setMediaUrl(propMedia.getMediaUrl());
+        propMediaModel.setMediaType(propMedia.getType());
+        propMediaModel.setTitle(propMedia.getTitle());
+        propMediaModel.setThumbnail(propMedia.getThumbnail());
 
-		switch( propMedia.getCategory() )
-		{
-			case "banner":
-				bannerImages.add( propMediaModel );
-				break;
+        switch (propMedia.getCategory()) {
+            case "banner":
+                bannerImages.add(propMediaModel);
+                break;
 
-			case "cover":
-				coverImages.add( propMediaModel );
-				break;
+            case "cover":
+                coverImages.add(propMediaModel);
+                break;
 
-			case "other":
-				otherMedia.add( propMediaModel );
-				break;
+            case "other":
+                otherMedia.add(propMediaModel);
+                break;
 
-			default:
-				break;
-		}
-	}
+            default:
+                break;
+        }
+    }
 }

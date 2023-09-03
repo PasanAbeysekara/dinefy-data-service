@@ -13,36 +13,32 @@ import org.springframework.stereotype.Component;
  * @since 5/4/2020 1:27 AM
  */
 @Component
-public class TagsModelAssembler extends RepresentationModelAssemblerSupport<Tags, TagsModel>
-{
+public class TagsModelAssembler extends RepresentationModelAssemblerSupport<Tags, TagsModel> {
 
-	public TagsModelAssembler()
-	{
-		super( SysTagsController.class, TagsModel.class );
-	}
+    public TagsModelAssembler() {
+        super(SysTagsController.class, TagsModel.class);
+    }
 
-	@Override
-	public TagsModel toModel( Tags entity )
-	{
-		TagsModel tagModel = new TagsModel();
-		tagModel.setTagId( entity.getTagId() );
-		tagModel.setCode( entity.getCode() );
-		tagModel.setName( entity.getName() );
-		tagModel.setIcon( entity.getIcon() );
-		tagModel.setDescription( entity.getDescription() );
+    @Override
+    public TagsModel toModel(Tags entity) {
+        TagsModel tagModel = new TagsModel();
+        tagModel.setTagId(entity.getTagId());
+        tagModel.setCode(entity.getCode());
+        tagModel.setName(entity.getName());
+        tagModel.setIcon(entity.getIcon());
+        tagModel.setDescription(entity.getDescription());
 
-		tagModel.add( HATEOASProvider.sysFacilitySelfLinkProvider( tagModel.getTagId() ) );
+        tagModel.add(HATEOASProvider.sysFacilitySelfLinkProvider(tagModel.getTagId()));
 
-		return tagModel;
-	}
+        return tagModel;
+    }
 
-	@Override
-	public CollectionModel<TagsModel> toCollectionModel( Iterable<? extends Tags> entities )
-	{
-		CollectionModel<TagsModel> facilitiesModel = super.toCollectionModel( entities );
+    @Override
+    public CollectionModel<TagsModel> toCollectionModel(Iterable<? extends Tags> entities) {
+        CollectionModel<TagsModel> facilitiesModel = super.toCollectionModel(entities);
 
-		facilitiesModel.add( HATEOASProvider.sysFacilitySelfLinkProvider( 10 ) ); // TODO change
+        facilitiesModel.add(HATEOASProvider.sysFacilitySelfLinkProvider(10)); // TODO change
 
-		return facilitiesModel;
-	}
+        return facilitiesModel;
+    }
 }

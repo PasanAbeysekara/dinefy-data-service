@@ -25,152 +25,131 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
-public class LocationService extends AbstractService<LocationBased>
-{
+public class LocationService extends AbstractService<LocationBased> {
 
-	@Autowired
-	private LocationRepository locationRepository;
+    @Autowired
+    private LocationRepository locationRepository;
 
-	@Autowired
-	private LocationsWrapperConverter locationsWrapperConverter;
-
-
-	/**
-	 * Get All based locations
-	 *
-	 * @param pageable The Pageable
-	 * @return All base locations
-	 */
-	public ResponseEntity<ResponseWrapper<LocationsWrapper>> getLocations( Pageable pageable )
-	{
-		List<LocationBased> locationBasedList = locationRepository.findAll( pageable ).getContent();
-
-		ResponseEntity<ResponseWrapper<LocationsWrapper>> response;
-
-		if( !locationBasedList.isEmpty() )
-		{
-			LocationsWrapper locationsWrapper = locationsWrapperConverter.convert( locationBasedList );
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, locationsWrapper ) );
-		}
-		else
-		{
-			response = ResponseEntity.status( HttpStatus.NOT_FOUND )
-					.headers( new HttpHeaders() )
-					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.NOT_FOUND, "" ) );
-		}
-
-		return response;
-	}
-
-	/**
-	 * Get Single Location
-	 *
-	 * @param locationId Based Location ID
-	 * @return The Based Location
-	 */
-	public ResponseEntity<ResponseWrapper<LocationBased>> getBasedLocation( long locationId )
-	{
-		Optional<LocationBased> optionalLocationBased = locationRepository.findById( locationId );
-
-		ResponseEntity<ResponseWrapper<LocationBased>> response;
-
-		if( optionalLocationBased.isPresent() )
-		{
-			LocationBased locationBased = optionalLocationBased.get();
-
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, locationBased ) );
-		}
-		else
-		{
-			response = buildNotFoundResponseWrapped();
-		}
-
-		return response;
-	}
+    @Autowired
+    private LocationsWrapperConverter locationsWrapperConverter;
 
 
-	/**
-	 * Create a new base location
-	 *
-	 * @param locationBased LocationBased
-	 * @return Saved LocationBased
-	 */
-	public ResponseEntity<ResponseWrapper<LocationBased>> createLocationBased( LocationBased locationBased )
-	{
-		ResponseEntity<ResponseWrapper<LocationBased>> response;
+    /**
+     * Get All based locations
+     *
+     * @param pageable The Pageable
+     * @return All base locations
+     */
+    public ResponseEntity<ResponseWrapper<LocationsWrapper>> getLocations(Pageable pageable) {
+        List<LocationBased> locationBasedList = locationRepository.findAll(pageable).getContent();
 
-		try
-		{
-			LocationBased savedLocationBased = locationRepository.save( locationBased );
+        ResponseEntity<ResponseWrapper<LocationsWrapper>> response;
 
-			response = ResponseEntity.status( HttpStatus.CREATED )
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.LOCATION_BASED_CREATE_SUCCESS, savedLocationBased ) );
-		}
-		catch( Exception e )
-		{
-			response = buildExceptionErrorResponse( SystemOperation.CREATE, SystemMessages.LOCATION_BASED_CREATE_FAILED, e );
-		}
+        if (!locationBasedList.isEmpty()) {
+            LocationsWrapper locationsWrapper = locationsWrapperConverter.convert(locationBasedList);
+            response = ResponseEntity.ok()
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, locationsWrapper));
+        } else {
+            response = ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .headers(new HttpHeaders())
+                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.NOT_FOUND, ""));
+        }
 
-		return response;
-	}
+        return response;
+    }
 
-	/**
-	 * Update a based location
-	 *
-	 * @param locationId    LocationBased ID
-	 * @param locationBased LocationBased
-	 * @return Updated LocationBased
-	 */
-	public ResponseEntity<ResponseWrapper<LocationBased>> updateLocationBased( long locationId, LocationBased locationBased )
-	{
-		ResponseEntity<ResponseWrapper<LocationBased>> response;
+    /**
+     * Get Single Location
+     *
+     * @param locationId Based Location ID
+     * @return The Based Location
+     */
+    public ResponseEntity<ResponseWrapper<LocationBased>> getBasedLocation(long locationId) {
+        Optional<LocationBased> optionalLocationBased = locationRepository.findById(locationId);
 
-		try
-		{
-			locationBased.setLocationId( locationId );
+        ResponseEntity<ResponseWrapper<LocationBased>> response;
 
-			LocationBased updatedLocationBased = locationRepository.save( locationBased );
+        if (optionalLocationBased.isPresent()) {
+            LocationBased locationBased = optionalLocationBased.get();
 
-			response = ResponseEntity.status( HttpStatus.CREATED )
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.MODIFY.withSuccess(), SystemMessages.LOCATION_BASED_UPDATE_SUCCESS, updatedLocationBased ) );
-		}
-		catch( Exception e )
-		{
-			response = buildExceptionErrorResponse( SystemOperation.MODIFY, SystemMessages.LOCATION_BASED_UPDATE_FAILED, e );
-		}
+            response = ResponseEntity.ok()
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, locationBased));
+        } else {
+            response = buildNotFoundResponseWrapped();
+        }
 
-		return response;
-	}
+        return response;
+    }
 
-	/**
-	 * Delete LocationBased
-	 *
-	 * @param locationId LocationBased ID
-	 * @return Delete LocationBased
-	 */
-	public ResponseEntity<ResponseWrapper<LocationBased>> deleteLocationBased( long locationId )
-	{
-		ResponseEntity<ResponseWrapper<LocationBased>> response;
 
-		try
-		{
-			locationRepository.deleteById( locationId );
+    /**
+     * Create a new base location
+     *
+     * @param locationBased LocationBased
+     * @return Saved LocationBased
+     */
+    public ResponseEntity<ResponseWrapper<LocationBased>> createLocationBased(LocationBased locationBased) {
+        ResponseEntity<ResponseWrapper<LocationBased>> response;
 
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.LOCATION_BASED_DELETE_SUCCESS, "" ) );
-		}
-		catch( Exception e )
-		{
-			response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.LOCATION_BASED_DELETE_FAILED, e );
-		}
+        try {
+            LocationBased savedLocationBased = locationRepository.save(locationBased);
 
-		return response;
-	}
+            response = ResponseEntity.status(HttpStatus.CREATED)
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.CREATE.withSuccess(), SystemMessages.LOCATION_BASED_CREATE_SUCCESS, savedLocationBased));
+        } catch (Exception e) {
+            response = buildExceptionErrorResponse(SystemOperation.CREATE, SystemMessages.LOCATION_BASED_CREATE_FAILED, e);
+        }
+
+        return response;
+    }
+
+    /**
+     * Update a based location
+     *
+     * @param locationId    LocationBased ID
+     * @param locationBased LocationBased
+     * @return Updated LocationBased
+     */
+    public ResponseEntity<ResponseWrapper<LocationBased>> updateLocationBased(long locationId, LocationBased locationBased) {
+        ResponseEntity<ResponseWrapper<LocationBased>> response;
+
+        try {
+            locationBased.setLocationId(locationId);
+
+            LocationBased updatedLocationBased = locationRepository.save(locationBased);
+
+            response = ResponseEntity.status(HttpStatus.CREATED)
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.MODIFY.withSuccess(), SystemMessages.LOCATION_BASED_UPDATE_SUCCESS, updatedLocationBased));
+        } catch (Exception e) {
+            response = buildExceptionErrorResponse(SystemOperation.MODIFY, SystemMessages.LOCATION_BASED_UPDATE_FAILED, e);
+        }
+
+        return response;
+    }
+
+    /**
+     * Delete LocationBased
+     *
+     * @param locationId LocationBased ID
+     * @return Delete LocationBased
+     */
+    public ResponseEntity<ResponseWrapper<LocationBased>> deleteLocationBased(long locationId) {
+        ResponseEntity<ResponseWrapper<LocationBased>> response;
+
+        try {
+            locationRepository.deleteById(locationId);
+
+            response = ResponseEntity.ok()
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.DELETE.withSuccess(), SystemMessages.LOCATION_BASED_DELETE_SUCCESS, ""));
+        } catch (Exception e) {
+            response = buildExceptionErrorResponse(SystemOperation.DELETE, SystemMessages.LOCATION_BASED_DELETE_FAILED, e);
+        }
+
+        return response;
+    }
 }

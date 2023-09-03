@@ -12,33 +12,29 @@ import org.springframework.stereotype.Component;
  * @author Tharindu Aththanayaka
  */
 @Component
-public class ChoiceModelAssembler extends RepresentationModelAssemblerSupport<Choices, ChoiceModel>
-{
-	public ChoiceModelAssembler()
-	{
-		super( SysChoiceController.class, ChoiceModel.class );
-	}
+public class ChoiceModelAssembler extends RepresentationModelAssemblerSupport<Choices, ChoiceModel> {
+    public ChoiceModelAssembler() {
+        super(SysChoiceController.class, ChoiceModel.class);
+    }
 
-	@Override
-	public ChoiceModel toModel( Choices entity )
-	{
-		ChoiceModel choiceModel = new ChoiceModel();
-		choiceModel.setChoiceId( entity.getChoiceId() );
-		choiceModel.setName( entity.getName() );
-		choiceModel.setDescription( entity.getDescription() );
+    @Override
+    public ChoiceModel toModel(Choices entity) {
+        ChoiceModel choiceModel = new ChoiceModel();
+        choiceModel.setChoiceId(entity.getChoiceId());
+        choiceModel.setName(entity.getName());
+        choiceModel.setDescription(entity.getDescription());
 
-		choiceModel.add( HATEOASProvider.sysChoicesSelfLinkProvider( entity.getChoiceId() ) );
+        choiceModel.add(HATEOASProvider.sysChoicesSelfLinkProvider(entity.getChoiceId()));
 
-		return choiceModel;
-	}
+        return choiceModel;
+    }
 
-	@Override
-	public CollectionModel<ChoiceModel> toCollectionModel( Iterable<? extends Choices> entities )
-	{
-		CollectionModel<ChoiceModel> choicesModels = super.toCollectionModel( entities );
+    @Override
+    public CollectionModel<ChoiceModel> toCollectionModel(Iterable<? extends Choices> entities) {
+        CollectionModel<ChoiceModel> choicesModels = super.toCollectionModel(entities);
 
-		choicesModels.add( HATEOASProvider.sysChoicesSelfLinkProvider( 1 ) );
+        choicesModels.add(HATEOASProvider.sysChoicesSelfLinkProvider(1));
 
-		return choicesModels;
-	}
+        return choicesModels;
+    }
 }

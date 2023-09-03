@@ -11,17 +11,15 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class ApplicationEventListener
-{
+public class ApplicationEventListener {
 
-	@EventListener
-	public void onApplicationEvent( ContextRefreshedEvent event )
-	{
-		log.info( "**************************** Increment counter ******************************** " );
-		log.info( "**************************** Increment counter ******************************** " );
-		log.info( "**************************** Increment counter ******************************** " );
-		log.info( "**************************** Increment counter ******************************** " );
-		log.info( "**************************** Increment counter ******************************** " );
-		log.info( "**************************** Increment counter ******************************** " );
-	}
+    @EventListener
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        log.info("**************************** Increment counter ******************************** ");
+        log.info("**************************** Increment counter ******************************** ");
+        log.info("**************************** Increment counter ******************************** ");
+        log.info("**************************** Increment counter ******************************** ");
+        log.info("**************************** Increment counter ******************************** ");
+        log.info("**************************** Increment counter ******************************** ");
+    }
 }

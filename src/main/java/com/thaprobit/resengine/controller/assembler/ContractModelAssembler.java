@@ -18,27 +18,28 @@ import java.util.stream.Collectors;
  * @since 01/01/2021 10:44 AM
  */
 @Component
-public class ContractModelAssembler extends RepresentationModelAssemblerSupport<Contract, ContractModel>
-{
+public class ContractModelAssembler extends RepresentationModelAssemblerSupport<Contract, ContractModel> {
 
-	@Autowired
-	private SeasonModelConverter seasonModelConverter;
+    @Autowired
+    private SeasonModelConverter seasonModelConverter;
 
-	public ContractModelAssembler() { super( ContractController.class, ContractModel.class ); }
+    public ContractModelAssembler() {
+        super(ContractController.class, ContractModel.class);
+    }
 
-	@Override public ContractModel toModel( Contract entity )
-	{
-		ContractModel contractModel = new ContractModel();
-		contractModel.setContractId( entity.getContractId() );
-		contractModel.setVersion( entity.getVersion() );
-		contractModel.setPropId( entity.getPropId() );
-		contractModel.setName( entity.getName() );
-		contractModel.setValidFrom( entity.getValidFrom() );
-		contractModel.setValidTo( entity.getValidTo() );
-		contractModel.setVersionTxt( entity.getVersionTxt() );
-		contractModel.add( HATEOASProvider.contractSelfLinkProvider( entity.getContractId() ) );
-		contractModel.setSeasons( entity.getSeasons().stream().map( seasonModelConverter :: convert ).collect( Collectors.toSet()) );
+    @Override
+    public ContractModel toModel(Contract entity) {
+        ContractModel contractModel = new ContractModel();
+        contractModel.setContractId(entity.getContractId());
+        contractModel.setVersion(entity.getVersion());
+        contractModel.setPropId(entity.getPropId());
+        contractModel.setName(entity.getName());
+        contractModel.setValidFrom(entity.getValidFrom());
+        contractModel.setValidTo(entity.getValidTo());
+        contractModel.setVersionTxt(entity.getVersionTxt());
+        contractModel.add(HATEOASProvider.contractSelfLinkProvider(entity.getContractId()));
+        contractModel.setSeasons(entity.getSeasons().stream().map(seasonModelConverter::convert).collect(Collectors.toSet()));
 
-		return contractModel;
-	}
+        return contractModel;
+    }
 }

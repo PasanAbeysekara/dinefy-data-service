@@ -10,17 +10,15 @@ import org.springframework.stereotype.Component;
  * @since 01/01/2021 10:08 AM
  */
 @Component
-public class LocationStateModelConverter implements Converter<LocationState, LocationStateModel>
-{
+public class LocationStateModelConverter implements Converter<LocationState, LocationStateModel> {
 
-	@Override
-	public LocationStateModel convert( LocationState locationState )
-	{
-		LocationStateModel locationStateModel = new LocationStateModel();
-		locationStateModel.setStateID( locationState.getStateId() );
-		locationStateModel.setName( locationState.getName() );
+    @Override
+    public LocationStateModel convert(LocationState locationState) {
+        LocationStateModel locationStateModel = new LocationStateModel();
+        locationStateModel.setStateID(locationState.getStateId());
+        locationStateModel.setName(locationState.getName());
 
-		return locationStateModel;
-	}
+        return locationStateModel;
+    }
 
 }

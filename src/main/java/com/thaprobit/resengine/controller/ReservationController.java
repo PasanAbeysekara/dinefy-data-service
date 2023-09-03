@@ -8,14 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Tharindu Aththanayake
@@ -23,57 +16,63 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping( URLProvider.SERVICE_RESERVATION )
-public class ReservationController
-{
-	final ReservationService reservationService;
+@RequestMapping(URLProvider.SERVICE_RESERVATION)
+public class ReservationController {
+    final ReservationService reservationService;
 
-	/**
-	 * Get all reservations
-	 *
-	 * @param pageable The pageable
-	 * @return The reservations
-	 */
-	@GetMapping("/reservations")
-	public ResponseEntity<ResponseWrapper< Page<Reservation> >> getAllReservations( Pageable pageable ) { return reservationService.getAllReservations( pageable ); }
+    /**
+     * Get all reservations
+     *
+     * @param pageable The pageable
+     * @return The reservations
+     */
+    @GetMapping("/reservations")
+    public ResponseEntity<ResponseWrapper<Page<Reservation>>> getAllReservations(Pageable pageable) {
+        return reservationService.getAllReservations(pageable);
+    }
 
-	/**
-	 * Get Single property
-	 *
-	 * @param id property ID
-	 * @return The PropertyModel
-	 */
-	@GetMapping("/reservations/{id}")
-	public ResponseEntity<ResponseWrapper<Reservation>> getReservation( @PathVariable("id")  long id ) { return reservationService.getReservation( id ); }
+    /**
+     * Get Single property
+     *
+     * @param id property ID
+     * @return The PropertyModel
+     */
+    @GetMapping("/reservations/{id}")
+    public ResponseEntity<ResponseWrapper<Reservation>> getReservation(@PathVariable("id") long id) {
+        return reservationService.getReservation(id);
+    }
 
-	/**
-	 * Create a reservation
-	 *
-	 * @param reservation The reservation
-	 * @return The saved reservation
-	 */
-	@PostMapping("/reservations")
-	public ResponseEntity<ResponseWrapper<Reservation>> createReservation( @RequestBody Reservation reservation )
-	{
-		return reservationService.createReservation( reservation );
-	}
+    /**
+     * Create a reservation
+     *
+     * @param reservation The reservation
+     * @return The saved reservation
+     */
+    @PostMapping("/reservations")
+    public ResponseEntity<ResponseWrapper<Reservation>> createReservation(@RequestBody Reservation reservation) {
+        return reservationService.createReservation(reservation);
+    }
 
-	/**
-	 * Update a reservation
-	 *
-	 * @param id			The reservation ID
-	 * @param reservation 	The reservation
-	 * @return The updated reservation
-	 */
-	@PutMapping("/reservations/{id}")
-	public ResponseEntity<ResponseWrapper<Reservation>> updateReservation(@PathVariable("id") long id, @RequestBody  Reservation reservation ) { return  reservationService.updateReservation( id, reservation ); }
+    /**
+     * Update a reservation
+     *
+     * @param id          The reservation ID
+     * @param reservation The reservation
+     * @return The updated reservation
+     */
+    @PutMapping("/reservations/{id}")
+    public ResponseEntity<ResponseWrapper<Reservation>> updateReservation(@PathVariable("id") long id, @RequestBody Reservation reservation) {
+        return reservationService.updateReservation(id, reservation);
+    }
 
-	/**
-	 * Delete a reservation
-	 *
-	 * @param id The reservation ID
-	 * @return The deleted reservation response
-	 */
-	@DeleteMapping("/reservations/{id}")
-	public ResponseEntity<ResponseWrapper<Reservation>> deleteReservation( @PathVariable("id")  long id ) { return  reservationService.deleteReservation( id ); }
+    /**
+     * Delete a reservation
+     *
+     * @param id The reservation ID
+     * @return The deleted reservation response
+     */
+    @DeleteMapping("/reservations/{id}")
+    public ResponseEntity<ResponseWrapper<Reservation>> deleteReservation(@PathVariable("id") long id) {
+        return reservationService.deleteReservation(id);
+    }
 }

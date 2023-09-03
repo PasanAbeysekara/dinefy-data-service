@@ -1,10 +1,6 @@
 package com.thaprobit.resengine.facade.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.domain.Page;
 
 import java.util.Set;
@@ -18,9 +14,8 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class LocationsWrapper
-{
-	private Long countryId;
-	private Set<LocationStateWrapper> states;
-	private Page<LocationBasedWrapper> cities;
+public class LocationsWrapper {
+    private Long countryId;
+    private Set<LocationStateWrapper> states;
+    private Page<LocationBasedWrapper> cities;
 }

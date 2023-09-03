@@ -12,25 +12,22 @@ import org.springframework.stereotype.Component;
  * @since 01/01/2021 11:39 AM
  */
 @Component
-public class PropFacilityModelConverter implements Converter<PropFacilities, PropFacilityModel>
-{
-	@Autowired
-	private FacilitiesModelAssembler facilitiesModelAssembler;
+public class PropFacilityModelConverter implements Converter<PropFacilities, PropFacilityModel> {
+    @Autowired
+    private FacilitiesModelAssembler facilitiesModelAssembler;
 
-	@Override
-	public PropFacilityModel convert( PropFacilities propFacilities )
-	{
-		PropFacilityModel propFacilitiesModel = new PropFacilityModel();
-		propFacilitiesModel.setPropFacilityId( propFacilities.getPropFacilityId() );
-		propFacilitiesModel.setName( propFacilities.getName() );
-		propFacilitiesModel.setDescription( propFacilities.getDescription() );
-		propFacilitiesModel.setOrder( propFacilities.getOrder() );
+    @Override
+    public PropFacilityModel convert(PropFacilities propFacilities) {
+        PropFacilityModel propFacilitiesModel = new PropFacilityModel();
+        propFacilitiesModel.setPropFacilityId(propFacilities.getPropFacilityId());
+        propFacilitiesModel.setName(propFacilities.getName());
+        propFacilitiesModel.setDescription(propFacilities.getDescription());
+        propFacilitiesModel.setOrder(propFacilities.getOrder());
 
-		if( propFacilities.getSysFacility() != null)
-		{
-			propFacilitiesModel.setSysFacility( facilitiesModelAssembler.toModel( propFacilities.getSysFacility() ) );
-		}
+        if (propFacilities.getSysFacility() != null) {
+            propFacilitiesModel.setSysFacility(facilitiesModelAssembler.toModel(propFacilities.getSysFacility()));
+        }
 
-		return propFacilitiesModel;
-	}
+        return propFacilitiesModel;
+    }
 }

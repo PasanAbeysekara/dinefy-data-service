@@ -12,18 +12,16 @@ import org.springframework.stereotype.Component;
  * @since 01/01/2021 03:40 PM
  */
 @Component
-public class PropEventModelConverter implements Converter<PropEvent, PropEventModel>
-{
-	@Autowired
-	private EventsModelAssembler eventsModelAssembler;
+public class PropEventModelConverter implements Converter<PropEvent, PropEventModel> {
+    @Autowired
+    private EventsModelAssembler eventsModelAssembler;
 
-	@Override
-	public PropEventModel convert( PropEvent propEvent )
-	{
-		PropEventModel propEventModel = new PropEventModel();
-		propEventModel.setPropEventID( propEvent.getPropEventID() );
-		propEventModel.setSysEvent( eventsModelAssembler.toModel( propEvent.getSysEvent() ) );
+    @Override
+    public PropEventModel convert(PropEvent propEvent) {
+        PropEventModel propEventModel = new PropEventModel();
+        propEventModel.setPropEventID(propEvent.getPropEventID());
+        propEventModel.setSysEvent(eventsModelAssembler.toModel(propEvent.getSysEvent()));
 
-		return propEventModel;
-	}
+        return propEventModel;
+    }
 }

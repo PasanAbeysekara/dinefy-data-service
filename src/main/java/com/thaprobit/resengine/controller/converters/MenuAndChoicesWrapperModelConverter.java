@@ -14,20 +14,19 @@ import java.util.stream.Collectors;
  * @since 01/01/2021 12:54 PM
  */
 @Component
-public class MenuAndChoicesWrapperModelConverter implements Converter< MenuAndChoicesWrapper, MenuAndChoicesWrapperModel>
-{
-	@Autowired
-	private MenuModelAssembler menuModelAssembler;
+public class MenuAndChoicesWrapperModelConverter implements Converter<MenuAndChoicesWrapper, MenuAndChoicesWrapperModel> {
+    @Autowired
+    private MenuModelAssembler menuModelAssembler;
 
-	@Autowired
-	private PropChoicesModelConverter propChoicesModelConverter;
+    @Autowired
+    private PropChoicesModelConverter propChoicesModelConverter;
 
-	@Override public MenuAndChoicesWrapperModel convert( MenuAndChoicesWrapper menuAndChoicesWrapper )
-	{
-		MenuAndChoicesWrapperModel menuAndChoicesWrapperModel = new MenuAndChoicesWrapperModel();
-		menuAndChoicesWrapperModel.setMenus( menuAndChoicesWrapper.getMenus().stream().map( menuModelAssembler :: toModel ).collect( Collectors.toSet()) );
-		menuAndChoicesWrapperModel.setChoices( menuAndChoicesWrapper.getChoices().stream().map( propChoicesModelConverter :: convert ).collect( Collectors.toSet()) );
+    @Override
+    public MenuAndChoicesWrapperModel convert(MenuAndChoicesWrapper menuAndChoicesWrapper) {
+        MenuAndChoicesWrapperModel menuAndChoicesWrapperModel = new MenuAndChoicesWrapperModel();
+        menuAndChoicesWrapperModel.setMenus(menuAndChoicesWrapper.getMenus().stream().map(menuModelAssembler::toModel).collect(Collectors.toSet()));
+        menuAndChoicesWrapperModel.setChoices(menuAndChoicesWrapper.getChoices().stream().map(propChoicesModelConverter::convert).collect(Collectors.toSet()));
 
-		return menuAndChoicesWrapperModel;
-	}
+        return menuAndChoicesWrapperModel;
+    }
 }

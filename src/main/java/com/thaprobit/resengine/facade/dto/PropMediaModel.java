@@ -13,10 +13,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PropMediaModel
-{
-	private String mediaUrl;
-	private String title;
-	private String mediaType;
-	private String thumbnail;
+public class PropMediaModel {
+    private String mediaUrl;
+    private String title;
+    private String mediaType;
+    private String thumbnail;
 }

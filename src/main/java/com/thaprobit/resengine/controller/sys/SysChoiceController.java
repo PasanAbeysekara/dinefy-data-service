@@ -10,14 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Tharindu Aththanayake
@@ -25,68 +18,62 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(URLProvider.SERVICE_DATA)
 @Slf4j
-public class SysChoiceController
-{
-	@Autowired
-	private SysChoiceService choiceService;
+public class SysChoiceController {
+    @Autowired
+    private SysChoiceService choiceService;
 
-	/**
-	 * Get All Choices
-	 *
-	 * @return all sys choices
-	 */
-	@GetMapping("/choices")
-	public ResponseEntity<ResponseWrapper<PagedModel<ChoiceModel>>> getChoices( Pageable pageable )
-	{
-		return choiceService.getChoices( pageable );
-	}
+    /**
+     * Get All Choices
+     *
+     * @return all sys choices
+     */
+    @GetMapping("/choices")
+    public ResponseEntity<ResponseWrapper<PagedModel<ChoiceModel>>> getChoices(Pageable pageable) {
+        return choiceService.getChoices(pageable);
+    }
 
-	/**
-	 * Get Single Choice
-	 *
-	 * @param id Choice ID
-	 * @return The Choice
-	 */
-	@GetMapping("/choices/{id}")
-	public ResponseEntity<ResponseWrapper<Choices>> getChoice( @PathVariable("id") int id )
-	{
-		return choiceService.getChoice( id );
-	}
+    /**
+     * Get Single Choice
+     *
+     * @param id Choice ID
+     * @return The Choice
+     */
+    @GetMapping("/choices/{id}")
+    public ResponseEntity<ResponseWrapper<Choices>> getChoice(@PathVariable("id") int id) {
+        return choiceService.getChoice(id);
+    }
 
-	/**
-	 * Create a Choice
-	 *
-	 * @param choice The Choice
-	 * @return Saved Choice response
-	 */
-	@PostMapping("/choices")
-	public ResponseEntity<ResponseWrapper<Choices>> createChoice( @RequestBody Choices choice )
-	{
-		return choiceService.createChoice( choice );
-	}
+    /**
+     * Create a Choice
+     *
+     * @param choice The Choice
+     * @return Saved Choice response
+     */
+    @PostMapping("/choices")
+    public ResponseEntity<ResponseWrapper<Choices>> createChoice(@RequestBody Choices choice) {
+        return choiceService.createChoice(choice);
+    }
 
-	/**
-	 * Update a Choice
-	 *
-	 * @param id     The Choice ID
-	 * @param choice The Choice
-	 * @return Updated Choice response
-	 */
-	@PutMapping("/choices/{id}")
-	public ResponseEntity<ResponseWrapper<Choices>> updateChoice( @PathVariable("id") int id, @RequestBody Choices choice )
-	{
-		return choiceService.updateChoice( id, choice );
-	}
+    /**
+     * Update a Choice
+     *
+     * @param id     The Choice ID
+     * @param choice The Choice
+     * @return Updated Choice response
+     */
+    @PutMapping("/choices/{id}")
+    public ResponseEntity<ResponseWrapper<Choices>> updateChoice(@PathVariable("id") int id, @RequestBody Choices choice) {
+        return choiceService.updateChoice(id, choice);
+    }
 
-	/**
-	 * Delete a Choice
-	 *
-	 * @param id The Choice ID
-	 * @return Delete Choice Response
-	 */
-	@DeleteMapping("/choices/{id}")
-	public ResponseEntity<ResponseWrapper<Choices>> deleteChoice( @PathVariable("id") int id )
-	{
-		return choiceService.deleteChoice( id );
-	}
+    /**
+     * Delete a Choice
+     *
+     * @param id The Choice ID
+     * @return Delete Choice Response
+     */
+    @DeleteMapping("/choices/{id}")
+    public ResponseEntity<ResponseWrapper<Choices>> deleteChoice(@PathVariable("id") int id) {
+        return choiceService.deleteChoice(id);
+    }
 }

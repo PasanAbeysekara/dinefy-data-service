@@ -18,29 +18,27 @@ import java.util.stream.Collectors;
  * @since 01/02/2021 12:19 AM
  */
 @Component
-public class LocationsWrapperConverter implements Converter< List<LocationBased> , LocationsWrapper >
-{
-	@Override
-	public LocationsWrapper convert( List<LocationBased> locationBasedList )
-	{
-		Set<LocationStateWrapper> locationStateWrappersSet = locationBasedList
-				.stream()
-				.map( i -> new LocationStateWrapper( i.getState().getStateId().getStateId(), i.getState().getName() ) )
-				.collect( Collectors.toSet() );
+public class LocationsWrapperConverter implements Converter<List<LocationBased>, LocationsWrapper> {
+    @Override
+    public LocationsWrapper convert(List<LocationBased> locationBasedList) {
+        Set<LocationStateWrapper> locationStateWrappersSet = locationBasedList
+                .stream()
+                .map(i -> new LocationStateWrapper(i.getState().getStateId().getStateId(), i.getState().getName()))
+                .collect(Collectors.toSet());
 
-		List<LocationBasedWrapper> locationBasedWrappers = locationBasedList
-				.stream()
-				.map( i -> new LocationBasedWrapper( i.getLocationId(), i.getName(), i.getState().getStateId().getStateId() ) )
-				.collect( Collectors.toList() );
+        List<LocationBasedWrapper> locationBasedWrappers = locationBasedList
+                .stream()
+                .map(i -> new LocationBasedWrapper(i.getLocationId(), i.getName(), i.getState().getStateId().getStateId()))
+                .collect(Collectors.toList());
 
-		Page<LocationBasedWrapper> locationBasedWrapperPage = new PageImpl<>( locationBasedWrappers );
+        Page<LocationBasedWrapper> locationBasedWrapperPage = new PageImpl<>(locationBasedWrappers);
 
-		LocationsWrapper locationsWrapper = new LocationsWrapper();
-		locationsWrapper.setCountryId( (long) locationBasedList.get( 0 ).getState().getStateId().getCountryId() );
-		locationsWrapper.setStates( locationStateWrappersSet );
-		locationsWrapper.setCities( locationBasedWrapperPage );
+        LocationsWrapper locationsWrapper = new LocationsWrapper();
+        locationsWrapper.setCountryId((long) locationBasedList.get(0).getState().getStateId().getCountryId());
+        locationsWrapper.setStates(locationStateWrappersSet);
+        locationsWrapper.setCities(locationBasedWrapperPage);
 
-		return locationsWrapper;
-	}
+        return locationsWrapper;
+    }
 
 }

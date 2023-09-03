@@ -17,8 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class MenuAndChoicesWrapper
-{
-	private Set<Menu> menus;
-	private Set<PropChoices> choices;
+public class MenuAndChoicesWrapper {
+    private Set<Menu> menus;
+    private Set<PropChoices> choices;
 }

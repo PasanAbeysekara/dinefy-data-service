@@ -18,17 +18,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AvailDataWrapper
-{
-	private Long propId;
-	private Long contractId;
+public class AvailDataWrapper {
+    private Long propId;
+    private Long contractId;
 
-	private LocalDate fromDate;
-	private LocalDate toDate;
+    private LocalDate fromDate;
+    private LocalDate toDate;
 
-	private List<LocalTime> timeSlots;
+    private List<LocalTime> timeSlots;
 
-	private List<AvailabilityUnit> availabilityUnits;
+    private List<AvailabilityUnit> availabilityUnits;
 
-	private List<DateWiseAvailData> dateWiseAvailData;
+    private List<DateWiseAvailData> dateWiseAvailData;
 }

@@ -14,37 +14,33 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class
-AvailUnitModelAssembler extends RepresentationModelAssemblerSupport<AvailabilityUnit, AvailabilityUnitModel>
-{
+AvailUnitModelAssembler extends RepresentationModelAssemblerSupport<AvailabilityUnit, AvailabilityUnitModel> {
 
-	public AvailUnitModelAssembler()
-	{
-		super( SysAvailabilityUnitController.class, AvailabilityUnitModel.class );
-	}
+    public AvailUnitModelAssembler() {
+        super(SysAvailabilityUnitController.class, AvailabilityUnitModel.class);
+    }
 
-	@Override
-	public AvailabilityUnitModel toModel( AvailabilityUnit entity )
-	{
-		AvailabilityUnitModel availabilityUnitModel = new AvailabilityUnitModel();
-		availabilityUnitModel.setUnitId( entity.getUnitId() );
-		availabilityUnitModel.setCode( entity.getCode() );
-		availabilityUnitModel.setName( entity.getName() );
-		availabilityUnitModel.setMinCapacity( entity.getMinCapacity() );
-		availabilityUnitModel.setMaxCapacity( entity.getMaxCapacity() );
-		availabilityUnitModel.setType( entity.getType() );
+    @Override
+    public AvailabilityUnitModel toModel(AvailabilityUnit entity) {
+        AvailabilityUnitModel availabilityUnitModel = new AvailabilityUnitModel();
+        availabilityUnitModel.setUnitId(entity.getUnitId());
+        availabilityUnitModel.setCode(entity.getCode());
+        availabilityUnitModel.setName(entity.getName());
+        availabilityUnitModel.setMinCapacity(entity.getMinCapacity());
+        availabilityUnitModel.setMaxCapacity(entity.getMaxCapacity());
+        availabilityUnitModel.setType(entity.getType());
 
-		availabilityUnitModel.add( HATEOASProvider.sysAvailabilityUnitSelfLinkProvider( availabilityUnitModel.getUnitId() ) );
+        availabilityUnitModel.add(HATEOASProvider.sysAvailabilityUnitSelfLinkProvider(availabilityUnitModel.getUnitId()));
 
-		return availabilityUnitModel;
-	}
+        return availabilityUnitModel;
+    }
 
-	@Override
-	public CollectionModel<AvailabilityUnitModel> toCollectionModel( Iterable<? extends AvailabilityUnit> entities )
-	{
-		CollectionModel<AvailabilityUnitModel> facilitiesModel = super.toCollectionModel( entities );
+    @Override
+    public CollectionModel<AvailabilityUnitModel> toCollectionModel(Iterable<? extends AvailabilityUnit> entities) {
+        CollectionModel<AvailabilityUnitModel> facilitiesModel = super.toCollectionModel(entities);
 
-		facilitiesModel.add( HATEOASProvider.sysFacilitySelfLinkProvider( 10 ) ); // TODO change
+        facilitiesModel.add(HATEOASProvider.sysFacilitySelfLinkProvider(10)); // TODO change
 
-		return facilitiesModel;
-	}
+        return facilitiesModel;
+    }
 }

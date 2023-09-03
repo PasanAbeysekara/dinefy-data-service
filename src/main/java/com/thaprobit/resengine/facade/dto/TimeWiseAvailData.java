@@ -15,14 +15,13 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class TimeWiseAvailData
-{
-	private LocalTime timeSlot;
-	private Integer availUnitId;
-	private Short contractAvailCount;
-	private Short open;
-	private Short close;
-	private Short bookable;
-	private Short hold;
-	private Short booked;
+public class TimeWiseAvailData {
+    private LocalTime timeSlot;
+    private Integer availUnitId;
+    private Short contractAvailCount;
+    private Short open;
+    private Short close;
+    private Short bookable;
+    private Short hold;
+    private Short booked;
 }

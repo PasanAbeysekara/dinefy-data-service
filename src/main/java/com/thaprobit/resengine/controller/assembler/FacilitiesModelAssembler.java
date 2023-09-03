@@ -13,36 +13,32 @@ import org.springframework.stereotype.Component;
  * @since 5/4/2020 1:27 AM
  */
 @Component
-public class FacilitiesModelAssembler extends RepresentationModelAssemblerSupport<Facilities, FacilitiesModel>
-{
+public class FacilitiesModelAssembler extends RepresentationModelAssemblerSupport<Facilities, FacilitiesModel> {
 
-	public FacilitiesModelAssembler()
-	{
-		super( SysFacilityController.class, FacilitiesModel.class );
-	}
+    public FacilitiesModelAssembler() {
+        super(SysFacilityController.class, FacilitiesModel.class);
+    }
 
-	@Override
-	public FacilitiesModel toModel( Facilities entity )
-	{
-		FacilitiesModel facilitiesModel = new FacilitiesModel();
-		facilitiesModel.setFacilityId( entity.getFacilityId() );
-		facilitiesModel.setCode( entity.getCode() );
-		facilitiesModel.setName( entity.getName() );
-		facilitiesModel.setDescription( entity.getDescription() );
-		facilitiesModel.setIcon( entity.getIcon() );
+    @Override
+    public FacilitiesModel toModel(Facilities entity) {
+        FacilitiesModel facilitiesModel = new FacilitiesModel();
+        facilitiesModel.setFacilityId(entity.getFacilityId());
+        facilitiesModel.setCode(entity.getCode());
+        facilitiesModel.setName(entity.getName());
+        facilitiesModel.setDescription(entity.getDescription());
+        facilitiesModel.setIcon(entity.getIcon());
 
-		facilitiesModel.add( HATEOASProvider.sysFacilitySelfLinkProvider( facilitiesModel.getFacilityId() ) );
+        facilitiesModel.add(HATEOASProvider.sysFacilitySelfLinkProvider(facilitiesModel.getFacilityId()));
 
-		return facilitiesModel;
-	}
+        return facilitiesModel;
+    }
 
-	@Override
-	public CollectionModel<FacilitiesModel> toCollectionModel( Iterable<? extends Facilities> entities )
-	{
-		CollectionModel<FacilitiesModel> facilitiesModel = super.toCollectionModel( entities );
+    @Override
+    public CollectionModel<FacilitiesModel> toCollectionModel(Iterable<? extends Facilities> entities) {
+        CollectionModel<FacilitiesModel> facilitiesModel = super.toCollectionModel(entities);
 
-		facilitiesModel.add( HATEOASProvider.sysFacilitySelfLinkProvider( 10 ) ); // TODO change
+        facilitiesModel.add(HATEOASProvider.sysFacilitySelfLinkProvider(10)); // TODO change
 
-		return facilitiesModel;
-	}
+        return facilitiesModel;
+    }
 }

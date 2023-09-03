@@ -9,14 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -25,69 +18,64 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(URLProvider.SERVICE_DATA)
 @Slf4j
-public class PropSpecialityController
-{
+public class PropSpecialityController {
 
-	@Autowired
-	private PropSpecialityService propSpecialityService;
+    @Autowired
+    private PropSpecialityService propSpecialityService;
 
-	/**
-	 * Get All Specialities
-	 * @param pageable Pageable
-	 * @return all Specialities
-	 */
-	@GetMapping("/specialities")
-	public ResponseEntity<ResponseWrapper<Page<PropertySpeciality>>> getSpecialities( Pageable pageable )
-	{
-		return propSpecialityService.getSpecialities( pageable );
-	}
+    /**
+     * Get All Specialities
+     *
+     * @param pageable Pageable
+     * @return all Specialities
+     */
+    @GetMapping("/specialities")
+    public ResponseEntity<ResponseWrapper<Page<PropertySpeciality>>> getSpecialities(Pageable pageable) {
+        return propSpecialityService.getSpecialities(pageable);
+    }
 
-	/**
-	 * Get Single Speciality
-	 *
-	 * @param id Speciality ID
-	 * @return The Speciality
-	 */
-	@GetMapping("/specialities/{id}")
-	public ResponseEntity<ResponseWrapper<PropertySpeciality>> getSpeciality( @PathVariable("id") short id )
-	{
-		return propSpecialityService.getSpeciality( id );
-	}
+    /**
+     * Get Single Speciality
+     *
+     * @param id Speciality ID
+     * @return The Speciality
+     */
+    @GetMapping("/specialities/{id}")
+    public ResponseEntity<ResponseWrapper<PropertySpeciality>> getSpeciality(@PathVariable("id") short id) {
+        return propSpecialityService.getSpeciality(id);
+    }
 
-	/**
-	 * Create a Speciality
-	 *
-	 * @param propertySpeciality The Speciality
-	 * @return Saved Speciality response
-	 */
-	@PostMapping("/specialities")
-	public ResponseEntity<ResponseWrapper<PropertySpeciality>> createSpeciality( @RequestBody PropertySpeciality propertySpeciality )
-	{
-		return propSpecialityService.createSpeciality( propertySpeciality );
-	}
+    /**
+     * Create a Speciality
+     *
+     * @param propertySpeciality The Speciality
+     * @return Saved Speciality response
+     */
+    @PostMapping("/specialities")
+    public ResponseEntity<ResponseWrapper<PropertySpeciality>> createSpeciality(@RequestBody PropertySpeciality propertySpeciality) {
+        return propSpecialityService.createSpeciality(propertySpeciality);
+    }
 
-	/**
-	 * Update a Speciality
-	 *
-	 * @param id                 The Speciality ID
-	 * @param propertySpeciality The Speciality
-	 * @return Updated Speciality response
-	 */
-	@PutMapping("/specialities/{id}")
-	public ResponseEntity<ResponseWrapper<PropertySpeciality>> updateSpeciality( @PathVariable("id") short id, @RequestBody PropertySpeciality propertySpeciality )
-	{
-		return propSpecialityService.updateSpeciality( id, propertySpeciality );
-	}
+    /**
+     * Update a Speciality
+     *
+     * @param id                 The Speciality ID
+     * @param propertySpeciality The Speciality
+     * @return Updated Speciality response
+     */
+    @PutMapping("/specialities/{id}")
+    public ResponseEntity<ResponseWrapper<PropertySpeciality>> updateSpeciality(@PathVariable("id") short id, @RequestBody PropertySpeciality propertySpeciality) {
+        return propSpecialityService.updateSpeciality(id, propertySpeciality);
+    }
 
-	/**
-	 * Delete a Speciality
-	 *
-	 * @param id The Speciality ID
-	 * @return Delete Speciality response
-	 */
-	@DeleteMapping("/specialities/{id}")
-	public ResponseEntity<ResponseWrapper<PropertySpeciality>> deleteSpeciality( @PathVariable("id") short id )
-	{
-		return propSpecialityService.deleteSpeciality( id );
-	}
+    /**
+     * Delete a Speciality
+     *
+     * @param id The Speciality ID
+     * @return Delete Speciality response
+     */
+    @DeleteMapping("/specialities/{id}")
+    public ResponseEntity<ResponseWrapper<PropertySpeciality>> deleteSpeciality(@PathVariable("id") short id) {
+        return propSpecialityService.deleteSpeciality(id);
+    }
 }

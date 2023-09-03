@@ -22,152 +22,131 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
-public class PaymentOptionService extends AbstractService<PaymentOptions>
-{
+public class PaymentOptionService extends AbstractService<PaymentOptions> {
 
-	@Autowired
-	private PaymentOptionsRepository paymentOptionsRepository;
+    @Autowired
+    private PaymentOptionsRepository paymentOptionsRepository;
 
-	/**
-	 * Get All Payment Options
-	 *
-	 * @param pageable Pageable
-	 * @return all Payment Options
-	 */
-	public ResponseEntity<ResponseWrapper<Page<PaymentOptions>>> getPaymentOptions( Pageable pageable )
-	{
-		ResponseEntity<ResponseWrapper<Page<PaymentOptions>>> response = null;
+    /**
+     * Get All Payment Options
+     *
+     * @param pageable Pageable
+     * @return all Payment Options
+     */
+    public ResponseEntity<ResponseWrapper<Page<PaymentOptions>>> getPaymentOptions(Pageable pageable) {
+        ResponseEntity<ResponseWrapper<Page<PaymentOptions>>> response = null;
 
-		try
-		{
-			Page<PaymentOptions> paymentOptionsPage = paymentOptionsRepository.findAll( pageable );
+        try {
+            Page<PaymentOptions> paymentOptionsPage = paymentOptionsRepository.findAll(pageable);
 
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, paymentOptionsPage ) );
-		}
-		catch( Exception e )
-		{
-			response = ResponseEntity.status( HttpStatus.NOT_FOUND )
-					.headers( new HttpHeaders() )
-					.body( new ResponseWrapper<>( SystemOperation.READ.withError(), SystemMessages.NOT_FOUND, e.getMessage() ) );
-		}
+            response = ResponseEntity.ok()
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, paymentOptionsPage));
+        } catch (Exception e) {
+            response = ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .headers(new HttpHeaders())
+                    .body(new ResponseWrapper<>(SystemOperation.READ.withError(), SystemMessages.NOT_FOUND, e.getMessage()));
+        }
 
-		return response;
-	}
+        return response;
+    }
 
-	/**
-	 * Get Single Payment Option
-	 *
-	 * @param id Payment Option ID
-	 * @return The Payment Option
-	 */
-	public ResponseEntity<ResponseWrapper<PaymentOptions>> getPaymentOption( short id )
-	{
-		Optional<PaymentOptions> optionalPaymentOption = paymentOptionsRepository.findById( id );
+    /**
+     * Get Single Payment Option
+     *
+     * @param id Payment Option ID
+     * @return The Payment Option
+     */
+    public ResponseEntity<ResponseWrapper<PaymentOptions>> getPaymentOption(short id) {
+        Optional<PaymentOptions> optionalPaymentOption = paymentOptionsRepository.findById(id);
 
-		ResponseEntity<ResponseWrapper<PaymentOptions>> response;
+        ResponseEntity<ResponseWrapper<PaymentOptions>> response;
 
-		if( optionalPaymentOption.isPresent() )
-		{
-			PaymentOptions paymentOption = optionalPaymentOption.get();
+        if (optionalPaymentOption.isPresent()) {
+            PaymentOptions paymentOption = optionalPaymentOption.get();
 
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, paymentOption ) );
-		}
-		else
-		{
-			response = buildNotFoundResponseWrapped();
-		}
+            response = ResponseEntity.ok()
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, paymentOption));
+        } else {
+            response = buildNotFoundResponseWrapped();
+        }
 
-		return response;
+        return response;
 
-	}
+    }
 
-	/**
-	 * Create a Payment Option
-	 *
-	 * @param paymentOption The Payment Option
-	 * @return Saved paymentOption response
-	 */
-	public ResponseEntity<ResponseWrapper<PaymentOptions>> createPaymentOptions( PaymentOptions paymentOption )
-	{
-		ResponseEntity<ResponseWrapper<PaymentOptions>> response;
+    /**
+     * Create a Payment Option
+     *
+     * @param paymentOption The Payment Option
+     * @return Saved paymentOption response
+     */
+    public ResponseEntity<ResponseWrapper<PaymentOptions>> createPaymentOptions(PaymentOptions paymentOption) {
+        ResponseEntity<ResponseWrapper<PaymentOptions>> response;
 
-		try
-		{
-			short nextOptionId = paymentOptionsRepository.nextOptionId();
-			paymentOption.setOptionId( nextOptionId );
-			PaymentOptions savedPaymentOption = paymentOptionsRepository.save( paymentOption );
+        try {
+            short nextOptionId = paymentOptionsRepository.nextOptionId();
+            paymentOption.setOptionId(nextOptionId);
+            PaymentOptions savedPaymentOption = paymentOptionsRepository.save(paymentOption);
 
-			response = ResponseEntity.status( HttpStatus.CREATED )
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.CREATE.withSuccess(), SystemMessages.PAYMENT_OPTION_CREATE_SUCCESS, savedPaymentOption ) );
-		}
-		catch( Exception e )
-		{
-			e.printStackTrace();
-			response = buildExceptionErrorResponse( SystemOperation.CREATE, SystemMessages.PAYMENT_OPTION_CREATE_FAILED, e );
-		}
+            response = ResponseEntity.status(HttpStatus.CREATED)
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.CREATE.withSuccess(), SystemMessages.PAYMENT_OPTION_CREATE_SUCCESS, savedPaymentOption));
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = buildExceptionErrorResponse(SystemOperation.CREATE, SystemMessages.PAYMENT_OPTION_CREATE_FAILED, e);
+        }
 
-		return response;
-	}
+        return response;
+    }
 
 
-	/**
-	 * Update a Payment Option
-	 *
-	 * @param id            The Payment Option ID
-	 * @param paymentOption The Payment Option
-	 * @return Updated Payment Option response
-	 */
-	public ResponseEntity<ResponseWrapper<PaymentOptions>> updatePaymentOption( short id, PaymentOptions paymentOption )
-	{
-		ResponseEntity<ResponseWrapper<PaymentOptions>> response;
+    /**
+     * Update a Payment Option
+     *
+     * @param id            The Payment Option ID
+     * @param paymentOption The Payment Option
+     * @return Updated Payment Option response
+     */
+    public ResponseEntity<ResponseWrapper<PaymentOptions>> updatePaymentOption(short id, PaymentOptions paymentOption) {
+        ResponseEntity<ResponseWrapper<PaymentOptions>> response;
 
-		try
-		{
-			paymentOption.setOptionId( id );
-			PaymentOptions savedPaymentOption = paymentOptionsRepository.save( paymentOption );
+        try {
+            paymentOption.setOptionId(id);
+            PaymentOptions savedPaymentOption = paymentOptionsRepository.save(paymentOption);
 
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.MODIFY.withSuccess(), SystemMessages.PAYMENT_OPTION_UPDATE_SUCCESS, savedPaymentOption ) );
-		}
-		catch( Exception e )
-		{
-			e.printStackTrace();
-			response = buildExceptionErrorResponse( SystemOperation.MODIFY, SystemMessages.PAYMENT_OPTION_UPDATE_FAILED, e );
-		}
+            response = ResponseEntity.ok()
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.MODIFY.withSuccess(), SystemMessages.PAYMENT_OPTION_UPDATE_SUCCESS, savedPaymentOption));
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = buildExceptionErrorResponse(SystemOperation.MODIFY, SystemMessages.PAYMENT_OPTION_UPDATE_FAILED, e);
+        }
 
-		return response;
-	}
+        return response;
+    }
 
-	/**
-	 * Delete a Payment Option
-	 *
-	 * @param id The Payment Option ID
-	 * @return Delete Payment Option response
-	 */
-	public ResponseEntity<ResponseWrapper<PaymentOptions>> deletePaymentOption( short id )
-	{
-		ResponseEntity<ResponseWrapper<PaymentOptions>> response;
+    /**
+     * Delete a Payment Option
+     *
+     * @param id The Payment Option ID
+     * @return Delete Payment Option response
+     */
+    public ResponseEntity<ResponseWrapper<PaymentOptions>> deletePaymentOption(short id) {
+        ResponseEntity<ResponseWrapper<PaymentOptions>> response;
 
-		try
-		{
-			paymentOptionsRepository.deleteById( id );
+        try {
+            paymentOptionsRepository.deleteById(id);
 
-			response = ResponseEntity.ok()
-					.headers( addCommonHeaders( new HttpHeaders() ) )
-					.body( new ResponseWrapper<>( SystemOperation.DELETE.withSuccess(), SystemMessages.PAYMENT_OPTION_DELETE_SUCCESS, "" ) );
-		}
-		catch( Exception e )
-		{
-			e.printStackTrace();
-			response = buildExceptionErrorResponse( SystemOperation.DELETE, SystemMessages.PAYMENT_OPTION_DELETE_FAILED, e );
-		}
+            response = ResponseEntity.ok()
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.DELETE.withSuccess(), SystemMessages.PAYMENT_OPTION_DELETE_SUCCESS, ""));
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = buildExceptionErrorResponse(SystemOperation.DELETE, SystemMessages.PAYMENT_OPTION_DELETE_FAILED, e);
+        }
 
-		return response;
-	}
+        return response;
+    }
 }

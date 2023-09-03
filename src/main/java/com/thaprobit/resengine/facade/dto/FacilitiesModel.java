@@ -13,11 +13,10 @@ import org.springframework.hateoas.RepresentationModel;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class FacilitiesModel extends RepresentationModel<FacilitiesModel>
-{
-	private int facilityId;
-	private String code;
-	private String name;
-	private String description;
-	private String icon;
+public class FacilitiesModel extends RepresentationModel<FacilitiesModel> {
+    private int facilityId;
+    private String code;
+    private String name;
+    private String description;
+    private String icon;
 }
