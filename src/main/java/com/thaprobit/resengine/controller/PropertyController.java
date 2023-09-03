@@ -33,44 +33,21 @@ public class PropertyController {
     @Autowired
     private AvailDataSearchService availDataSearchService;
 
-    /**
-     * Get all properties
-     *
-     * @return return All properties
-     */
     @GetMapping("/properties")
     public ResponseEntity<List<Property>> getProperties() {
         return propertyService.getProperties();
     }
 
-    /**
-     * Get all properties
-     *
-     * @return return All properties
-     */
     @GetMapping("/properties/{id}/facilities")
     public ResponseEntity<List<PropFacilities>> getPropFacilities(@PathVariable("id") long id) {
         return propertyService.getPropFacilities(id);
     }
 
-    /**
-     * Get all property menus by prop code
-     *
-     * @param code PropertyModel Code
-     * @return return All property menus
-     */
     @GetMapping("/properties/{code}/menus")
     public ResponseEntity<ResponseWrapper<PropMenuWrapper>> getPropMenusByPropCode(@PathVariable("code") String code) {
         return propertyService.getPropertyMenus(code);
     }
 
-    /**
-     * Get all property menus
-     *
-     * @param id       PropertyModel ID
-     * @param pageable Pageable
-     * @return return All property menus
-     */
     @GetMapping("/properties/id/{id}/menus")
     public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getPropMenusByPropId(@PathVariable("id") long id, Pageable pageable) {
         return propertyService.getPropertyMenus(id, pageable);
@@ -105,12 +82,6 @@ public class PropertyController {
         return availDataSearchService.getPropertyAvailabilities(propId, dateFrom, dateTo, timeFrom, timeTo, availabilityUnitType, availabilityUnit, pageable);
     }
 
-    /**
-     * Get Single property
-     *
-     * @param id property ID
-     * @return The PropertyModel
-     */
     @GetMapping("/properties/{id}")
     public ResponseEntity<ResponseWrapper<PropertyModel>> getProperty(@PathVariable("id") long id) {
         return propertyService.getProperty(id);

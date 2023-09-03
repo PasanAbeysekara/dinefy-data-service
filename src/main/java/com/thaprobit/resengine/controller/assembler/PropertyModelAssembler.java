@@ -74,7 +74,7 @@ public class PropertyModelAssembler extends RepresentationModelAssemblerSupport<
         propertyModel.setOperationHours(entity.getOperationHours());
         propertyModel.setAvailabilityUnits(entity.getAvailabilityUnits());
         propertyModel.setBasedLocation(locationBasedModelConverter.convert(entity.getBasedLocation()));
-        propertyModel.setCurrentContract(contractModelAssembler.toModel(entity.getCurrentContract()));
+        //propertyModel.setCurrentContract(contractModelAssembler.toModel(entity.getCurrentContract()));
         propertyModel.setFacilities(entity.getFacilities().stream().map(propFacilityModelConverter::convert).collect(Collectors.toSet()));
         propertyModel.setTags(entity.getTags().stream().map(propTagsModelConverter::convert).collect(Collectors.toSet()));
         propertyModel.setContactDetails(contactDetailsModelConverter.convert(entity.getContactDetails()));
