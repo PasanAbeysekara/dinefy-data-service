@@ -8,7 +8,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 /**
  * @author Tharinda Wickramaarachchi
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages={
+        "com.thaprobit.resengine.controller",
+        "com.thaprobit.resengine.repo",
+        "com.thaprobit.resengine.app.config",
+        "com.thaprobit.resengine.messaging"
+})
 @EnableScheduling
 @EnableAsync
 public class ReservationEngineData {
