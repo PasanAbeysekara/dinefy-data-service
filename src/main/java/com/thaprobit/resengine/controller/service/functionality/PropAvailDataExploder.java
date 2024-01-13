@@ -80,7 +80,7 @@ public class PropAvailDataExploder implements Callable<DataCarrier<String>> {
 
             List<Seasons> sortedSeasons = this.contract.getSeasons().stream().sorted(Comparator.comparing(Seasons::getFrom)).collect(Collectors.toList());
 
-            Map<Short, WeekDefinition> weekDefinitionMap = weekDefinitionRepository.findAll().stream().collect(Collectors.toMap(WeekDefinition::getWeekDefId, o -> o));// TODO cache this
+            Map<Long, WeekDefinition> weekDefinitionMap = weekDefinitionRepository.findAll().stream().collect(Collectors.toMap(WeekDefinition::getWeekDefId, o -> o));// TODO cache this
 
             List<WidenPropData> data = new ArrayList<>();
 
