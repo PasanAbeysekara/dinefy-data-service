@@ -1,17 +1,25 @@
 package com.thaprobit.resengine.controller.service;
 
 import com.thaprobit.global.SystemOperation;
+import com.thaprobit.resengine.controller.assembler.ContractModelAssembler;
 import com.thaprobit.resengine.controller.service.functionality.PropAvailDataAsyncExecutor;
 import com.thaprobit.resengine.dao.Contract;
 import com.thaprobit.resengine.dao.ContractAvailability;
 import com.thaprobit.resengine.dao.Seasons;
+import com.thaprobit.resengine.dao.sys.Tags;
+import com.thaprobit.resengine.facade.dto.ContractModel;
+import com.thaprobit.resengine.facade.dto.TagsModel;
 import com.thaprobit.resengine.repo.ContractsRepository;
 import com.thaprobit.service.AbstractService;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +39,12 @@ public class ContractService extends AbstractService<Contract> {
     private ContractsRepository contractsRepository;
 
     @Autowired
+    private PagedResourcesAssembler<Contract> pagedResourcesAssembler;
+
+    @Autowired
+    private ContractModelAssembler contractModelAssembler;
+
+    @Autowired
     private PropAvailDataAsyncExecutor availDataAsyncExecutor;
 
 
@@ -47,6 +61,15 @@ public class ContractService extends AbstractService<Contract> {
 
 
         return responseEntity;
+    }
+
+    public ResponseEntity<ResponseWrapper<PagedModel<ContractModel>>> getContracts(Pageable pageable) {
+        Page<Contract> contractedPage = contractsRepository.findAll(pageable);
+        PagedModel<ContractModel> collModel = pagedResourcesAssembler.toModel(contractedPage, contractModelAssembler);
+
+        return ResponseEntity.ok()
+                .headers(addCommonHeaders(new HttpHeaders()))
+                .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, collModel));
     }
 
     /**
