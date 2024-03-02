@@ -12,7 +12,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
         "com.thaprobit.resengine.controller",
         "com.thaprobit.resengine.repo",
         "com.thaprobit.resengine.app.config",
-        "com.thaprobit.resengine.messaging"
+        "com.thaprobit.resengine.messaging",
+        "com.thaprobit.resengine.config"
 })
 @EnableScheduling
 @EnableAsync
