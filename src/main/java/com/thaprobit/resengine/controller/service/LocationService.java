@@ -1,8 +1,10 @@
 package com.thaprobit.resengine.controller.service;
 
 import com.thaprobit.global.SystemOperation;
+import com.thaprobit.resengine.controller.assembler.LocationModelAssembler;
 import com.thaprobit.resengine.controller.converters.LocationsWrapperConverter;
 import com.thaprobit.resengine.dao.LocationBased;
+import com.thaprobit.resengine.facade.dto.LocationBasedModel;
 import com.thaprobit.resengine.facade.dto.LocationsWrapper;
 import com.thaprobit.resengine.repo.LocationRepository;
 import com.thaprobit.service.AbstractService;
@@ -10,7 +12,10 @@ import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,29 +39,45 @@ public class LocationService extends AbstractService<LocationBased> {
     private LocationsWrapperConverter locationsWrapperConverter;
 
 
+    @Autowired
+    private PagedResourcesAssembler<LocationBased> pagedResourcesAssembler;
+
+    @Autowired
+    private LocationModelAssembler locationModelAssembler;
+
+
     /**
      * Get All based locations
      *
      * @param pageable The Pageable
      * @return All base locations
      */
-    public ResponseEntity<ResponseWrapper<LocationsWrapper>> getLocations(Pageable pageable) {
-        List<LocationBased> locationBasedList = locationRepository.findAll(pageable).getContent();
+//    public ResponseEntity<ResponseWrapper<LocationsWrapper>> getLocations(Pageable pageable) {
+//        List<LocationBased> locationBasedList = locationRepository.findAll(pageable).getContent();
+//
+//        ResponseEntity<ResponseWrapper<LocationsWrapper>> response;
+//
+//        if (!locationBasedList.isEmpty()) {
+//            LocationsWrapper locationsWrapper = locationsWrapperConverter.convert(locationBasedList);
+//            response = ResponseEntity.ok()
+//                    .headers(addCommonHeaders(new HttpHeaders()))
+//                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, locationsWrapper));
+//        } else {
+//            response = ResponseEntity.status(HttpStatus.NOT_FOUND)
+//                    .headers(new HttpHeaders())
+//                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.NOT_FOUND, ""));
+//        }
+//
+//        return response;
+//    }
 
-        ResponseEntity<ResponseWrapper<LocationsWrapper>> response;
+    public ResponseEntity<ResponseWrapper<PagedModel<LocationBasedModel>>> getLocations(Pageable pageable) {
+        Page<LocationBased> locationBasedPaged = locationRepository.findAll(pageable);
+        PagedModel<LocationBasedModel> collModel = pagedResourcesAssembler.toModel(locationBasedPaged, locationModelAssembler);
 
-        if (!locationBasedList.isEmpty()) {
-            LocationsWrapper locationsWrapper = locationsWrapperConverter.convert(locationBasedList);
-            response = ResponseEntity.ok()
-                    .headers(addCommonHeaders(new HttpHeaders()))
-                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, locationsWrapper));
-        } else {
-            response = ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .headers(new HttpHeaders())
-                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.NOT_FOUND, ""));
-        }
-
-        return response;
+        return ResponseEntity.ok()
+                .headers(addCommonHeaders(new HttpHeaders()))
+                .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, collModel));
     }
 
     /**

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.hateoas.RepresentationModel;
 
 /**
  * @author Tharindu Aththanayake
@@ -14,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class LocationBasedModel {
+public class LocationBasedModel extends RepresentationModel<LocationBasedModel> {
     private Long locationId;
     private String name;
     private LocationStateModel state;

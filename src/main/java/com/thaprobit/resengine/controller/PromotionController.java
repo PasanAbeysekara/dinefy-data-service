@@ -2,9 +2,13 @@ package com.thaprobit.resengine.controller;
 
 import com.thaprobit.resengine.controller.service.PromotionService;
 import com.thaprobit.resengine.dao.Promotion;
+import com.thaprobit.resengine.facade.dto.PromotionModel;
+import com.thaprobit.resengine.facade.dto.TagsModel;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.URLProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +23,11 @@ import java.util.List;
 public class PromotionController {
     @Autowired
     private PromotionService promotionService;
+
+    @GetMapping("/promotions")
+    public ResponseEntity<ResponseWrapper<PagedModel<PromotionModel>>> getAllPromotions(Pageable pageable) {
+        return promotionService.getAllPromotions(pageable);
+    }
 
     /**
      * Get multiple Promotions

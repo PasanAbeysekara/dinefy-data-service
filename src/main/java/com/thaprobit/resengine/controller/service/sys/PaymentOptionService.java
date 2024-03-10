@@ -86,7 +86,7 @@ public class PaymentOptionService extends AbstractService<PaymentOptions> {
         ResponseEntity<ResponseWrapper<PaymentOptions>> response;
 
         try {
-            short nextOptionId = paymentOptionsRepository.nextOptionId();
+            int nextOptionId = paymentOptionsRepository.nextOptionId();
             paymentOption.setOptionId(nextOptionId);
             PaymentOptions savedPaymentOption = paymentOptionsRepository.save(paymentOption);
 
@@ -109,7 +109,7 @@ public class PaymentOptionService extends AbstractService<PaymentOptions> {
      * @param paymentOption The Payment Option
      * @return Updated Payment Option response
      */
-    public ResponseEntity<ResponseWrapper<PaymentOptions>> updatePaymentOption(short id, PaymentOptions paymentOption) {
+    public ResponseEntity<ResponseWrapper<PaymentOptions>> updatePaymentOption(int id, PaymentOptions paymentOption) {
         ResponseEntity<ResponseWrapper<PaymentOptions>> response;
 
         try {

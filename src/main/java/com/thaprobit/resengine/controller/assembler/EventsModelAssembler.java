@@ -24,7 +24,7 @@ public class EventsModelAssembler extends RepresentationModelAssemblerSupport<Ev
         eventModel.setEventId(entity.getEventId());
         eventModel.setName(entity.getName());
         eventModel.setDescription(entity.getDescription());
-        eventModel.setOrder(entity.getOrder());
+        eventModel.setOrder(entity.getEventOrder());
 
         eventModel.add(HATEOASProvider.sysEventSelfLinkProvider(entity.getEventId()));
 

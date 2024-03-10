@@ -1,15 +1,24 @@
 package com.thaprobit.resengine.controller.service;
 
 import com.thaprobit.global.SystemOperation;
+import com.thaprobit.resengine.controller.assembler.PromotionModelAssembler;
+import com.thaprobit.resengine.controller.assembler.TagsModelAssembler;
 import com.thaprobit.resengine.dao.Promotion;
 import com.thaprobit.resengine.dao.key.PromoID;
+import com.thaprobit.resengine.dao.sys.Tags;
+import com.thaprobit.resengine.facade.dto.PromotionModel;
+import com.thaprobit.resengine.facade.dto.TagsModel;
 import com.thaprobit.resengine.repo.PromotionRepository;
 import com.thaprobit.service.AbstractService;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.SystemMessages;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +37,11 @@ public class PromotionService extends AbstractService<Promotion> {
     @Autowired
     private PromotionRepository promotionRepository;
 
+    @Autowired
+    private PagedResourcesAssembler<Promotion> pagedResourcesAssembler;
+
+    @Autowired
+    private PromotionModelAssembler promotionModelAssembler;
 
     public ResponseEntity<ResponseWrapper<List<Promotion>>> getPromotions(Long propId, Boolean live) {
         List<Promotion> promotions;
@@ -173,4 +187,22 @@ public class PromotionService extends AbstractService<Promotion> {
 
         return response;
     }
+
+    public ResponseEntity<ResponseWrapper<PagedModel<PromotionModel>>> getAllPromotions(Pageable pageable) {
+        Page<Promotion> promotionPaged = promotionRepository.findAll(pageable);
+        PagedModel<PromotionModel> collModel = pagedResourcesAssembler.toModel(promotionPaged, promotionModelAssembler);
+
+        return ResponseEntity.ok()
+                .headers(addCommonHeaders(new HttpHeaders()))
+                .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, collModel));
+    }
+
+//    public ResponseEntity<ResponseWrapper<PagedModel<TagsModel>>> getTags(Pageable pageable) {
+//        Page<Tags> tagsPaged = tagsRepository.findAll(pageable);
+//        PagedModel<TagsModel> collModel = pagedResourcesAssembler.toModel(tagsPaged, tagsModelAssembler);
+//
+//        return ResponseEntity.ok()
+//                .headers(addCommonHeaders(new HttpHeaders()))
+//                .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, collModel));
+//    }
 }
