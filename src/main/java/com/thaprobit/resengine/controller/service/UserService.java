@@ -10,6 +10,7 @@ import com.thaprobit.resengine.dto.RegUserDto;
 import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpSession;
 import java.util.Objects;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RequiredArgsConstructor
 @Service
@@ -17,6 +18,8 @@ public class UserService {
     @Autowired
     private final UserRepository userRepository;
     private final HttpSession httpSession;
+    //private final BCryptPasswordEncoder passwordEncoder;
+
     public UserDto login(CredentialsDto credentialsDto) {
         User user = userRepository.findByUsername(credentialsDto.getUsername())
                 .orElseThrow(() -> new RuntimeException("Unknown user"));
@@ -32,9 +35,10 @@ public class UserService {
     }
 
     private boolean passwordMatches(String enteredPassword, String storedPasswordHash) {
-
-        return Objects.equals(enteredPassword, storedPasswordHash);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(enteredPassword, storedPasswordHash);
     }
+
 
     public UserDto findByLogin(String login) {
         User user = userRepository.findByUsername(login)
@@ -47,6 +51,10 @@ public class UserService {
             throw new RuntimeException("Username already exists");
         }
 
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(regUserDto.getPassword());
+
+
         //Long maxUserId = userRepository.findMaxUserId().orElse(0L);
 
         User newUser = new User();
@@ -54,7 +62,7 @@ public class UserService {
         newUser.setFirstName(regUserDto.getFirstName());
         newUser.setLastName(regUserDto.getLastName());
         newUser.setUsername(regUserDto.getEmail());
-        newUser.setPassword(regUserDto.getPassword());
+        newUser.setPassword(encodedPassword);
 
         User savedUser = userRepository.save(newUser);
 
