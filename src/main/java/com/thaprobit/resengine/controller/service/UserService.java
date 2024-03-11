@@ -46,14 +46,13 @@ public class UserService {
         return new UserDto(user);
     }
 
-    public UserDto register(RegUserDto regUserDto) {
+    public void register(RegUserDto regUserDto) {
         if (userRepository.existsByUsername(regUserDto.getEmail())) {
             throw new RuntimeException("Username already exists");
         }
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(regUserDto.getPassword());
-
 
         //Long maxUserId = userRepository.findMaxUserId().orElse(0L);
 
@@ -66,6 +65,8 @@ public class UserService {
 
         User savedUser = userRepository.save(newUser);
 
-        return new UserDto(savedUser);
+        if (savedUser == null) {
+            throw new RuntimeException("Failed to add user to database");
+        }
     }
 }

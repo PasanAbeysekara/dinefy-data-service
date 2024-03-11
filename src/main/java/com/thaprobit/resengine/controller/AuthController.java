@@ -34,8 +34,16 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegUserDto regUserDto) {
-        userService.register(regUserDto);
-        return ResponseEntity.ok("User registered successfully!");
+        try {
+            userService.register(regUserDto);
+            return ResponseEntity.ok("User registered successfully!");
+        } catch (RuntimeException e) {
+            if (e.getMessage().contains("already exists")) {
+                return ResponseEntity.badRequest().body("Username already exists");
+            } else {
+                return ResponseEntity.internalServerError().body("Registration failed");
+            }
+        }
     }
 
 }
