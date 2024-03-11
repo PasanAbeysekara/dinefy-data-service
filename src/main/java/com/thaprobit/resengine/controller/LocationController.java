@@ -2,11 +2,14 @@ package com.thaprobit.resengine.controller;
 
 import com.thaprobit.resengine.controller.service.LocationService;
 import com.thaprobit.resengine.dao.LocationBased;
+import com.thaprobit.resengine.facade.dto.LocationBasedModel;
 import com.thaprobit.resengine.facade.dto.LocationsWrapper;
+import com.thaprobit.resengine.facade.dto.TagsModel;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.URLProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +29,13 @@ public class LocationController {
      * @param pageable The Pageable
      * @return All base locations
      */
+//    @GetMapping("/locations")
+//    public ResponseEntity<ResponseWrapper<LocationsWrapper>> getLocations(Pageable pageable) {
+//        return locationService.getLocations(pageable);
+//    }
+
     @GetMapping("/locations")
-    public ResponseEntity<ResponseWrapper<LocationsWrapper>> getLocations(Pageable pageable) {
+    public ResponseEntity<ResponseWrapper<PagedModel<LocationBasedModel>>> getTags(Pageable pageable) {
         return locationService.getLocations(pageable);
     }
 
