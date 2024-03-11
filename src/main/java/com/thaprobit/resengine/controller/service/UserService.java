@@ -6,8 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.thaprobit.resengine.dto.CredentialsDto;
 import com.thaprobit.resengine.dto.UserDto;
+import com.thaprobit.resengine.dto.RegUserDto;
 import org.springframework.stereotype.Service;
-
+import jakarta.servlet.http.HttpSession;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -15,13 +16,16 @@ import java.util.Objects;
 public class UserService {
     @Autowired
     private final UserRepository userRepository;
-
+    private final HttpSession httpSession;
     public UserDto login(CredentialsDto credentialsDto) {
         User user = userRepository.findByUsername(credentialsDto.getUsername())
                 .orElseThrow(() -> new RuntimeException("Unknown user"));
 
         if (!passwordMatches(credentialsDto.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid password");
+        }
+        else {
+            httpSession.setAttribute("logType", "normal");
         }
 
         return new UserDto(user);
@@ -36,5 +40,24 @@ public class UserService {
         User user = userRepository.findByUsername(login)
                 .orElseThrow(() -> new RuntimeException("Unknown user"));
         return new UserDto(user);
+    }
+
+    public UserDto register(RegUserDto regUserDto) {
+        if (userRepository.existsByUsername(regUserDto.getEmail())) {
+            throw new RuntimeException("Username already exists");
+        }
+
+        //Long maxUserId = userRepository.findMaxUserId().orElse(0L);
+
+        User newUser = new User();
+       // newUser.setUserId(maxUserId +1);
+        newUser.setFirstName(regUserDto.getFirstName());
+        newUser.setLastName(regUserDto.getLastName());
+        newUser.setUsername(regUserDto.getEmail());
+        newUser.setPassword(regUserDto.getPassword());
+
+        User savedUser = userRepository.save(newUser);
+
+        return new UserDto(savedUser);
     }
 }

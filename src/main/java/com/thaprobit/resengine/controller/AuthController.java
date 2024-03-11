@@ -4,6 +4,7 @@ import com.thaprobit.resengine.config.UserAuthenticationProvider;
 import com.thaprobit.resengine.controller.service.UserService;
 import com.thaprobit.resengine.dto.CredentialsDto;
 import com.thaprobit.resengine.dto.UserDto;
+import com.thaprobit.resengine.dto.RegUserDto;
 import com.thaprobit.util.URLProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,4 +31,11 @@ public class AuthController {
             return ResponseEntity.ok(userDto);
         }
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody RegUserDto regUserDto) {
+        userService.register(regUserDto);
+        return ResponseEntity.ok("User registered successfully!");
+    }
+
 }
