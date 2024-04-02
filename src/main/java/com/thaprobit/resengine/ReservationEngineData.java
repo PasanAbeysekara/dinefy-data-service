@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
         "com.thaprobit.resengine.messaging",
         "com.thaprobit.resengine.config"
 })
+
 @EnableScheduling
 @EnableAsync
 public class ReservationEngineData {
