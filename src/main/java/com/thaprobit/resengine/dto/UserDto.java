@@ -1,10 +1,15 @@
 package com.thaprobit.resengine.dto;
 
+import com.thaprobit.resengine.dao.Reservation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.thaprobit.resengine.dao.User;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -25,5 +30,6 @@ public class UserDto {
     private String lastName;
     private String username;
     private String token;
-
+    private Set<Reservation> reservations; // Add reservations field
 }
+
