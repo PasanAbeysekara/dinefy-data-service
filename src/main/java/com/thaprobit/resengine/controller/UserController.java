@@ -35,9 +35,9 @@ public class UserController {
         existingUser.setUsername(user.getUsername());
         existingUser.setPassword(user.getPassword());
         existingUser.setFirstName(user.getFirstName());
-        existingUser.setMiddleName(user.getMiddleName());
+       // existingUser.setMiddleName(user.getMiddleName());
         existingUser.setLastName(user.getLastName());
-        existingUser.setBirthday(user.getBirthday());
+       // existingUser.setBirthday(user.getBirthday());
 
         return userRepository.save(existingUser);
     }

@@ -13,17 +13,25 @@ import com.thaprobit.resengine.dao.User;
 public class UserDto {
 
     public UserDto(User user) {
-        this.id = user.getUserId();
+        //this.id = user.getUserId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.username = user.getUsername();
-        this.token = null;
+        this.role = user.getRole();
     }
 
-    private Long id;
+    public UserDto(RegUserDto user) {
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.username = user.getUsername();
+        //this.token = null;
+    }
+
+    //private Long id;
     private String firstName;
     private String lastName;
     private String username;
-    private String token;
-
+    private String role;
+    private String accessToken;
+    private String refreshToken;
 }

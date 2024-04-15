@@ -9,7 +9,6 @@ import com.thaprobit.resengine.dto.UserDto;
 import com.thaprobit.resengine.dto.RegUserDto;
 import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpSession;
-import java.util.Objects;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RequiredArgsConstructor
@@ -40,14 +39,14 @@ public class UserService {
     }
 
 
-    public UserDto findByLogin(String login) {
-        User user = userRepository.findByUsername(login)
+    public UserDto findByUsername(String username) {
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Unknown user"));
         return new UserDto(user);
     }
 
-    public void register(RegUserDto regUserDto) {
-        if (userRepository.existsByUsername(regUserDto.getEmail())) {
+    public boolean register(RegUserDto regUserDto) {
+        if (userRepository.existsByUsername(regUserDto.getUsername())) {
             throw new RuntimeException("Username already exists");
         }
 
@@ -60,13 +59,18 @@ public class UserService {
        // newUser.setUserId(maxUserId +1);
         newUser.setFirstName(regUserDto.getFirstName());
         newUser.setLastName(regUserDto.getLastName());
-        newUser.setUsername(regUserDto.getEmail());
+        newUser.setUsername(regUserDto.getUsername());
+        newUser.setRole("customer");
         newUser.setPassword(encodedPassword);
 
         User savedUser = userRepository.save(newUser);
 
         if (savedUser == null) {
-            throw new RuntimeException("Failed to add user to database");
+            return false;
+        }
+        else {
+            return true;
         }
     }
+
 }
