@@ -19,6 +19,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class ReservationModel {
     private Long reservationId;
+    private String reserveCode;
     private LocalDate date;
     private LocalTime time;
     private int headCount;

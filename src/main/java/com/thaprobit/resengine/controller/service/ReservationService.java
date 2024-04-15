@@ -66,7 +66,7 @@ public class ReservationService extends AbstractService<Reservation> {
 
 
         if (optionalReservation.isPresent()) {
-            response = ResponseEntity.status(HttpStatus.FOUND)
+            response = ResponseEntity.ok()
                     .headers(addCommonHeaders(new HttpHeaders()))
                     .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, optionalReservation.get()));
         } else {
@@ -76,12 +76,30 @@ public class ReservationService extends AbstractService<Reservation> {
         return response;
     }
 
-    /**
-     * Create a reservation
-     *
-     * @param reservation The reservation
-     * @return The saved reservation
-     */
+    public ResponseEntity<ResponseWrapper<Reservation>> getReservationByCode(String reserveCode) {
+        ResponseEntity<ResponseWrapper<Reservation>> response;
+
+        Optional<Reservation> optionalReservation = reservationRepository.findByReserveCode(reserveCode);
+
+        if (optionalReservation.isPresent()) {
+            response = ResponseEntity.ok()
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, optionalReservation.get()));
+
+        } else {
+            response = buildNotFoundResponseWrapped();
+        }
+
+        return response;
+
+    }
+
+        /**
+         * Create a reservation
+         *
+         * @param reservation The reservation
+         * @return The saved reservation
+         */
     public ResponseEntity<ResponseWrapper<Reservation>> createReservation(Reservation reservation) {
         ResponseEntity<ResponseWrapper<Reservation>> response;
 

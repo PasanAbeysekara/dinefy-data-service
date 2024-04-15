@@ -87,6 +87,11 @@ public class PropertyController {
         return propertyService.getProperty(id);
     }
 
+    @GetMapping("/properties/code/{code}")
+    public ResponseEntity<ResponseWrapper<PropertyModel>> getPropertyByCode(@PathVariable("code") String code) {
+        return propertyService.getPropertyByCode(code);
+    }
+
     /**
      * Save a property
      *
