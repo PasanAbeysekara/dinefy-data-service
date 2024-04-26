@@ -33,10 +33,7 @@ public class SecurityConfig {
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.authorizeRequests().requestMatchers("/refresh-token/**").permitAll();
-        http.authorizeRequests().requestMatchers("/data/login").permitAll();
-        http.authorizeRequests().requestMatchers("/data/register").permitAll();
-        http.authorizeRequests().requestMatchers("/data/properties").permitAll();
-        http.authorizeRequests().requestMatchers("/data/promotions").permitAll();
+        http.authorizeRequests().requestMatchers("/data/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(new JwtAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), provider));
         http.addFilterBefore(new JwtAuthorizationFilter(provider), UsernamePasswordAuthenticationFilter.class);
