@@ -35,6 +35,8 @@ public class SecurityConfig {
         http.authorizeRequests().requestMatchers("/refresh-token/**").permitAll();
         http.authorizeRequests().requestMatchers("/data/login").permitAll();
         http.authorizeRequests().requestMatchers("/data/register").permitAll();
+        http.authorizeRequests().requestMatchers("/data/properties").permitAll();
+        http.authorizeRequests().requestMatchers("/data/promotions").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(new JwtAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), provider));
         http.addFilterBefore(new JwtAuthorizationFilter(provider), UsernamePasswordAuthenticationFilter.class);
