@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -34,7 +36,8 @@ public class ReservationController {
     }
 
     @PostMapping("/reservations")
-    public ResponseEntity<ResponseWrapper<Reservation>> createReservation(@RequestBody Reservation reservation) {
+    public ResponseEntity<ResponseWrapper<Reservation>> createReservation(@AuthenticationPrincipal Long userId, @RequestBody Reservation reservation) {
+        reservation.setUserId(userId);
         return reservationService.createReservation(reservation);
     }
 

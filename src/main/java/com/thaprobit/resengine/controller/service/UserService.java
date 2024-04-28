@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.thaprobit.resengine.dto.CredentialsDto;
 import com.thaprobit.resengine.dto.UserDto;
 import com.thaprobit.resengine.dto.RegUserDto;
+import org.springframework.data.repository.cdi.Eager;
 import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RequiredArgsConstructor
 @Service
+
 public class UserService {
     @Autowired
     private final UserRepository userRepository;
@@ -43,6 +45,12 @@ public class UserService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Unknown user"));
         return new UserDto(user);
+    }
+
+    public Long getUserIdByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Unknown user"));
+        return user.getUserId();
     }
 
     public boolean register(RegUserDto regUserDto) {

@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -29,13 +31,17 @@ import java.util.Collection;
 
 import static com.thaprobit.resengine.config.JWTUtil.AUTH_HEADER;
 import static com.thaprobit.resengine.config.JWTUtil.SECRET;
+import com.thaprobit.resengine.controller.service.UserService;
 
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private UserAuthenticationProvider provider;
+    //@Autowired
+    private UserService userService;
 
-    public JwtAuthorizationFilter(UserAuthenticationProvider provider) {
+    public JwtAuthorizationFilter(UserAuthenticationProvider provider, UserService userService) {
         this.provider = provider;
+        this.userService = userService;
     }
 
     @Override
@@ -69,7 +75,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                         authorities.add(new SimpleGrantedAuthority(role));
                     }
 
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, null, authorities);
+                    Long userId = userService.getUserIdByUsername(email);
+
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     filterChain.doFilter(request, response);
                 }
@@ -102,8 +110,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
                     authorities.add(new SimpleGrantedAuthority("customer"));
 
+                    Long userId = userService.getUserIdByUsername(email);
 
-                    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, null, authorities);
+                    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userId, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(token);
                     filterChain.doFilter(request, response);
                 }

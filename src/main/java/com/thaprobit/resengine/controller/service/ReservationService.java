@@ -4,7 +4,9 @@ import com.thaprobit.global.SystemOperation;
 import com.thaprobit.resengine.dao.Order;
 import com.thaprobit.resengine.dao.OrderChoices;
 import com.thaprobit.resengine.dao.Reservation;
+import com.thaprobit.resengine.dao.User;
 import com.thaprobit.resengine.repo.ReservationRepository;
+import com.thaprobit.resengine.repo.UserRepository;
 import com.thaprobit.service.AbstractService;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.SystemMessages;
@@ -28,7 +30,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReservationService extends AbstractService<Reservation> {
     private final ReservationRepository reservationRepository;
-
+    private final UserRepository userRepository;
     /**
      * Get all reservations
      *
@@ -104,7 +106,7 @@ public class ReservationService extends AbstractService<Reservation> {
         ResponseEntity<ResponseWrapper<Reservation>> response;
 
         try {
-            reservation.setReservationId(reservationRepository.getNextVal());
+            //reservation.setReservationId(reservationRepository.getNextVal());
             preProcess(reservation);
 
             Reservation savedReservation = reservationRepository.save(reservation);
