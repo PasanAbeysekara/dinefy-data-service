@@ -1,7 +1,7 @@
 package com.thaprobit.resengine.controller.service;
 
 import com.thaprobit.global.SystemOperation;
-import com.thaprobit.resengine.dao.Order;
+import com.thaprobit.resengine.dao.Orders;
 import com.thaprobit.resengine.dao.OrderChoices;
 import com.thaprobit.resengine.dao.Reservation;
 import com.thaprobit.resengine.dao.User;
@@ -125,7 +125,7 @@ public class ReservationService extends AbstractService<Reservation> {
         if (reservation.getOrders() != null) {
             long reservationId = reservation.getReservationId();
 
-            for (Order order : reservation.getOrders()) {
+            for (Orders order : reservation.getOrders()) {
                 order.getOrderId().setReservationId(reservationId);
 
                 if (order.getOrderChoices() != null) {
