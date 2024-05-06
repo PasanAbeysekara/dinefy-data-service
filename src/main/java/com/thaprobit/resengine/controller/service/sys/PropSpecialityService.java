@@ -85,7 +85,7 @@ public class PropSpecialityService extends AbstractService<PropertySpeciality> {
         ResponseEntity<ResponseWrapper<PropertySpeciality>> response;
 
         try {
-            Short nextSpecialityId = propertySpecialityRepository.nextSpecialityId();
+            int nextSpecialityId = propertySpecialityRepository.nextSpecialityId();
             propertySpeciality.setSpecialityId(nextSpecialityId);
             PropertySpeciality savedSpeciality = propertySpecialityRepository.save(propertySpeciality);
 
@@ -108,7 +108,7 @@ public class PropSpecialityService extends AbstractService<PropertySpeciality> {
      * @param propertySpeciality The Speciality
      * @return Updated Speciality response
      */
-    public ResponseEntity<ResponseWrapper<PropertySpeciality>> updateSpeciality(short id, PropertySpeciality propertySpeciality) {
+    public ResponseEntity<ResponseWrapper<PropertySpeciality>> updateSpeciality(int id, PropertySpeciality propertySpeciality) {
         ResponseEntity<ResponseWrapper<PropertySpeciality>> response;
 
         try {

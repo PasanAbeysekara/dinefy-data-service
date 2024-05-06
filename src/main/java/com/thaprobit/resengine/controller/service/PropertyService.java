@@ -154,6 +154,26 @@ public class PropertyService extends AbstractService<Property> {
         return response;
     }
 
+    public ResponseEntity<ResponseWrapper<PropertyModel>> getPropertyByCode(String code) {
+        List<Property> properties = propertyRepository.findByCode(code);
+
+        ResponseEntity<ResponseWrapper<PropertyModel>> response;
+
+        if (!properties.isEmpty()) {
+            Property property = properties.get(0);
+            PropertyModel propertyModel = propertyModelAssembler.toModel(property);
+            propertyModel.linkPropertyEntities();
+
+            response = ResponseEntity.ok()
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, propertyModel));
+        } else {
+            response = ResponseEntity.notFound().headers(new HttpHeaders()).build();
+        }
+
+        return response;
+    }
+
     public static final String ACCOUNT_SID = "AC8616f53c8c89dd86620f67d9404e2384";
     public static final String AUTH_TOKEN = "b29e2bd32b44b0aaf9017a5741ddd1c1";
 

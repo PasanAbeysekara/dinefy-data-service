@@ -20,11 +20,6 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    /**
-     * Get All Menus
-     *
-     * @return all menus
-     */
     @GetMapping("/menus")
     public ResponseEntity<ResponseWrapper<PagedModel<MenuModel>>> getMenus(Pageable pageable) {
         return menuService.getMenus(pageable);

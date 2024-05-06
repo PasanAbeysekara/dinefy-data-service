@@ -4,7 +4,9 @@ import com.thaprobit.global.SystemOperation;
 import com.thaprobit.resengine.controller.assembler.EventsModelAssembler;
 import com.thaprobit.resengine.controller.service.HATEOASProvider;
 import com.thaprobit.resengine.dao.sys.Event;
+import com.thaprobit.resengine.dao.sys.Tags;
 import com.thaprobit.resengine.facade.dto.EventModel;
+import com.thaprobit.resengine.facade.dto.TagsModel;
 import com.thaprobit.resengine.repo.sys.EventsRepository;
 import com.thaprobit.service.AbstractService;
 import com.thaprobit.util.ResponseWrapper;
@@ -46,22 +48,12 @@ public class SysEventService extends AbstractService<Event> {
      * @return All sys events
      */
     public ResponseEntity<ResponseWrapper<PagedModel<EventModel>>> getEvents(Pageable pageable) {
-        ResponseEntity<ResponseWrapper<PagedModel<EventModel>>> response = null;
+        Page<Event> eventsPaged = eventsRepository.findAll(pageable);
+        PagedModel<EventModel> collModel = pagedResourcesAssembler.toModel(eventsPaged, eventsModelAssembler);
 
-        try {
-            Page<Event> eventPage = eventsRepository.findAll(pageable);
-            PagedModel<EventModel> eventModels = pagedResourcesAssembler.toModel(eventPage, eventsModelAssembler);
-
-            response = ResponseEntity.ok()
-                    .headers(addCommonHeaders(new HttpHeaders()))
-                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, eventModels));
-        } catch (Exception e) {
-            response = ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .headers(new HttpHeaders())
-                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.NOT_FOUND, e.getMessage()));
-        }
-
-        return response;
+        return ResponseEntity.ok()
+                .headers(addCommonHeaders(new HttpHeaders()))
+                .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, collModel));
     }
 
     /**

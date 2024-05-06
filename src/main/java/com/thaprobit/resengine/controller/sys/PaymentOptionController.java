@@ -50,7 +50,8 @@ public class PaymentOptionController {
      * @param paymentOption The Payment Option
      * @return Saved paymentOption response
      */
-    @PostMapping("/payment-options")
+    @PostMapping("/" +
+            "--")
     public ResponseEntity<ResponseWrapper<PaymentOptions>> createPaymentOption(@RequestBody PaymentOptions paymentOption) {
         return paymentOptionService.createPaymentOptions(paymentOption);
     }

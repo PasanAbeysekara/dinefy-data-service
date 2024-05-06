@@ -2,9 +2,13 @@ package com.thaprobit.resengine.controller;
 
 import com.thaprobit.resengine.controller.service.ContractService;
 import com.thaprobit.resengine.dao.Contract;
+import com.thaprobit.resengine.facade.dto.ContractModel;
+import com.thaprobit.resengine.facade.dto.TagsModel;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.URLProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +23,14 @@ public class ContractController {
     @Autowired
     private ContractService contractService;
 
+//    @GetMapping("/contracts")
+//    public ResponseEntity<List<Contract>> getProperty() {
+//        return contractService.getProperty();
+//    }
+
     @GetMapping("/contracts")
-    public ResponseEntity<List<Contract>> getProperty() {
-        return contractService.getProperty();
+    public ResponseEntity<ResponseWrapper<PagedModel<ContractModel>>> getContracts(Pageable pageable) {
+        return contractService.getContracts(pageable);
     }
 
     /**

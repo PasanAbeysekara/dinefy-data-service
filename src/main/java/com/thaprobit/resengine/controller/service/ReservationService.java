@@ -1,10 +1,12 @@
 package com.thaprobit.resengine.controller.service;
 
 import com.thaprobit.global.SystemOperation;
-import com.thaprobit.resengine.dao.Order;
+import com.thaprobit.resengine.dao.Orders;
 import com.thaprobit.resengine.dao.OrderChoices;
 import com.thaprobit.resengine.dao.Reservation;
+import com.thaprobit.resengine.dao.User;
 import com.thaprobit.resengine.repo.ReservationRepository;
+import com.thaprobit.resengine.repo.UserRepository;
 import com.thaprobit.service.AbstractService;
 import com.thaprobit.util.ResponseWrapper;
 import com.thaprobit.util.SystemMessages;
@@ -28,7 +30,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReservationService extends AbstractService<Reservation> {
     private final ReservationRepository reservationRepository;
-
+    private final UserRepository userRepository;
     /**
      * Get all reservations
      *
@@ -66,7 +68,7 @@ public class ReservationService extends AbstractService<Reservation> {
 
 
         if (optionalReservation.isPresent()) {
-            response = ResponseEntity.status(HttpStatus.FOUND)
+            response = ResponseEntity.ok()
                     .headers(addCommonHeaders(new HttpHeaders()))
                     .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, optionalReservation.get()));
         } else {
@@ -76,17 +78,35 @@ public class ReservationService extends AbstractService<Reservation> {
         return response;
     }
 
-    /**
-     * Create a reservation
-     *
-     * @param reservation The reservation
-     * @return The saved reservation
-     */
+    public ResponseEntity<ResponseWrapper<Reservation>> getReservationByCode(String reserveCode) {
+        ResponseEntity<ResponseWrapper<Reservation>> response;
+
+        Optional<Reservation> optionalReservation = reservationRepository.findByReserveCode(reserveCode);
+
+        if (optionalReservation.isPresent()) {
+            response = ResponseEntity.ok()
+                    .headers(addCommonHeaders(new HttpHeaders()))
+                    .body(new ResponseWrapper<>(SystemOperation.READ.withSuccess(), SystemMessages.SUCCESSFULLY_LOADED, optionalReservation.get()));
+
+        } else {
+            response = buildNotFoundResponseWrapped();
+        }
+
+        return response;
+
+    }
+
+        /**
+         * Create a reservation
+         *
+         * @param reservation The reservation
+         * @return The saved reservation
+         */
     public ResponseEntity<ResponseWrapper<Reservation>> createReservation(Reservation reservation) {
         ResponseEntity<ResponseWrapper<Reservation>> response;
 
         try {
-            reservation.setReservationId(reservationRepository.getNextVal());
+            //reservation.setReservationId(reservationRepository.getNextVal());
             preProcess(reservation);
 
             Reservation savedReservation = reservationRepository.save(reservation);
@@ -105,7 +125,7 @@ public class ReservationService extends AbstractService<Reservation> {
         if (reservation.getOrders() != null) {
             long reservationId = reservation.getReservationId();
 
-            for (Order order : reservation.getOrders()) {
+            for (Orders order : reservation.getOrders()) {
                 order.getOrderId().setReservationId(reservationId);
 
                 if (order.getOrderChoices() != null) {
