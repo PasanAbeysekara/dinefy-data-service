@@ -1,4 +1,5 @@
 package com.thaprobit.resengine.controller;
+import com.thaprobit.resengine.controller.service.UserService;
 import com.thaprobit.resengine.dao.User;
 import com.thaprobit.resengine.dto.UserDto;
 import com.thaprobit.resengine.repo.UserRepository;
@@ -18,6 +19,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/user")
     public List<UserDto> getAllUsers() {
@@ -48,8 +52,29 @@ public class UserController {
         existingUser.setLastName(user.getLastName());
        // existingUser.setBirthday(user.getBirthday());
 
+
         return userRepository.save(existingUser);
     }
+    @PutMapping("/user/setting/{userId}")
+    public User updateUserDetails(@PathVariable Long userId, @RequestBody User user) {
+        return userService.updateUserDetails(userId, user);
+    }
+
+
+
+
+
+
+//    @PutMapping("/user/update-details")
+//    public ResponseEntity<?> updateUserDetails(@RequestBody UserDto userDto) {
+//        boolean updated = userService.updateUserDetails(userDto);
+//        if (updated) {
+//            return ResponseEntity.ok("User details updated successfully!");
+//        } else {
+//            return ResponseEntity.badRequest().body("Failed to update user details");
+//        }
+//    }
+
 
     @DeleteMapping("/user/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable Long userId) {

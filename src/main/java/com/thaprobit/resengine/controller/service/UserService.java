@@ -1,15 +1,23 @@
 package com.thaprobit.resengine.controller.service;
 
+import com.thaprobit.resengine.dao.Property;
 import com.thaprobit.resengine.dao.User;
+import com.thaprobit.resengine.repo.PropertyRepository;
 import com.thaprobit.resengine.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.thaprobit.resengine.dto.CredentialsDto;
 import com.thaprobit.resengine.dto.UserDto;
 import com.thaprobit.resengine.dto.RegUserDto;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -17,6 +25,11 @@ public class UserService {
     @Autowired
     private final UserRepository userRepository;
     private final HttpSession httpSession;
+    private final PropertyRepository propertyRepository;
+
+
+
+
     //private final BCryptPasswordEncoder passwordEncoder;
 
     public UserDto login(CredentialsDto credentialsDto) {
@@ -63,6 +76,7 @@ public class UserService {
         newUser.setRole("customer");
         newUser.setPassword(encodedPassword);
 
+
         User savedUser = userRepository.save(newUser);
 
         if (savedUser == null) {
@@ -72,5 +86,34 @@ public class UserService {
             return true;
         }
     }
+    public User updateUserDetails(Long userId, User userDetails) {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
+
+        existingUser.setAddress1(userDetails.getAddress1());
+        existingUser.setAddress2(userDetails.getAddress2());
+        existingUser.setCity(userDetails.getCity());
+        existingUser.setDistrict(userDetails.getDistrict());
+        existingUser.setProvince(userDetails.getProvince());
+        existingUser.setCountry(userDetails.getCountry());
+//        Set<String> preferredRestaurants = new HashSet<>(userDetails.getpreferredProperty());
+//        existingUser.setpreferredProperty(preferredProperty);
+        Set<Property> PreferredProperties = new HashSet<>();
+        for (Property prop : userDetails.getPreferredProperties()) {
+            Property property = propertyRepository.findByName(prop.getName())
+                    .orElseThrow(() -> new ResourceNotFoundException("Property not found with id: " ));
+            PreferredProperties.add(property);
+        }
+        existingUser.setPreferredProperties(PreferredProperties);
+
+//        for (String propertyName : userDetails.getddPreferredProperty()) {
+//            Property property = Property.findByName(Name)
+//                    .orElseThrow(() -> new ResourceNotFoundException("Property not found with name: " + propertyName));
+//            preferredProperties.add(property);
+//        }
+//        existingUser.setPreferredProperties(preferredProperties);
+        return userRepository.save(existingUser);
+    }
+
 
 }

@@ -10,4 +10,5 @@ public class RegUserDto {
     private String lastName;
     private String username;
     private String password;
+
 }
