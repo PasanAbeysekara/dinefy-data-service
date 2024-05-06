@@ -9,11 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.thaprobit.resengine.dto.CredentialsDto;
 import com.thaprobit.resengine.dto.UserDto;
 import com.thaprobit.resengine.dto.RegUserDto;
-<<<<<<< HEAD
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-=======
 import org.springframework.data.repository.cdi.Eager;
->>>>>>> b9a1c54bdea0c0b31e5998f67b0d4674e8a912d0
 import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
