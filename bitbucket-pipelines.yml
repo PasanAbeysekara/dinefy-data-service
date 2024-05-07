@@ -1,10 +1,10 @@
-image: maven:3.3.9
+image: maven:3.6.3
 
 pipelines:
   default:
     - step:
         name: Maven Clean Build
-        image: maven:3.3.9
+        image: maven:3.6.3
         caches:
           - maven
         script:
