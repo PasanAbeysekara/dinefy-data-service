@@ -2,22 +2,22 @@ package com.thaprobit.resengine.controller.service;
 
 import com.thaprobit.resengine.dao.Property;
 import com.thaprobit.resengine.dao.User;
+import com.thaprobit.resengine.repo.PropTagsRepository;
 import com.thaprobit.resengine.repo.PropertyRepository;
 import com.thaprobit.resengine.repo.UserRepository;
+import com.thaprobit.resengine.repo.sys.PropertySpecialityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.thaprobit.resengine.dto.CredentialsDto;
 import com.thaprobit.resengine.dto.UserDto;
 import com.thaprobit.resengine.dto.RegUserDto;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.data.repository.cdi.Eager;
 import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -28,8 +28,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final HttpSession httpSession;
     private final PropertyRepository propertyRepository;
-
-
+    private final PropTagsRepository propTagsRepository;
+    private final PropertySpecialityRepository propertySpecialityRepository;
 
 
     //private final BCryptPasswordEncoder passwordEncoder;
@@ -123,5 +123,11 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
+    public List<String> findPreferredTagNamesByUserId(Long userId) {
+        return propTagsRepository.findPreferredTagNamesByUserId(userId);
+    }
 
+    public List<String> findPreferredCuisineNamesByUserId(Long userId) {
+        return propertySpecialityRepository.findPreferredCuisineNamesByUserId(userId);
+    }
 }
