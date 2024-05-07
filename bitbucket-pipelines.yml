@@ -3,21 +3,14 @@ image: maven:3.6.3
 pipelines:
   default:
     - step:
-        name: Maven Clean Build
-        image: maven:3.6.3
+        name: Build and Package
         caches:
           - maven
         script:
-          - echo -B clean
-    - step:
-        name: Maven Compile Build
-        caches:
-          - maven
-        script:
-          - echo -B compile
-    - step:
-        name: Maven Package Build
-        caches:
-          - maven
-        script:
-          - echo -B package
+          - mvn clean compile package
+        artifacts:
+          - target/**
+
+definitions:
+  caches:
+    maven: ~/.m2
