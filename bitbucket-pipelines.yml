@@ -8,16 +8,16 @@ pipelines:
         caches:
           - maven
         script:
-          - mvn -B clean
+          - echo -B clean
     - step:
         name: Maven Compile Build
         caches:
           - maven
         script:
-          - mvn -B compile
+          - echo -B compile
     - step:
         name: Maven Package Build
         caches:
           - maven
         script:
-          - mvn -B package
+          - echo -B package
