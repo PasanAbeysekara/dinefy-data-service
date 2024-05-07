@@ -1,16 +1,17 @@
-image: atlassian/default-image:2
+image: pasankavinda/maven-image:latest
+
 pipelines:
   default:
-    - parallel:
-        - step:
-            name: Build and Test
-            script:
-              - pipe: JfrogDev/artifactory-maven:0.3.3
-                variables:
-                  ARTIFACTORY_URL: 'https://thaprobit.jfrog.io/artifactory'
-                  ARTIFACTORY_USER: 'tharinda'
-                  ARTIFACTORY_PASSWORD: 'tharinda321'
-                  MAVEN_SNAPSHOT_REPO: 'hangouts-snapshot-repo'
-                  MAVEN_RELEASE_REPO: 'hangouts-repo'
-                  MAVEN_COMMAND: 'clean test install'
-                  FOLDER: 'app'
+    - step:
+        name: Build and Package
+        caches:
+          - maven
+        script:
+          - mvn -version
+          - mvn clean compile package
+        artifacts:
+          - target/**
+
+definitions:
+  caches:
+    maven: ~/.m2
