@@ -6,7 +6,7 @@ import java.util.Base64;
 
 public class JWTUtil {
 
-    public static final long EXPIRE_ACCESS_TOKEN = 30*60*1000;
+    public static final long EXPIRE_ACCESS_TOKEN = 60*60*1000;
 
     public static final long EXPIRE_REFRESH_TOKEN = 120*60*1000;
 
