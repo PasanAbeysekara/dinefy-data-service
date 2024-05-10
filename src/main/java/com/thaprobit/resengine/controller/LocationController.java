@@ -31,7 +31,7 @@ public class LocationController {
      */
 //    @GetMapping("/locations")
 //    public ResponseEntity<ResponseWrapper<LocationsWrapper>> getLocations(Pageable pageable) {
-//        return locationService.getLocations(pageable);
+//        return locationService.getLocations(pageable);some change
 //    }
 
     @GetMapping("/locations")
