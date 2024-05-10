@@ -7,6 +7,7 @@ import com.thaprobit.util.URLProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -82,5 +83,17 @@ public class UserController {
             userRepository.delete(user);
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
-}
+    }
+
+    @GetMapping("/preferred-tags")
+    public ResponseEntity<List<String>> findPreferredTagNamesByUserId(@AuthenticationPrincipal Long userId) {
+        List<String> tagNames = userService.findPreferredTagNamesByUserId(userId);
+        return ResponseEntity.ok(tagNames);
+    }
+
+    @GetMapping("/preferred-cuisines")
+    public ResponseEntity<List<String>> findPreferredCuisineNamesByUserId(@AuthenticationPrincipal Long userId) {
+        List<String> cuisineNames = userService.findPreferredCuisineNamesByUserId(userId);
+        return ResponseEntity.ok(cuisineNames);
+    }
 }
