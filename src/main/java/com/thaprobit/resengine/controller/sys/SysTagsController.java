@@ -22,6 +22,11 @@ public class SysTagsController {
     @Autowired
     private SysTagsService sysTagsService;
 
+
+    public SysTagsController(SysTagsService sysTagsService) {
+        this.sysTagsService = sysTagsService;
+    }
+
     /**
      * Get All Tags
      *
