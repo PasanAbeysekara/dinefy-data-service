@@ -18,20 +18,13 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        server-id: github  
-        server-username: GITHUB_ACTOR
-        server-password: MY_GITHUB_TOKEN 
-
-    - name: Cache Maven packages
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-m2
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml --settings ./settings.xml
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
     - name: Test with Maven
       run: mvn test --settings ./settings.xml
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
