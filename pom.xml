@@ -27,13 +27,15 @@
         <dependency>
             <groupId>com.thaprobit.resengine</groupId>
             <artifactId>persistence-library</artifactId>
-            <version>${lib-version}</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>com.thaprobit</groupId>
             <artifactId>common-utility-library</artifactId>
-            <version>${lib-version}</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
