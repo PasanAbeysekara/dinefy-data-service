@@ -1,4 +1,4 @@
-name: Spring Boot CI/CD Pipeline
+name: CI with Maven
 
 on:
   push:
@@ -7,21 +7,17 @@ on:
     branches: [ dev-efac ]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
         java-version: '17'
         distribution: 'temurin'
-
-    - name: Set executable permissions for Maven Wrapper
-      run: chmod +x ./mvnw
 
     - name: Cache Maven packages
       uses: actions/cache@v2
@@ -32,7 +28,7 @@ jobs:
           ${{ runner.os }}-m2
 
     - name: Build with Maven
-      run: ./mvnw clean install -DskipTests
+      run: mvn -B package --file pom.xml
 
-    - name: Run tests
-      run: ./mvnw test
+    - name: Test with Maven
+      run: mvn test
