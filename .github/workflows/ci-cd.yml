@@ -20,6 +20,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Set executable permissions for Maven Wrapper
+      run: chmod +x ./mvnw
+
     - name: Cache Maven packages
       uses: actions/cache@v2
       with:
