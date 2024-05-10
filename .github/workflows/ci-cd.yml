@@ -11,17 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          server-id: github  # This should match the ID in your Maven settings.xml for GitHub Packages
-          server-username: ${{ github.actor }}  # Default GitHub actor
-          server-password: ${{ secrets.MY_GITHUB_TOKEN }}  # Updated token name
-      
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
-      
+    - uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        server-id: github  
+        server-username: GITHUB_ACTOR
+        server-password: MY_GITHUB_TOKEN 
+
+    - name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-m2
+
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml --settings ./settings.xml
+
+    - name: Test with Maven
+      run: mvn test --settings ./settings.xml
