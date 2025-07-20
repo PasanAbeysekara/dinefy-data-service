@@ -15,25 +15,36 @@
     <name>data-service</name>
     <description>x for Everyone</description>
 
-    <properties>
-        <java.version>17</java.version>
-        <skipTests>true</skipTests>
-        <lib-version>1.0-SNAPSHOT</lib-version>
-        <maven.compiler.release>17</maven.compiler.release>
-    </properties>
+    <repositories>
+        <repository>
+            <id>github-persistence-library</id>
+            <name>GitHub Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/PasanAbeysekara/persistence-library</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>github-common-utility-library</id>
+            <name>GitHub Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/PasanAbeysekara/common-utility-library</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <dependencies>
-
-        <dependency>
+        <!-- <dependency>
             <groupId>com.thaprobit.resengine</groupId>
             <artifactId>persistence-library</artifactId>
-            <version>${lib-version}</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.thaprobit</groupId>
             <artifactId>common-utility-library</artifactId>
-            <version>${lib-version}</version>
-        </dependency>
+            <version>1.0-SNAPSHOT</version>
+        </dependency> -->
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
